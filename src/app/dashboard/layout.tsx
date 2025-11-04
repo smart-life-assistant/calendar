@@ -1,5 +1,5 @@
-import DashboardHeader from "@/components/custom/dashboard/DashboardHeader";
-import Sidebar from "@/components/custom/dashboard/Sidebar";
+import { CommandPaletteProvider } from "@/components/custom/dashboard/CommandPaletteProvider";
+import DashboardLayoutClient from "@/components/custom/dashboard/DashboardLayoutClient";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
@@ -15,13 +15,10 @@ export default async function DashboardLayout({
   }
 
   return (
-    // add css to differentiate dashboard layout
-    <div className="flex-1 flex bg-gray-50 border-t border-gray-200">
-      <Sidebar />
-      <div className="flex-1 flex flex-col min-w-0">
-        <DashboardHeader session={session} />
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
-      </div>
-    </div>
+    <CommandPaletteProvider>
+      <DashboardLayoutClient session={session}>
+        {children}
+      </DashboardLayoutClient>
+    </CommandPaletteProvider>
   );
 }

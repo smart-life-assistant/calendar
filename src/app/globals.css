@@ -149,10 +149,6 @@
 }
 
 /* Focus visible styles */
-*:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(59, 130, 246);
-}
 
 /* Smooth font rendering */
 body {
