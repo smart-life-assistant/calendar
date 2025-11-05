@@ -405,10 +405,11 @@ export function getCanChi(
 
 /**
  * Check if a lunar year has leap month
+ * Returns the leap month number (1-12) or 0 if no leap month
  */
 export function hasLeapMonth(lunarYear: number, timeZone: number = 7): number {
-  const a11 = getLunarMonth11(lunarYear, timeZone);
-  const b11 = getLunarMonth11(lunarYear + 1, timeZone);
+  const a11 = getLunarMonth11(lunarYear - 1, timeZone);
+  const b11 = getLunarMonth11(lunarYear, timeZone);
   if (b11 - a11 > 365) {
     return getLeapMonthOffset(a11, timeZone) - 2;
   }

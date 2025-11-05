@@ -14,18 +14,20 @@ import {
   convertSolar2Lunar,
   getCanChi,
   getYearCanChiString,
+  hasLeapMonth,
 } from "@/lib/lunar-calendar";
 import {
   addMonths,
   eachDayOfInterval,
   endOfMonth,
+  endOfWeek,
   format,
   isSameMonth,
   isToday,
   startOfMonth,
+  startOfWeek,
   subMonths,
 } from "date-fns";
-import { vi } from "date-fns/locale";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Calendar as CalendarIcon,
@@ -94,7 +96,8 @@ export default function CalendarPage() {
 
   // Fetch special dates
   useEffect(() => {
-    fetchSpecialDates();
+    // eslint-disable-next-line
+    void fetchSpecialDates();
   }, []);
 
   // Handle modal actions
@@ -127,9 +130,22 @@ export default function CalendarPage() {
     setAddEventDate(null);
   };
 
+  // Generate calendar grid with days from previous and next month
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);
-  const calendarDays = eachDayOfInterval({ start: monthStart, end: monthEnd });
+
+  // Get the start of the week for the first day of month (to include previous month days)
+  // weekStartsOn: 1 means Monday (0 = Sunday, 1 = Monday)
+  const calendarStart = startOfWeek(monthStart, { weekStartsOn: 1 });
+
+  // Get the end of the week for the last day of month (to include next month days)
+  const calendarEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
+
+  // Get all days to display in the calendar grid
+  const calendarDays = eachDayOfInterval({
+    start: calendarStart,
+    end: calendarEnd,
+  });
 
   // Get lunar date using our custom library
   const getLunarDate = (date: Date) => {
@@ -156,10 +172,41 @@ export default function CalendarPage() {
     return canChi.day;
   };
 
-  // Get can chi of year
+  // Get can chi of year (based on lunar year)
   const getYearCanChi = (date: Date) => {
-    return getYearCanChiString(date.getFullYear());
+    const lunar = getLunarDate(date);
+    return getYearCanChiString(lunar.year);
   };
+
+  // Get can chi of month
+  const getMonthCanChi = (date: Date) => {
+    const canChi = getCanChi(
+      date.getDate(),
+      date.getMonth() + 1,
+      date.getFullYear()
+    );
+    return canChi.month;
+  };
+
+  // Get current month lunar info (for displaying in header)
+  const getCurrentMonthLunarInfo = () => {
+    const firstDayOfMonth = startOfMonth(currentDate);
+    const lunar = getLunarDate(firstDayOfMonth);
+    const monthCanChi = getMonthCanChi(firstDayOfMonth);
+    const yearCanChi = getYearCanChi(firstDayOfMonth);
+    const isYearLeap = hasLeapMonth(lunar.year) > 0;
+
+    return {
+      lunarMonth: lunar.month,
+      lunarYear: lunar.year,
+      isLeapMonth: lunar.isLeapMonth,
+      isYearLeap,
+      monthCanChi,
+      yearCanChi,
+    };
+  };
+
+  const currentMonthLunar = getCurrentMonthLunarInfo();
 
   // Get events for a specific date
   const getEventsForDate = (date: Date) => {
@@ -381,13 +428,19 @@ export default function CalendarPage() {
                       <div className="font-bold text-sm sm:text-lg mb-0.5">
                         Tháng {format(currentDate, "MM/yyyy")}
                       </div>
-                      <div className="text-[10px] sm:text-xs text-muted-foreground mb-1 hidden md:block">
-                        {format(currentDate, "MMMM yyyy", { locale: vi })}
+
+                      {/* Lunar Month Info */}
+                      <div className="text-[10px] sm:text-xs text-amber-600 dark:text-amber-400 font-medium mb-1">
+                        🌙 Tháng {currentMonthLunar.lunarMonth}{" "}
+                        {currentMonthLunar.isLeapMonth && "nhuận"} năm{" "}
+                        {currentMonthLunar.yearCanChi}
+                        {currentMonthLunar.isYearLeap && " nhuận"}
                       </div>
-                      {/* Can Chi Badge - Beautiful Design */}
-                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 border border-purple-200 dark:border-purple-700">
-                        <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-                          ✨ {getYearCanChiString(currentDate.getFullYear())}
+
+                      {/* Month Can Chi Badge */}
+                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 border border-indigo-200 dark:border-indigo-700">
+                        <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+                          ✨ Tháng {currentMonthLunar.monthCanChi}
                         </span>
                       </div>
                     </div>
@@ -421,11 +474,6 @@ export default function CalendarPage() {
           {/* Weekday Headers - Modern Gradient Design - Responsive */}
           <div className="grid grid-cols-7 border-b border-border/50 bg-gradient-to-r from-blue-50/50 via-indigo-50/50 to-purple-50/50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20">
             {[
-              {
-                short: "CN",
-                full: "Chủ Nhật",
-                color: "text-red-600 dark:text-red-400",
-              },
               { short: "T2", full: "Thứ Hai", color: "text-foreground" },
               { short: "T3", full: "Thứ Ba", color: "text-foreground" },
               { short: "T4", full: "Thứ Tư", color: "text-foreground" },
@@ -435,6 +483,11 @@ export default function CalendarPage() {
                 short: "T7",
                 full: "Thứ Bảy",
                 color: "text-blue-600 dark:text-blue-400",
+              },
+              {
+                short: "CN",
+                full: "Chủ Nhật",
+                color: "text-red-600 dark:text-red-400",
               },
             ].map((day, index) => (
               <motion.div
@@ -465,7 +518,9 @@ export default function CalendarPage() {
             {calendarDays.map((date, index) => {
               const lunar = getLunarDate(date);
               const canChi = getDayCanChi(date);
+              const monthCanChi = getMonthCanChi(date);
               const yearCanChi = getYearCanChi(date);
+              const isYearLeap = hasLeapMonth(lunar.year) > 0;
               const events = getEventsForDate(date);
 
               return (
@@ -478,7 +533,9 @@ export default function CalendarPage() {
                     date={date}
                     lunar={lunar}
                     canChi={canChi}
+                    monthCanChi={monthCanChi}
                     yearCanChi={yearCanChi}
+                    isYearLeap={isYearLeap}
                     events={events}
                     isCurrentMonth={isSameMonth(date, currentDate)}
                     isToday={isToday(date)}
@@ -558,7 +615,9 @@ export default function CalendarPage() {
             date={selectedDate}
             lunar={getLunarDate(selectedDate)}
             canChi={getDayCanChi(selectedDate)}
+            monthCanChi={getMonthCanChi(selectedDate)}
             yearCanChi={getYearCanChi(selectedDate)}
+            isYearLeap={hasLeapMonth(getLunarDate(selectedDate).year) > 0}
             events={getEventsForDate(selectedDate)}
             onClose={() => setSelectedDate(null)}
             isAuthenticated={!!session}

@@ -38,7 +38,9 @@ interface CalendarDetailModalProps {
     isLeapMonth: boolean;
   };
   canChi: string;
+  monthCanChi: string;
   yearCanChi: string;
+  isYearLeap: boolean;
   events: SpecialDate[];
   onClose: () => void;
   isAuthenticated: boolean;
@@ -51,7 +53,9 @@ export default function CalendarDetailModal({
   date,
   lunar,
   canChi,
+  monthCanChi,
   yearCanChi,
+  isYearLeap,
   events,
   onClose,
   isAuthenticated,
@@ -143,26 +147,39 @@ export default function CalendarDetailModal({
               )}
             </div>
 
-            {/* Can Chi Cards - Side by Side */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-gradient-to-br from-purple-400/20 to-pink-400/20 backdrop-blur-md rounded-xl p-4 border border-purple-300/30 shadow-lg">
-                <div className="flex items-center gap-1.5 mb-2">
-                  <Sun className="h-4 w-4 text-purple-200" />
-                  <span className="text-xs font-semibold text-white/90">
-                    Can Chi Ngày
+            {/* Can Chi Cards - 3 columns */}
+            <div className="grid grid-cols-3 gap-2.5">
+              <div className="bg-gradient-to-br from-purple-400/20 to-pink-400/20 backdrop-blur-md rounded-xl p-3 border border-purple-300/30 shadow-lg">
+                <div className="flex items-center gap-1 mb-1.5">
+                  <Sun className="h-3.5 w-3.5 text-purple-200" />
+                  <span className="text-[10px] font-semibold text-white/90">
+                    Ngày
                   </span>
                 </div>
-                <p className="text-xl font-bold text-white">{canChi}</p>
+                <p className="text-base font-bold text-white">{canChi}</p>
               </div>
 
-              <div className="bg-gradient-to-br from-indigo-400/20 to-blue-400/20 backdrop-blur-md rounded-xl p-4 border border-indigo-300/30 shadow-lg">
-                <div className="flex items-center gap-1.5 mb-2">
-                  <Star className="h-4 w-4 text-indigo-200 fill-indigo-200" />
-                  <span className="text-xs font-semibold text-white/90">
-                    Can Chi Năm
+              <div className="bg-gradient-to-br from-cyan-400/20 to-teal-400/20 backdrop-blur-md rounded-xl p-3 border border-cyan-300/30 shadow-lg">
+                <div className="flex items-center gap-1 mb-1.5">
+                  <Moon className="h-3.5 w-3.5 text-cyan-200" />
+                  <span className="text-[10px] font-semibold text-white/90">
+                    Tháng
                   </span>
                 </div>
-                <p className="text-xl font-bold text-white">{yearCanChi}</p>
+                <p className="text-base font-bold text-white">{monthCanChi}</p>
+              </div>
+
+              <div className="bg-gradient-to-br from-indigo-400/20 to-blue-400/20 backdrop-blur-md rounded-xl p-3 border border-indigo-300/30 shadow-lg">
+                <div className="flex items-center gap-1 mb-1.5">
+                  <Star className="h-3.5 w-3.5 text-indigo-200 fill-indigo-200" />
+                  <span className="text-[10px] font-semibold text-white/90">
+                    Năm
+                  </span>
+                </div>
+                <p className="text-base font-bold text-white">
+                  {yearCanChi}
+                  {isYearLeap && " nhuận"}
+                </p>
               </div>
             </div>
           </div>

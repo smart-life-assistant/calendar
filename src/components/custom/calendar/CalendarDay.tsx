@@ -33,7 +33,9 @@ interface CalendarDayProps {
     isLeapMonth: boolean;
   };
   canChi: string;
+  monthCanChi: string;
   yearCanChi: string;
+  isYearLeap: boolean;
   events: SpecialDate[];
   isCurrentMonth: boolean;
   isToday: boolean;
@@ -44,7 +46,9 @@ export default function CalendarDay({
   date,
   lunar,
   canChi,
+  monthCanChi,
   yearCanChi,
+  isYearLeap,
   events,
   isCurrentMonth,
   isToday,
@@ -87,12 +91,25 @@ export default function CalendarDay({
       >
         <motion.div
           className={cn(
-            "relative h-full w-full border border-gray-200 dark:border-gray-700 rounded-md sm:rounded-lg p-1.5 sm:p-2 md:p-3 cursor-pointer transition-all hover:shadow-lg hover:border-blue-400 dark:hover:border-blue-600",
-            !isCurrentMonth && "bg-gray-50/50 dark:bg-gray-900/50 opacity-60",
-            isCurrentMonth && "bg-white dark:bg-gray-800",
+            "relative h-full w-full border rounded-md sm:rounded-lg p-1.5 sm:p-2 md:p-3 cursor-pointer transition-all",
+            // Base styles for current month days
+            isCurrentMonth && [
+              "bg-white dark:bg-gray-800",
+              "border-gray-200 dark:border-gray-700",
+              "hover:shadow-lg hover:border-blue-400 dark:hover:border-blue-600",
+            ],
+            // Dimmed styles for other month days
+            !isCurrentMonth && [
+              "bg-gray-50/30 dark:bg-gray-900/30",
+              "border-gray-100 dark:border-gray-800",
+              "opacity-40",
+            ],
+            // Today highlight
             isToday &&
               "ring-1 sm:ring-2 ring-blue-500 ring-offset-1 sm:ring-offset-2 dark:ring-offset-gray-900",
+            // Holiday background
             hasHoliday &&
+              isCurrentMonth &&
               "bg-gradient-to-br from-red-50 to-pink-50 dark:from-red-950/20 dark:to-pink-950/20"
           )}
           onClick={onClick}
@@ -104,10 +121,20 @@ export default function CalendarDay({
           <div className="flex items-start justify-between mb-1 sm:mb-2">
             <div
               className={cn(
-                "text-base sm:text-xl md:text-2xl font-bold tracking-tight transition-colors leading-none",
-                !isCurrentMonth && "text-gray-400 dark:text-gray-600",
-                isToday && "text-blue-600 dark:text-blue-400",
-                hasHoliday && !isToday && "text-red-600 dark:text-red-400",
+                "text-base sm:text-xl md:text-2xl tracking-tight transition-colors leading-none",
+                // Current month days - bold and clear
+                isCurrentMonth && "font-bold",
+                // Other month days - lighter weight and very dim
+                !isCurrentMonth &&
+                  "font-normal text-gray-500 dark:text-gray-700",
+                // Today highlight
+                isCurrentMonth && isToday && "text-blue-600 dark:text-blue-400",
+                // Holiday color
+                isCurrentMonth &&
+                  hasHoliday &&
+                  !isToday &&
+                  "text-red-600 dark:text-red-400",
+                // Regular days
                 isCurrentMonth &&
                   !isToday &&
                   !hasHoliday &&
@@ -281,29 +308,42 @@ export default function CalendarDay({
                   )}
                 </div>
 
-                {/* Can Chi Cards */}
-                <div className="grid grid-cols-2 gap-2">
+                {/* Can Chi Cards - 3 items in row */}
+                <div className="grid grid-cols-3 gap-2">
                   <div className="p-2.5 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/30 dark:to-pink-950/30 border border-purple-200 dark:border-purple-800 shadow-sm">
                     <div className="flex items-center gap-1 mb-1">
-                      <Sparkles className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" />
-                      <span className="text-[10px] font-semibold text-purple-900 dark:text-purple-100">
+                      <Sparkles className="h-3 w-3 text-purple-600 dark:text-purple-400" />
+                      <span className="text-[9px] font-semibold text-purple-900 dark:text-purple-100">
                         Ngày
                       </span>
                     </div>
-                    <p className="text-sm font-bold text-purple-900 dark:text-purple-100">
+                    <p className="text-xs font-bold text-purple-900 dark:text-purple-100">
                       {canChi}
+                    </p>
+                  </div>
+
+                  <div className="p-2.5 rounded-lg bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-cyan-950/30 dark:to-teal-950/30 border border-cyan-200 dark:border-cyan-800 shadow-sm">
+                    <div className="flex items-center gap-1 mb-1">
+                      <Moon className="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
+                      <span className="text-[9px] font-semibold text-cyan-900 dark:text-cyan-100">
+                        Tháng
+                      </span>
+                    </div>
+                    <p className="text-xs font-bold text-cyan-900 dark:text-cyan-100">
+                      {monthCanChi}
                     </p>
                   </div>
 
                   <div className="p-2.5 rounded-lg bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 border border-indigo-200 dark:border-indigo-800 shadow-sm">
                     <div className="flex items-center gap-1 mb-1">
-                      <Star className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400 fill-indigo-600 dark:fill-indigo-400" />
-                      <span className="text-[10px] font-semibold text-indigo-900 dark:text-indigo-100">
+                      <Star className="h-3 w-3 text-indigo-600 dark:text-indigo-400 fill-indigo-600 dark:fill-indigo-400" />
+                      <span className="text-[9px] font-semibold text-indigo-900 dark:text-indigo-100">
                         Năm
                       </span>
                     </div>
-                    <p className="text-sm font-bold text-indigo-900 dark:text-indigo-100">
+                    <p className="text-xs font-bold text-indigo-900 dark:text-indigo-100">
                       {yearCanChi}
+                      {isYearLeap && " nhuận"}
                     </p>
                   </div>
                 </div>
