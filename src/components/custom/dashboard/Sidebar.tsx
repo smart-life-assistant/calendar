@@ -79,7 +79,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: SidebarProps) {
       x: 0,
       transition: {
         delay: custom * 0.05,
-        type: "spring" as const as const,
+        type: "spring" as const,
         stiffness: 100,
       },
     }),
