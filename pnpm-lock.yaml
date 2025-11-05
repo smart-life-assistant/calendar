@@ -65,9 +65,6 @@ importers:
       lucide-react:
         specifier: ^0.552.0
         version: 0.552.0(react@19.2.0)
-      lunar-javascript:
-        specifier: ^1.7.6
-        version: 1.7.6
       next:
         specifier: 16.0.1
         version: 16.0.1(@babel/core@7.28.5)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -2127,9 +2124,6 @@ packages:
     resolution: {integrity: sha512-g9WCjmfwqbexSnZE+2cl21PCfXOcqnGeWeMTNAOGEfpPbm/ZF4YIq77Z8qWrxbu660EKuLB4nSLggoKnCb+isw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
-
-  lunar-javascript@1.7.6:
-    resolution: {integrity: sha512-gpARjH/I/TOWXBya+084L9XICi/tzDbTMy6g+f4xlynrqLx9zoK2r5jIeCTXAhe3KADpcZrjUvcXqer9WtKmBA==}
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -4878,8 +4872,6 @@ snapshots:
   lucide-react@0.552.0(react@19.2.0):
     dependencies:
       react: 19.2.0
-
-  lunar-javascript@1.7.6: {}
 
   magic-string@0.30.21:
     dependencies:
