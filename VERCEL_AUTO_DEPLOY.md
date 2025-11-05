@@ -5,6 +5,7 @@
 ### Đây là cách ĐƠN GIẢN NHẤT và đã hoạt động sẵn!
 
 Khi bạn import project từ GitHub vào Vercel:
+
 - ✅ Vercel tự động theo dõi repository
 - ✅ Mỗi khi push lên `main` → Tự động build & deploy
 - ✅ Mỗi PR → Tự động tạo preview deployment
@@ -38,6 +39,7 @@ git push origin main
 ## 🔧 Cách 2: GitHub Actions (ADVANCED - Optional)
 
 **Chỉ dùng nếu bạn cần:**
+
 - Run tests trước khi deploy
 - Deploy tới nhiều environments
 - Custom build steps phức tạp
@@ -46,17 +48,20 @@ git push origin main
 ### Setup (nếu muốn dùng cách này):
 
 1. **Tạo Vercel Token:**
+
    - https://vercel.com/account/tokens
    - Create → "GitHub Actions" → Full Account
    - Copy token
 
 2. **Get Project IDs:**
+
    ```bash
    # Chạy script setup
    .\scripts\setup-vercel.ps1
    ```
 
 3. **Add GitHub Secrets:**
+
    - Vào: https://github.com/YOUR_REPO/settings/secrets/actions
    - Thêm 3 secrets:
      - `VERCEL_TOKEN`
@@ -68,10 +73,12 @@ git push origin main
 ### ⚠️ Lưu ý khi dùng cả 2 cách:
 
 Nếu bạn enable cả Vercel auto-deploy VÀ GitHub Actions:
+
 - Sẽ có **2 deployments** mỗi khi push (trùng lặp!)
 - **Tốn quota** không cần thiết
 
 **Khuyến nghị:**
+
 - Dùng Vercel auto-deploy (Cách 1)
 - Disable GitHub Actions bằng cách xóa file workflow
 
@@ -84,6 +91,7 @@ Nếu bạn enable cả Vercel auto-deploy VÀ GitHub Actions:
 ✅ **Dùng Vercel tự động (Cách 1)**
 
 **Lý do:**
+
 - ✅ Đơn giản, không cần config gì thêm
 - ✅ Vercel tối ưu cho Next.js
 - ✅ Preview deployments miễn phí cho PR
@@ -91,6 +99,7 @@ Nếu bạn enable cả Vercel auto-deploy VÀ GitHub Actions:
 - ✅ Deployment logs rõ ràng
 
 **Xóa file này đi (không cần):**
+
 ```bash
 rm -rf .github/workflows/vercel-deploy.yml
 # Hoặc Windows:
@@ -101,15 +110,15 @@ rm -rf .github/workflows/vercel-deploy.yml
 
 ## 📊 So sánh 2 cách
 
-| Feature | Vercel Auto | GitHub Actions |
-|---------|-------------|----------------|
-| Setup | ✅ Dễ (1 click) | ⚠️ Phức tạp (cần secrets) |
-| Auto-deploy | ✅ Có | ✅ Có |
-| Preview PR | ✅ Có | ⚠️ Cần config thêm |
-| Custom tests | ❌ Không | ✅ Có |
-| Build logs | ✅ Trong Vercel | ✅ Trong GitHub |
-| Quota | ✅ Tiết kiệm | ⚠️ Dùng 2x nếu overlap |
-| Rollback | ✅ 1 click | ⚠️ Phải redeploy |
+| Feature      | Vercel Auto     | GitHub Actions            |
+| ------------ | --------------- | ------------------------- |
+| Setup        | ✅ Dễ (1 click) | ⚠️ Phức tạp (cần secrets) |
+| Auto-deploy  | ✅ Có           | ✅ Có                     |
+| Preview PR   | ✅ Có           | ⚠️ Cần config thêm        |
+| Custom tests | ❌ Không        | ✅ Có                     |
+| Build logs   | ✅ Trong Vercel | ✅ Trong GitHub           |
+| Quota        | ✅ Tiết kiệm    | ⚠️ Dùng 2x nếu overlap    |
+| Rollback     | ✅ 1 click      | ⚠️ Phải redeploy          |
 
 ---
 
@@ -152,6 +161,7 @@ git push origin test-auto-deploy
 ### Cho project Calendar:
 
 **GỠ BỎ GitHub Actions workflow** (không cần thiết):
+
 ```bash
 rm .github/workflows/vercel-deploy.yml
 git add .github/workflows/vercel-deploy.yml
@@ -160,12 +170,14 @@ git push origin main
 ```
 
 **Chỉ cần:**
+
 1. ✅ Repository connected với Vercel (đã có)
 2. ✅ Environment variables set trên Vercel (đã có)
 3. ✅ Push code lên GitHub
 4. ✅ Vercel tự động build & deploy!
 
 **Workflow đơn giản:**
+
 ```
 Code changes → Git push → Vercel auto-build → Live!
 ```
@@ -177,10 +189,12 @@ Code changes → Git push → Vercel auto-build → Live!
 ### Kiểm tra:
 
 1. **Vercel Git Integration:**
+
    - Settings → Git → Connected Repository
    - Nếu chưa: Click "Connect Git Repository"
 
 2. **Deployment Settings:**
+
    - Settings → Git
    - "Production Branch" = `main` hoặc `master`
    - "Automatic Deployments" = ✅ Enabled
