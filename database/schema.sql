@@ -44,24 +44,6 @@ FOR EACH ROW
 EXECUTE FUNCTION public.update_updated_at();
 
 -- ===============================
--- RLS: users
--- ===============================
-ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
-
--- Admin toàn quyền
-CREATE POLICY admin_full_access_users
-ON public.users
-FOR ALL
-USING (username = 'akira_hikaru')
-WITH CHECK (username = 'akira_hikaru');
-
--- Người khác chỉ được SELECT các record chưa xóa
-CREATE POLICY public_read_users
-ON public.users
-FOR SELECT
-USING (deleted = false);
-
--- ===============================
 -- Bảng special_dates (ngày đặc biệt / lễ tết)
 -- ===============================
 CREATE TABLE public.special_dates (
@@ -110,21 +92,3 @@ INSERT INTO public.special_dates (name, description, date_type, day, month, year
 ('Tết Hạ Nguyên', 'Tết Hạ Nguyên', 'lunar', 15, 10, NULL, FALSE, TRUE),
 ('Tết Ông Công Ông Táo', 'Ông Công Ông Táo về trời', 'lunar', 23, 12, NULL, FALSE, TRUE),
 ('Giao Thừa', 'Đêm Giao Thừa', 'lunar', 30, 12, NULL, FALSE, TRUE);
-
--- ===============================
--- RLS: special_dates
--- ===============================
-ALTER TABLE public.special_dates ENABLE ROW LEVEL SECURITY;
-
--- Admin toàn quyền
-CREATE POLICY admin_full_access_special_dates
-ON public.special_dates
-FOR ALL
-USING (true)
-WITH CHECK (true);
-
--- Người khác chỉ được SELECT các record chưa xóa
-CREATE POLICY public_read_special_dates
-ON public.special_dates
-FOR SELECT
-USING (deleted = false);
