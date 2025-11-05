@@ -73,7 +73,7 @@ export default function LoginPage() {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const as const,
         stiffness: 100,
         damping: 15,
       },
@@ -224,7 +224,11 @@ export default function LoginPage() {
               className="flex items-center justify-center mb-8"
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              transition={{
+                type: "spring" as const,
+                stiffness: 200,
+                damping: 20,
+              }}
             >
               <div className="relative">
                 <motion.div
@@ -255,7 +259,11 @@ export default function LoginPage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  transition={{
+                    type: "spring" as const,
+                    stiffness: 500,
+                    damping: 30,
+                  }}
                 >
                   <div className="flex items-start gap-3">
                     <div className="rounded-full bg-red-100 p-1">

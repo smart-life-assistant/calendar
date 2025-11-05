@@ -29,7 +29,7 @@ export default function Header() {
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ type: "spring", stiffness: 100 }}
+          transition={{ type: "spring" as const, stiffness: 100 }}
         >
           <Link href="/" className="flex items-center gap-2">
             <motion.div
@@ -102,7 +102,7 @@ export default function Header() {
                 className="flex items-center gap-2 rounded-xl bg-accent/50 px-4 py-2 border"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 200 }}
+                transition={{ type: "spring" as const, stiffness: 200 }}
               >
                 <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
                   <User className="h-4 w-4 text-white" />

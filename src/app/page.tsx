@@ -41,7 +41,7 @@ export default function HomePage() {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const as const,
         stiffness: 100,
         damping: 12,
       },
@@ -220,7 +220,7 @@ export default function HomePage() {
               variants={itemVariants}
               whileHover={{
                 y: -10,
-                transition: { type: "spring", stiffness: 300 },
+                transition: { type: "spring" as const, stiffness: 300 },
               }}
             >
               <motion.div

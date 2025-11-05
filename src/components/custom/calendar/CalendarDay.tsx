@@ -66,7 +66,7 @@ export default function CalendarDay({
           onClick={onClick}
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.98 }}
-          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          transition={{ type: "spring" as const, stiffness: 400, damping: 17 }}
         >
           {/* Date Number with modern design - Responsive */}
           <div className="flex items-start justify-between mb-1 sm:mb-2">
@@ -89,7 +89,7 @@ export default function CalendarDay({
                 <motion.div
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                  transition={{ type: "spring" as const, stiffness: 260, damping: 20 }}
                 >
                   <Star className="h-3 w-3 sm:h-4 sm:w-4 text-red-500 fill-red-500" />
                 </motion.div>
@@ -98,7 +98,7 @@ export default function CalendarDay({
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                  transition={{ type: "spring" as const, stiffness: 260, damping: 20 }}
                 >
                   <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 fill-green-500" />
                 </motion.div>

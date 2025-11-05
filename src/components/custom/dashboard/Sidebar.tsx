@@ -57,7 +57,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: SidebarProps) {
     expanded: {
       width: "16rem",
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 300,
         damping: 30,
       },
@@ -65,7 +65,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: SidebarProps) {
     collapsed: {
       width: "5rem",
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 300,
         damping: 30,
       },
@@ -79,7 +79,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: SidebarProps) {
       x: 0,
       transition: {
         delay: custom * 0.05,
-        type: "spring",
+        type: "spring" as const as const,
         stiffness: 100,
       },
     }),
@@ -172,7 +172,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: SidebarProps) {
                     className="absolute inset-0 bg-blue-50 dark:bg-blue-900/30"
                     layoutId="activeTab"
                     transition={{
-                      type: "spring",
+                      type: "spring" as const,
                       stiffness: 500,
                       damping: 30,
                     }}
@@ -279,7 +279,11 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: SidebarProps) {
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              transition={{
+                type: "spring" as const,
+                stiffness: 300,
+                damping: 30,
+              }}
             >
               <SidebarContent />
             </motion.aside>

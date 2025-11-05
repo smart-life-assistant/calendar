@@ -187,7 +187,7 @@ export default function CalendarPage() {
       opacity: 1,
       scale: 1,
       transition: {
-        type: "spring" as const,
+        type: "spring" as const as const,
         stiffness: 300,
       },
     },
