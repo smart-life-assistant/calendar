@@ -38,6 +38,7 @@ interface CalendarDetailModalProps {
     isLeapMonth: boolean;
   };
   canChi: string;
+  yearCanChi: string;
   events: SpecialDate[];
   onClose: () => void;
   isAuthenticated: boolean;
@@ -50,6 +51,7 @@ export default function CalendarDetailModal({
   date,
   lunar,
   canChi,
+  yearCanChi,
   events,
   onClose,
   isAuthenticated,
@@ -122,26 +124,46 @@ export default function CalendarDetailModal({
           </div>
 
           {/* Date Info Cards */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+          <div className="space-y-3">
+            {/* Lunar Date - Full Width */}
+            <div className="bg-white/15 backdrop-blur-md rounded-xl p-4 border border-white/20 shadow-lg">
               <div className="flex items-center gap-2 mb-2">
-                <Moon className="h-4 w-4" />
-                <span className="text-sm text-blue-100">Âm lịch</span>
+                <Moon className="h-5 w-5 text-amber-200" />
+                <span className="text-sm font-semibold text-white/90">
+                  Âm lịch
+                </span>
               </div>
-              <p className="text-xl font-semibold">
+              <p className="text-2xl font-bold">
                 {lunar.day}/{lunar.month}/{lunar.year}
               </p>
               {lunar.isLeapMonth && (
-                <span className="text-xs text-blue-200">(Tháng nhuận)</span>
+                <span className="inline-block mt-1 text-xs bg-amber-400/20 text-amber-100 px-2 py-0.5 rounded-full border border-amber-300/30">
+                  🌙 Tháng nhuận
+                </span>
               )}
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Sun className="h-4 w-4" />
-                <span className="text-sm text-blue-100">Can Chi</span>
+            {/* Can Chi Cards - Side by Side */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-gradient-to-br from-purple-400/20 to-pink-400/20 backdrop-blur-md rounded-xl p-4 border border-purple-300/30 shadow-lg">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Sun className="h-4 w-4 text-purple-200" />
+                  <span className="text-xs font-semibold text-white/90">
+                    Can Chi Ngày
+                  </span>
+                </div>
+                <p className="text-xl font-bold text-white">{canChi}</p>
               </div>
-              <p className="text-xl font-semibold">{canChi}</p>
+
+              <div className="bg-gradient-to-br from-indigo-400/20 to-blue-400/20 backdrop-blur-md rounded-xl p-4 border border-indigo-300/30 shadow-lg">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Star className="h-4 w-4 text-indigo-200 fill-indigo-200" />
+                  <span className="text-xs font-semibold text-white/90">
+                    Can Chi Năm
+                  </span>
+                </div>
+                <p className="text-xl font-bold text-white">{yearCanChi}</p>
+              </div>
             </div>
           </div>
         </div>

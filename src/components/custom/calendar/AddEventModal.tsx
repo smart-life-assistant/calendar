@@ -20,9 +20,14 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  getLunarMonthDays,
+  getSolarMonthDays,
+  getYearCanChiString,
+} from "@/lib/lunar-calendar";
 import { AnimatePresence, motion } from "framer-motion";
 import { Calendar, Loader2, Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 interface SpecialDate {
@@ -139,19 +144,43 @@ export default function AddEventModal({
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 21 }, (_, i) => currentYear - 10 + i);
 
-  // Generate day options based on month
-  const getDaysInMonth = (month: number) => {
+  // Calculate max days based on month, year, and calendar type
+  const maxDays = useMemo(() => {
     if (formData.date_type === "lunar") {
-      return [29, 30].includes(month) ? 29 : 30;
-    }
-    // Solar calendar
-    if ([1, 3, 5, 7, 8, 10, 12].includes(month)) return 31;
-    if ([4, 6, 9, 11].includes(month)) return 30;
-    return 29; // February
-  };
+      if (!formData.year) {
+        // When no year selected, default to 30 days
+        return 30;
+      }
 
-  const maxDays = getDaysInMonth(formData.month);
+      try {
+        // Use the accurate library function
+        const days = getLunarMonthDays(formData.month, formData.year, 7);
+        console.log(
+          `[Lunar ${formData.month}/${formData.year}] Month has ${days} days (from library)`
+        );
+        return days;
+      } catch (error) {
+        console.error("Error getting lunar month days:", error);
+        // Fallback: most lunar months have 29-30 days
+        return 30;
+      }
+    } else {
+      // Solar calendar - use library function
+      return getSolarMonthDays(formData.month, formData.year || undefined);
+    }
+  }, [formData.month, formData.year, formData.date_type]);
+
   const days = Array.from({ length: maxDays }, (_, i) => i + 1);
+
+  // Auto-adjust day if it exceeds max days
+  useEffect(() => {
+    if (formData.day > maxDays) {
+      setFormData((prev) => ({ ...prev, day: maxDays }));
+    }
+  }, [maxDays, formData.day]);
+
+  // Get Can Chi for selected year using library function
+  const yearCanChi = formData.year ? getYearCanChiString(formData.year) : "";
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -333,6 +362,11 @@ export default function AddEventModal({
                         ))}
                       </SelectContent>
                     </Select>
+                    {formData.year && yearCanChi && (
+                      <div className="text-xs text-muted-foreground font-medium mt-1 px-1">
+                        🐉 Năm {yearCanChi}
+                      </div>
+                    )}
                   </div>
                 </div>
 

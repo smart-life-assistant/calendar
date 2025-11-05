@@ -32,6 +32,7 @@ interface CalendarDayProps {
     isLeapMonth: boolean;
   };
   canChi: string;
+  yearCanChi: string;
   events: SpecialDate[];
   isCurrentMonth: boolean;
   isToday: boolean;
@@ -42,6 +43,7 @@ export default function CalendarDay({
   date,
   lunar,
   canChi,
+  yearCanChi,
   events,
   isCurrentMonth,
   isToday,
@@ -89,7 +91,11 @@ export default function CalendarDay({
                 <motion.div
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
-                  transition={{ type: "spring" as const, stiffness: 260, damping: 20 }}
+                  transition={{
+                    type: "spring" as const,
+                    stiffness: 260,
+                    damping: 20,
+                  }}
                 >
                   <Star className="h-3 w-3 sm:h-4 sm:w-4 text-red-500 fill-red-500" />
                 </motion.div>
@@ -98,7 +104,11 @@ export default function CalendarDay({
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ type: "spring" as const, stiffness: 260, damping: 20 }}
+                  transition={{
+                    type: "spring" as const,
+                    stiffness: 260,
+                    damping: 20,
+                  }}
                 >
                   <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 fill-green-500" />
                 </motion.div>
@@ -218,37 +228,53 @@ export default function CalendarDay({
             </div>
 
             {/* Lunar info */}
-            <div className="grid grid-cols-2 gap-2">
-              <div className="p-2 rounded-lg bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <Moon className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
-                  <span className="text-xs font-medium text-amber-900 dark:text-amber-100">
+            <div className="space-y-2">
+              {/* Lunar Date Card */}
+              <div className="p-3 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border border-amber-200 dark:border-amber-800 shadow-sm">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <Moon className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                  <span className="text-xs font-semibold text-amber-900 dark:text-amber-100">
                     Âm lịch
                   </span>
                 </div>
-                <p className="text-sm font-semibold text-amber-900 dark:text-amber-100">
+                <p className="text-lg font-bold text-amber-900 dark:text-amber-100">
                   {lunar.day}/{lunar.month}/{lunar.year}
                 </p>
                 {lunar.isLeapMonth && (
                   <Badge
                     variant="outline"
-                    className="text-[10px] mt-1 px-1.5 py-0"
+                    className="text-[10px] mt-1.5 px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900/40 border-amber-300 dark:border-amber-700"
                   >
-                    Tháng nhuận
+                    🌙 Tháng nhuận
                   </Badge>
                 )}
               </div>
 
-              <div className="p-2 rounded-lg bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-900">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <Sparkles className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" />
-                  <span className="text-xs font-medium text-purple-900 dark:text-purple-100">
-                    Can Chi
-                  </span>
+              {/* Can Chi Cards */}
+              <div className="grid grid-cols-2 gap-2">
+                <div className="p-2.5 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/30 dark:to-pink-950/30 border border-purple-200 dark:border-purple-800 shadow-sm">
+                  <div className="flex items-center gap-1 mb-1">
+                    <Sparkles className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" />
+                    <span className="text-[10px] font-semibold text-purple-900 dark:text-purple-100">
+                      Ngày
+                    </span>
+                  </div>
+                  <p className="text-sm font-bold text-purple-900 dark:text-purple-100">
+                    {canChi}
+                  </p>
                 </div>
-                <p className="text-sm font-semibold text-purple-900 dark:text-purple-100">
-                  {canChi}
-                </p>
+
+                <div className="p-2.5 rounded-lg bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 border border-indigo-200 dark:border-indigo-800 shadow-sm">
+                  <div className="flex items-center gap-1 mb-1">
+                    <Star className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400 fill-indigo-600 dark:fill-indigo-400" />
+                    <span className="text-[10px] font-semibold text-indigo-900 dark:text-indigo-100">
+                      Năm
+                    </span>
+                  </div>
+                  <p className="text-sm font-bold text-indigo-900 dark:text-indigo-100">
+                    {yearCanChi}
+                  </p>
+                </div>
               </div>
             </div>
 

@@ -10,7 +10,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { convertSolar2Lunar, getCanChi } from "@/lib/lunar-calendar";
+import {
+  convertSolar2Lunar,
+  getCanChi,
+  getYearCanChiString,
+} from "@/lib/lunar-calendar";
 import {
   addMonths,
   eachDayOfInterval,
@@ -150,7 +154,14 @@ export default function CalendarPage() {
       date.getFullYear()
     );
     return canChi.day;
-  }; // Get events for a specific date
+  };
+
+  // Get can chi of year
+  const getYearCanChi = (date: Date) => {
+    return getYearCanChiString(date.getFullYear());
+  };
+
+  // Get events for a specific date
   const getEventsForDate = (date: Date) => {
     const lunar = getLunarDate(date);
 
@@ -261,74 +272,89 @@ export default function CalendarPage() {
                 </div>
 
                 {session && (
-                  <motion.div
-                    className="w-full sm:w-auto"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Link
-                      href="/dashboard"
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
+                  <>
+                    <motion.div
+                      className="w-full sm:w-auto"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
-                      <CalendarIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                      Dashboard
-                    </Link>
-                  </motion.div>
+                      <Link
+                        href="/dashboard"
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
+                      >
+                        <CalendarIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                        Dashboard
+                      </Link>
+                    </motion.div>
+
+                    <motion.button
+                      onClick={() => handleAddEvent()}
+                      className="px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30 transition-all inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
+                      <span className="hidden md:inline">Thêm sự kiện</span>
+                      <span className="md:hidden">Thêm</span>
+                    </motion.button>
+                  </>
                 )}
               </div>
 
               {/* Modern Filter & Navigation Bar - Fully Responsive */}
               <div className="flex flex-col gap-4">
                 {/* Row 1: Year & Month Selectors + Today Button */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                  {/* Year Selector */}
-                  <div className="flex items-center gap-2 bg-background/60 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-2 border border-border/50 flex-1 sm:flex-initial">
-                    <label className="text-xs sm:text-sm font-medium whitespace-nowrap">
-                      📅 Năm:
-                    </label>
-                    <Select
-                      value={currentDate.getFullYear().toString()}
-                      onValueChange={handleYearChange}
-                    >
-                      <SelectTrigger className="w-[80px] sm:w-[100px] border-0 bg-transparent focus:ring-0 h-8">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="max-h-[300px]">
-                        {years.map((year) => (
-                          <SelectItem key={year} value={year.toString()}>
-                            {year}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 justify-between">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    {/* Year Selector */}
+                    <div className="flex items-center gap-2 bg-background/60 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-2 border border-border/50 flex-1 sm:flex-initial">
+                      <label className="text-xs sm:text-sm font-medium whitespace-nowrap">
+                        📅 Năm:
+                      </label>
+                      <Select
+                        value={currentDate.getFullYear().toString()}
+                        onValueChange={handleYearChange}
+                      >
+                        <SelectTrigger className="w-full sm:w-[100px] border-0 bg-transparent focus:ring-0 h-8">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="max-h-[300px]">
+                          {years.map((year) => (
+                            <SelectItem key={year} value={year.toString()}>
+                              {year}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-                  {/* Month Selector */}
-                  <div className="flex items-center gap-2 bg-background/60 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-2 border border-border/50 flex-1 sm:flex-initial">
-                    <label className="text-xs sm:text-sm font-medium whitespace-nowrap">
-                      🗓️ Tháng:
-                    </label>
-                    <Select
-                      value={(currentDate.getMonth() + 1).toString()}
-                      onValueChange={handleMonthChange}
-                    >
-                      <SelectTrigger className="w-[90px] sm:w-[110px] border-0 bg-transparent focus:ring-0 h-8">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {months.map((month) => (
-                          <SelectItem key={month} value={month.toString()}>
-                            Tháng {month}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    {/* Month Selector */}
+                    <div className="flex items-center gap-2 bg-background/60 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-2 border border-border/50 flex-1 sm:flex-initial">
+                      <label className="text-xs sm:text-sm font-medium whitespace-nowrap">
+                        🗓️ Tháng:
+                      </label>
+                      <Select
+                        value={(currentDate.getMonth() + 1).toString()}
+                        onValueChange={handleMonthChange}
+                      >
+                        <SelectTrigger className="w-full sm:w-[110px] border-0 bg-transparent focus:ring-0 h-8">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {months.map((month) => (
+                            <SelectItem key={month} value={month.toString()}>
+                              Tháng {month}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
 
                   {/* Today Button */}
                   <motion.button
                     onClick={() => setCurrentDate(new Date())}
-                    className="w-full sm:w-auto px-4 sm:px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
+                    className="w-full shrink-0 sm:w-auto px-4 sm:px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -340,7 +366,7 @@ export default function CalendarPage() {
                 {/* Row 2: Navigation & Actions */}
                 <div className="flex items-center gap-3 justify-between">
                   {/* Month Navigation */}
-                  <div className="flex items-center gap-1 sm:gap-2 bg-background/60 backdrop-blur-sm rounded-xl border border-border/50 p-1">
+                  <div className="flex w-full justify-between items-center gap-1 sm:gap-2 bg-background/60 backdrop-blur-sm rounded-xl border border-border/50 p-1">
                     <motion.button
                       onClick={() => setCurrentDate(subMonths(currentDate, 1))}
                       className="p-1.5 sm:p-2 rounded-lg hover:bg-accent transition-colors"
@@ -351,12 +377,18 @@ export default function CalendarPage() {
                       <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
                     </motion.button>
 
-                    <div className="px-2 sm:px-4 text-center min-w-[120px] sm:min-w-[160px]">
-                      <div className="font-bold text-sm sm:text-lg">
+                    <div className="px-2 sm:px-4 text-center min-w-[140px] sm:min-w-[200px]">
+                      <div className="font-bold text-sm sm:text-lg mb-0.5">
                         Tháng {format(currentDate, "MM/yyyy")}
                       </div>
-                      <div className="text-[10px] sm:text-xs text-muted-foreground hidden md:block">
+                      <div className="text-[10px] sm:text-xs text-muted-foreground mb-1 hidden md:block">
                         {format(currentDate, "MMMM yyyy", { locale: vi })}
+                      </div>
+                      {/* Can Chi Badge - Beautiful Design */}
+                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 border border-purple-200 dark:border-purple-700">
+                        <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                          ✨ {getYearCanChiString(currentDate.getFullYear())}
+                        </span>
                       </div>
                     </div>
 
@@ -370,20 +402,6 @@ export default function CalendarPage() {
                       <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
                     </motion.button>
                   </div>
-
-                  {/* Add Event Button */}
-                  {session && (
-                    <motion.button
-                      onClick={() => handleAddEvent()}
-                      className="px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30 transition-all inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span className="hidden md:inline">Thêm sự kiện</span>
-                      <span className="md:hidden">Thêm</span>
-                    </motion.button>
-                  )}
                 </div>
               </div>
             </div>
@@ -447,6 +465,7 @@ export default function CalendarPage() {
             {calendarDays.map((date, index) => {
               const lunar = getLunarDate(date);
               const canChi = getDayCanChi(date);
+              const yearCanChi = getYearCanChi(date);
               const events = getEventsForDate(date);
 
               return (
@@ -459,6 +478,7 @@ export default function CalendarPage() {
                     date={date}
                     lunar={lunar}
                     canChi={canChi}
+                    yearCanChi={yearCanChi}
                     events={events}
                     isCurrentMonth={isSameMonth(date, currentDate)}
                     isToday={isToday(date)}
@@ -538,6 +558,7 @@ export default function CalendarPage() {
             date={selectedDate}
             lunar={getLunarDate(selectedDate)}
             canChi={getDayCanChi(selectedDate)}
+            yearCanChi={getYearCanChi(selectedDate)}
             events={getEventsForDate(selectedDate)}
             onClose={() => setSelectedDate(null)}
             isAuthenticated={!!session}

@@ -428,3 +428,94 @@ export function getZodiac(lunarYear: number): string {
 export function formatLunarDate(lunar: LunarDate): string {
   return `${lunar.dayName} ${lunar.monthName} năm ${lunar.yearCanChi}`;
 }
+
+/**
+ * Get number of days in a lunar month
+ * Returns 29 or 30 days
+ */
+export function getLunarMonthDays(
+  lunarMonth: number,
+  lunarYear: number,
+  timeZone: number = 7
+): number {
+  // Get the Julian day number for the 1st day of this month
+  let a11, b11;
+  if (lunarMonth < 11) {
+    a11 = getLunarMonth11(lunarYear - 1, timeZone);
+    b11 = getLunarMonth11(lunarYear, timeZone);
+  } else {
+    a11 = getLunarMonth11(lunarYear, timeZone);
+    b11 = getLunarMonth11(lunarYear + 1, timeZone);
+  }
+
+  const k = Math.floor(0.5 + (a11 - 2415021.076998695) / 29.530588853);
+  let off = lunarMonth - 11;
+  if (off < 0) {
+    off += 12;
+  }
+
+  // Check if there's a leap month
+  let leapMonth = -1;
+  if (b11 - a11 > 365) {
+    const leapOff = getLeapMonthOffset(a11, timeZone);
+    leapMonth = leapOff - 2;
+    if (leapMonth < 0) {
+      leapMonth += 12;
+    }
+  }
+
+  // Get the new moon of this month and next month
+  let nm = getNewMoonDay(k + off, timeZone);
+  let nmNext;
+
+  if (leapMonth >= 0 && off === leapMonth) {
+    // This is a leap month, next month is the regular month
+    nmNext = getNewMoonDay(k + off + 1, timeZone);
+  } else if (leapMonth >= 0 && off === leapMonth - 1) {
+    // Next month is the leap month
+    nmNext = getNewMoonDay(k + off + 2, timeZone);
+  } else {
+    // Normal case
+    nmNext = getNewMoonDay(k + off + 1, timeZone);
+  }
+
+  // Number of days in this lunar month
+  return Math.floor(nmNext - nm);
+}
+
+/**
+ * Check if a solar year is leap year
+ */
+export function isSolarLeapYear(year: number): boolean {
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
+
+/**
+ * Get number of days in a solar month
+ * Handles leap year for February
+ */
+export function getSolarMonthDays(month: number, year?: number): number {
+  if ([1, 3, 5, 7, 8, 10, 12].includes(month)) return 31;
+  if ([4, 6, 9, 11].includes(month)) return 30;
+  // February
+  if (year) {
+    return isSolarLeapYear(year) ? 29 : 28;
+  }
+  return 29; // Default when no year selected
+}
+
+/**
+ * Get Can Chi string for a year
+ * Returns formatted string like "Giáp Tý (Chuột)"
+ */
+export function getYearCanChiString(year: number): string {
+  const can = THIEN_CAN[(year + 6) % 10];
+  const chi = DIA_CHI[(year + 8) % 12];
+  const giap = CON_GIAP[(year + 8) % 12];
+
+  // format giap from Tý (Chuột) to Con Chuột
+  const get2 = giap.split(" ")[1].replace("(", "").replace(")", "").trim();
+  const formattedGiap = "Con " + get2;
+
+  return `${can} ${chi} (${formattedGiap})`;
+}
