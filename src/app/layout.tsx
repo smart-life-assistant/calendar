@@ -1,6 +1,7 @@
 import Footer from "@/components/custom/Footer";
 import Header from "@/components/custom/Header";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -39,10 +40,11 @@ export default function RootLayout({
         >
           <SessionProvider>
             <Header />
-            <main className="flex-1 flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+            <main className="flex-1 flex flex-col bg-gradient-to-br from-background via-background/95 to-accent/5">
               {children}
             </main>
             <Footer />
+            <Toaster />
           </SessionProvider>
         </ThemeProvider>
       </body>

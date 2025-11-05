@@ -54,7 +54,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return {
             id: user.id,
             name: user.full_name || user.username,
-            email: `${user.username}@calendar.app`,
+            username: user.username,
           };
         } catch (error) {
           console.error("Authorization error:", error);
@@ -83,7 +83,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       // Initial sign in
       if (user) {
         token.id = user.id;
-        token.username = user.email?.split("@")[0] || "admin";
+        token.username = user.username || "admin";
         token.role = "admin";
         token.iat = Math.floor(Date.now() / 1000); // Issued at
         token.exp = Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60; // Expires in 7 days
@@ -112,10 +112,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   // Events
   events: {
     async signIn({ user }) {
-      console.log(`User signed in: ${user.email}`);
+      console.log(`User signed in: ${user.name}`);
     },
-    async signOut({ token }) {
-      console.log(`User signed out: ${token?.username}`);
+    async signOut() {
+      console.log("User signed out");
     },
   },
 

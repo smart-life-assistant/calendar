@@ -239,9 +239,8 @@ export default function DashboardHeader({
                           <p className="font-semibold">
                             {session.user.username}
                           </p>
-                          <p className="text-xs text-blue-100">
-                            {session.user.email ||
-                              `${session.user.username}@calendar.app`}
+                          <p className="text-xs text-blue-100 capitalize">
+                            {session.user.role}
                           </p>
                         </div>
                       </div>

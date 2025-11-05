@@ -1,14 +1,14 @@
 "use client";
 
-import Footer from "@/components/custom/Footer";
 import { motion } from "framer-motion";
 import {
-  ArrowRight,
+  Calendar,
   CalendarDays,
   Globe,
   Shield,
   Sparkles,
   Star,
+  UserCircle2,
   Zap,
 } from "lucide-react";
 import Link from "next/link";
@@ -61,11 +61,14 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex items-center justify-center px-4 py-20 relative overflow-hidden">
-      {/* Animated Background Elements */}
+    <div className="flex items-center justify-center px-4 py-20 relative overflow-hidden min-h-[calc(100vh-8rem)]">
+      {/* Animated Background Elements - Dark Mode Compatible */}
       <div className="absolute inset-0 -z-10">
+        {/* Radial gradient overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100 via-transparent to-transparent dark:from-blue-950/50 opacity-60" />
+
         <motion.div
-          className="absolute top-20 left-10 w-64 h-64 bg-blue-400/20 rounded-full blur-3xl"
+          className="absolute top-20 left-10 w-64 h-64 bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3],
@@ -77,7 +80,7 @@ export default function HomePage() {
           }}
         />
         <motion.div
-          className="absolute bottom-20 right-10 w-80 h-80 bg-purple-400/20 rounded-full blur-3xl"
+          className="absolute bottom-20 right-10 w-80 h-80 bg-purple-500/20 dark:bg-purple-500/10 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.3, 1],
             opacity: [0.2, 0.4, 0.2],
@@ -89,7 +92,7 @@ export default function HomePage() {
           }}
         />
         <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-400/10 rounded-full blur-3xl"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full blur-3xl"
           animate={{
             rotate: 360,
             scale: [1, 1.1, 1],
@@ -108,26 +111,26 @@ export default function HomePage() {
         initial="hidden"
         animate="visible"
       >
-        {/* Badge */}
+        {/* Badge - Dark Mode Compatible */}
         <motion.div
-          className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 mb-8"
+          className="inline-flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 px-4 py-2 mb-8 backdrop-blur-sm"
           variants={itemVariants}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Sparkles className="h-4 w-4 text-blue-600" />
-          <span className="text-sm font-medium text-blue-700">
+          <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+          <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
             Lịch Việt Nam Hiện Đại
           </span>
         </motion.div>
 
-        {/* Title */}
+        {/* Title - Enhanced with Dark Mode */}
         <motion.h1
           className="text-6xl md:text-7xl font-bold tracking-tight mb-6"
           variants={itemVariants}
         >
           <motion.span
-            className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent"
+            className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent"
             animate={{
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
             }}
@@ -141,12 +144,12 @@ export default function HomePage() {
             Lịch Âm - Dương
           </motion.span>
           <br />
-          <span className="text-gray-900">Việt Nam</span>
+          <span className="text-gray-900 dark:text-gray-100">Việt Nam</span>
         </motion.h1>
 
-        {/* Description */}
+        {/* Description - Dark Mode Text */}
         <motion.p
-          className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto"
+          className="text-xl text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto"
           variants={itemVariants}
         >
           Tra cứu lịch Việt Nam với đầy đủ thông tin ngày lễ, tết, âm lịch. Giao
@@ -154,40 +157,29 @@ export default function HomePage() {
         </motion.p>
 
         {/* CTA Buttons */}
+        {/* CTA Buttons - Dark Mode Enhanced */}
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20"
+          className="flex flex-col sm:flex-row gap-4 justify-center pb-10"
           variants={itemVariants}
         >
-          {session ? (
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="/dashboard"
-                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all"
-              >
-                Vào Dashboard
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </motion.div>
-          ) : (
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="/login"
-                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all"
-              >
-                Bắt đầu ngay
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </motion.div>
-          )}
+          <Link
+            href="/calendar"
+            className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-blue-500/25 dark:shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30 dark:hover:shadow-blue-500/25 hover:scale-105 transition-all"
+          >
+            <Calendar className="h-5 w-5" />
+            <span>Xem Lịch Ngay</span>
+            <motion.span className="group-hover:translate-x-1 transition-transform">
+              →
+            </motion.span>
+          </Link>
 
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              href="#features"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-gray-300 bg-white px-8 py-4 text-lg font-semibold text-gray-700 hover:border-gray-400 hover:bg-gray-50 transition-all"
-            >
-              Tìm hiểu thêm
-            </Link>
-          </motion.div>
+          <Link
+            href={session ? "/dashboard" : "/login"}
+            className="inline-flex items-center gap-2 rounded-full border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-8 py-4 text-lg font-semibold text-gray-700 dark:text-gray-200 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+          >
+            <UserCircle2 className="h-5 w-5" />
+            <span>{session ? "Dashboard" : "Đăng Nhập"}</span>
+          </Link>
         </motion.div>
 
         {/* Features Grid */}
@@ -224,7 +216,7 @@ export default function HomePage() {
           ].map((feature, index) => (
             <motion.div
               key={index}
-              className="group rounded-2xl border border-gray-200 bg-white/50 backdrop-blur-sm p-8 hover:shadow-xl hover:border-blue-200 transition-all"
+              className="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm p-8 hover:shadow-xl hover:border-blue-200 dark:hover:border-blue-800 transition-all"
               variants={itemVariants}
               whileHover={{
                 y: -10,
@@ -232,16 +224,18 @@ export default function HomePage() {
               }}
             >
               <motion.div
-                className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-${feature.color}-100 text-${feature.color}-600 mb-4 group-hover:bg-${feature.color}-600 group-hover:text-white transition-colors`}
+                className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-${feature.color}-100 dark:bg-${feature.color}-950/30 text-${feature.color}-600 dark:text-${feature.color}-400 mb-4 group-hover:bg-${feature.color}-600 dark:group-hover:bg-${feature.color}-500 group-hover:text-white transition-colors`}
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.5 }}
               >
                 <feature.icon className="h-6 w-6" />
               </motion.div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">
+              <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100">
                 {feature.title}
               </h3>
-              <p className="text-gray-600">{feature.description}</p>
+              <p className="text-gray-600 dark:text-gray-400">
+                {feature.description}
+              </p>
             </motion.div>
           ))}
         </motion.div>
@@ -264,7 +258,7 @@ export default function HomePage() {
               whileHover={{ scale: 1.1 }}
             >
               <motion.div
-                className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white mb-3"
+                className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white mb-3 shadow-lg shadow-blue-500/25 dark:shadow-blue-500/20"
                 animate={{ rotate: 360 }}
                 transition={{
                   duration: 20,
@@ -274,16 +268,16 @@ export default function HomePage() {
               >
                 <stat.icon className="h-6 w-6" />
               </motion.div>
-              <div className="text-3xl font-bold text-gray-900 mb-1">
+              <div className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1">
                 {stat.number}
               </div>
-              <div className="text-sm text-gray-600">{stat.label}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">
+                {stat.label}
+              </div>
             </motion.div>
           ))}
         </motion.div>
       </motion.div>
-
-      <Footer />
     </div>
   );
 }

@@ -5,12 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   CalendarDays,
   ChevronLeft,
-  Clock,
   Home,
   Settings,
   Star,
-  TrendingUp,
-  Users,
   X,
 } from "lucide-react";
 import Link from "next/link";
@@ -29,24 +26,9 @@ const menuItems = [
     href: "/dashboard/calendar",
   },
   {
-    title: "Ngày lễ",
+    title: "Sự kiện & Ngày lễ",
     icon: Star,
     href: "/dashboard/holidays",
-  },
-  {
-    title: "Thống kê",
-    icon: TrendingUp,
-    href: "/dashboard/stats",
-  },
-  {
-    title: "Lịch sử",
-    icon: Clock,
-    href: "/dashboard/history",
-  },
-  {
-    title: "Người dùng",
-    icon: Users,
-    href: "/dashboard/users",
   },
   {
     title: "Cài đặt",

@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/command";
 import {
   CalendarDays,
-  Clock,
   FileText,
   Home,
   LogOut,
@@ -20,10 +19,9 @@ import {
   Settings,
   Star,
   Sun,
-  TrendingUp,
   Users,
 } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import * as React from "react";
@@ -36,6 +34,7 @@ interface CommandPaletteProps {
 export function CommandPalette({ open, setOpen }: CommandPaletteProps) {
   const router = useRouter();
   const { setTheme } = useTheme();
+  const { data: session } = useSession();
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -88,25 +87,7 @@ export function CommandPalette({ open, setOpen }: CommandPaletteProps) {
             }
           >
             <Star className="mr-2 h-4 w-4" />
-            <span>Ngày lễ</span>
-          </CommandItem>
-          <CommandItem
-            onSelect={() => runCommand(() => router.push("/dashboard/stats"))}
-          >
-            <TrendingUp className="mr-2 h-4 w-4" />
-            <span>Thống kê</span>
-          </CommandItem>
-          <CommandItem
-            onSelect={() => runCommand(() => router.push("/dashboard/history"))}
-          >
-            <Clock className="mr-2 h-4 w-4" />
-            <span>Lịch sử</span>
-          </CommandItem>
-          <CommandItem
-            onSelect={() => runCommand(() => router.push("/dashboard/users"))}
-          >
-            <Users className="mr-2 h-4 w-4" />
-            <span>Người dùng</span>
+            <span>Sự kiện & Ngày lễ</span>
           </CommandItem>
           <CommandItem
             onSelect={() =>
@@ -138,6 +119,20 @@ export function CommandPalette({ open, setOpen }: CommandPaletteProps) {
         <CommandSeparator />
 
         <CommandGroup heading="Quick Actions">
+          <CommandItem
+            onSelect={() =>
+              runCommand(() => router.push("/dashboard/holidays"))
+            }
+          >
+            <Star className="mr-2 h-4 w-4" />
+            <span>Quản lý sự kiện</span>
+          </CommandItem>
+          <CommandItem
+            onSelect={() => runCommand(() => router.push("/calendar"))}
+          >
+            <CalendarDays className="mr-2 h-4 w-4" />
+            <span>Xem lịch</span>
+          </CommandItem>
           <CommandItem onSelect={() => runCommand(() => window.print())}>
             <FileText className="mr-2 h-4 w-4" />
             <span>In trang</span>
@@ -146,14 +141,36 @@ export function CommandPalette({ open, setOpen }: CommandPaletteProps) {
 
         <CommandSeparator />
 
+        {/* Account: show login/register when not authenticated; sign out when authenticated */}
         <CommandGroup heading="Account">
-          <CommandItem
-            onSelect={() => runCommand(() => signOut({ redirectTo: "/login" }))}
-            className="text-red-600 dark:text-red-400"
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Đăng xuất</span>
-          </CommandItem>
+          {session ? (
+            <>
+              <CommandItem
+                onSelect={() =>
+                  runCommand(() => signOut({ redirectTo: "/login" }))
+                }
+                className="text-red-600 dark:text-red-400"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Đăng xuất</span>
+              </CommandItem>
+            </>
+          ) : (
+            <>
+              <CommandItem
+                onSelect={() => runCommand(() => router.push("/login"))}
+              >
+                <Users className="mr-2 h-4 w-4" />
+                <span>Đăng nhập</span>
+              </CommandItem>
+              <CommandItem
+                onSelect={() => runCommand(() => router.push("/register"))}
+              >
+                <Users className="mr-2 h-4 w-4" />
+                <span>Đăng ký</span>
+              </CommandItem>
+            </>
+          )}
         </CommandGroup>
       </CommandList>
     </CommandDialog>

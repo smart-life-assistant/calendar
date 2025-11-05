@@ -13,7 +13,7 @@ model special_dates {
   id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name         String
   description  String?
-  date_type    String    @db.VarChar(10)
+  date_type    String    @db.VarChar(10) // lunar, solar
   day          Int
   month        Int
   year         Int?
