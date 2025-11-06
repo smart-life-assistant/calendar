@@ -36,7 +36,6 @@ import {
   Plus,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface SpecialDate {
@@ -319,32 +318,16 @@ export default function CalendarPage() {
                 </div>
 
                 {session && (
-                  <>
-                    <motion.div
-                      className="w-full sm:w-auto"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Link
-                        href="/dashboard"
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
-                      >
-                        <CalendarIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                        Dashboard
-                      </Link>
-                    </motion.div>
-
-                    <motion.button
-                      onClick={() => handleAddEvent()}
-                      className="px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30 transition-all inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span className="hidden md:inline">Thêm sự kiện</span>
-                      <span className="md:hidden">Thêm</span>
-                    </motion.button>
-                  </>
+                  <motion.button
+                    onClick={() => handleAddEvent()}
+                    className="px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30 transition-all inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
+                    <span className="hidden md:inline">Thêm sự kiện</span>
+                    <span className="md:hidden">Thêm</span>
+                  </motion.button>
                 )}
               </div>
 

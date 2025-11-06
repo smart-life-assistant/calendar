@@ -1,7 +1,18 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, LogOut, Menu, Moon, Sun, User, X } from "lucide-react";
+import {
+  CalendarDays,
+  CalendarIcon,
+  ChevronRight,
+  LogOut,
+  LucideLayoutDashboard,
+  Menu,
+  Moon,
+  Sun,
+  User,
+  X,
+} from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -50,12 +61,29 @@ export default function Header() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
         >
-          <Link
-            href="/calendar"
-            className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-accent rounded-lg transition-colors"
+          <motion.div
+            whileHover={{ scale: 1.05, x: 5 }}
+            whileTap={{ scale: 0.95 }}
+            className="relative"
           >
-            Xem lịch
-          </Link>
+            <Link
+              href="/calendar"
+              className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 overflow-hidden rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white text-sm font-semibold shadow-lg shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 border border-white/20"
+            >
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+
+              {/* Content */}
+              <span className="relative z-10 flex items-center gap-1.5">
+                <CalendarIcon className="h-4 w-4 group-hover:rotate-12 transition-transform duration-300" />
+                <span className="font-bold">Xem lịch</span>
+                <ChevronRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+
+              {/* Hover background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </Link>
+          </motion.div>
 
           {/* Dark Mode Toggle */}
           <motion.button
@@ -112,13 +140,15 @@ export default function Header() {
                 </span>
               </motion.div>
               <motion.div
+                className="w-full sm:w-auto"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
                   href="/dashboard"
-                  className="rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
                 >
+                  <LucideLayoutDashboard className="h-3 w-3 sm:h-4 sm:w-4" />
                   Dashboard
                 </Link>
               </motion.div>

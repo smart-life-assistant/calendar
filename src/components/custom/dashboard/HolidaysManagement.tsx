@@ -14,10 +14,13 @@ import {
 import { motion } from "framer-motion";
 import {
   Calendar,
+  ChevronLeft,
+  ChevronRight,
   Edit,
   Loader2,
   Moon,
   Plus,
+  RotateCcw,
   Search,
   Star,
   Sun,
@@ -54,6 +57,10 @@ export default function HolidaysManagement() {
   >("all");
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingEvent, setEditingEvent] = useState<SpecialDate | null>(null);
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   // Fetch data
   const fetchSpecialDates = async () => {
@@ -106,7 +113,23 @@ export default function HolidaysManagement() {
     });
 
     setFilteredDates(filtered);
+    setCurrentPage(1); // Reset to first page when filters change
   }, [searchTerm, filterType, filterCategory, specialDates]);
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredDates.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedDates = filteredDates.slice(startIndex, endIndex);
+
+  // Reset filters
+  const handleResetFilters = () => {
+    setSearchTerm("");
+    setFilterType("all");
+    setFilterCategory("all");
+    setCurrentPage(1);
+    toast.success("Đã đặt lại bộ lọc!");
+  };
 
   // Handlers
   const handleDelete = async (id: string) => {
@@ -305,6 +328,14 @@ export default function HolidaysManagement() {
             <SelectItem value="event">📅 Sự kiện</SelectItem>
           </SelectContent>
         </Select>
+        <Button
+          variant="outline"
+          onClick={handleResetFilters}
+          className="gap-2 hover:bg-accent"
+        >
+          <RotateCcw className="h-4 w-4" />
+          Đặt lại
+        </Button>
       </motion.div>
 
       {/* Table */}
@@ -349,7 +380,7 @@ export default function HolidaysManagement() {
                 </tr>
               </thead>
               <tbody>
-                {filteredDates.map((item, index) => (
+                {paginatedDates.map((item, index) => (
                   <motion.tr
                     key={item.id}
                     initial={{ opacity: 0, y: 10 }}
@@ -457,6 +488,115 @@ export default function HolidaysManagement() {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {/* Pagination */}
+        {!loading && filteredDates.length > 0 && (
+          <div className="border-t border-border/50 px-4 py-4 flex items-center justify-between">
+            <div className="text-sm text-muted-foreground">
+              Hiển thị {startIndex + 1} -{" "}
+              {Math.min(endIndex, filteredDates.length)} trong tổng số{" "}
+              {filteredDates.length} sự kiện
+            </div>
+
+            {totalPages > 1 && (
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(1)}
+                  disabled={currentPage === 1}
+                  className="gap-1"
+                  title="Trang đầu"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  <ChevronLeft className="h-4 w-4 -ml-2" />
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(1, prev - 1))
+                  }
+                  disabled={currentPage === 1}
+                  className="gap-1"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  Trước
+                </Button>
+
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) => {
+                      // Show first page, last page, current page, and pages around current
+                      if (
+                        page === 1 ||
+                        page === totalPages ||
+                        (page >= currentPage - 1 && page <= currentPage + 1)
+                      ) {
+                        return (
+                          <Button
+                            key={page}
+                            variant={
+                              currentPage === page ? "default" : "outline"
+                            }
+                            size="sm"
+                            onClick={() => setCurrentPage(page)}
+                            className={`min-w-[36px] ${
+                              currentPage === page
+                                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
+                                : ""
+                            }`}
+                          >
+                            {page}
+                          </Button>
+                        );
+                      } else if (
+                        page === currentPage - 2 ||
+                        page === currentPage + 2
+                      ) {
+                        return (
+                          <span
+                            key={page}
+                            className="px-2 text-muted-foreground"
+                          >
+                            ...
+                          </span>
+                        );
+                      }
+                      return null;
+                    }
+                  )}
+                </div>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                  }
+                  disabled={currentPage === totalPages}
+                  className="gap-1"
+                >
+                  Sau
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(totalPages)}
+                  disabled={currentPage === totalPages}
+                  className="gap-1"
+                  title="Trang cuối"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="h-4 w-4 -ml-2" />
+                </Button>
+              </div>
+            )}
           </div>
         )}
       </motion.div>
