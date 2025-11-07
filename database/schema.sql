@@ -56,6 +56,7 @@ CREATE TABLE public.special_dates (
   year INT, -- NULL nếu lặp lại hàng năm
   is_holiday BOOLEAN DEFAULT FALSE,
   is_recurring BOOLEAN DEFAULT TRUE,
+  is_public BOOLEAN DEFAULT TRUE,
   deleted BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()

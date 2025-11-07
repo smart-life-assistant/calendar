@@ -40,6 +40,7 @@ interface SpecialDate {
   year?: number | null;
   is_holiday: boolean;
   is_recurring: boolean;
+  is_public: boolean;
 }
 
 interface AddEventModalProps {
@@ -67,6 +68,7 @@ export default function AddEventModal({
     year: null,
     is_holiday: false,
     is_recurring: true,
+    is_public: true,
   });
 
   // Reset form when modal opens/closes or editing event changes
@@ -86,6 +88,7 @@ export default function AddEventModal({
         year: selectedDate.getFullYear(),
         is_holiday: false,
         is_recurring: false,
+        is_public: true,
       });
     } else {
       setFormData({
@@ -97,9 +100,10 @@ export default function AddEventModal({
         year: null,
         is_holiday: false,
         is_recurring: true,
+        is_public: true,
       });
     }
-  }, [editingEvent, selectedDate, isOpen]);
+  }, [isOpen, selectedDate, editingEvent]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -414,6 +418,27 @@ export default function AddEventModal({
                           is_recurring: checked,
                           year: checked ? null : formData.year,
                         })
+                      }
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label
+                        htmlFor="is_public"
+                        className="text-sm font-semibold"
+                      >
+                        🌍 Công khai sự kiện
+                      </Label>
+                      <p className="text-xs text-muted-foreground">
+                        Cho phép người khác xem sự kiện này
+                      </p>
+                    </div>
+                    <Switch
+                      id="is_public"
+                      checked={formData.is_public}
+                      onCheckedChange={(checked) =>
+                        setFormData({ ...formData, is_public: checked })
                       }
                     />
                   </div>

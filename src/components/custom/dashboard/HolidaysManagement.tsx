@@ -39,6 +39,7 @@ interface SpecialDate {
   year?: number;
   is_holiday: boolean;
   is_recurring: boolean;
+  is_public: boolean;
   created_at?: string;
   updated_at?: string;
 }
@@ -54,6 +55,9 @@ export default function HolidaysManagement() {
   );
   const [filterCategory, setFilterCategory] = useState<
     "all" | "holiday" | "event"
+  >("all");
+  const [filterVisibility, setFilterVisibility] = useState<
+    "all" | "public" | "private"
   >("all");
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingEvent, setEditingEvent] = useState<SpecialDate | null>(null);
@@ -106,6 +110,13 @@ export default function HolidaysManagement() {
       filtered = filtered.filter((item) => !item.is_holiday);
     }
 
+    // Visibility filter (public/private)
+    if (filterVisibility === "public") {
+      filtered = filtered.filter((item) => item.is_public);
+    } else if (filterVisibility === "private") {
+      filtered = filtered.filter((item) => !item.is_public);
+    }
+
     // Sort by month and day
     filtered.sort((a, b) => {
       if (a.month !== b.month) return a.month - b.month;
@@ -114,7 +125,7 @@ export default function HolidaysManagement() {
 
     setFilteredDates(filtered);
     setCurrentPage(1); // Reset to first page when filters change
-  }, [searchTerm, filterType, filterCategory, specialDates]);
+  }, [searchTerm, filterType, filterCategory, filterVisibility, specialDates]);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredDates.length / itemsPerPage);
@@ -127,6 +138,7 @@ export default function HolidaysManagement() {
     setSearchTerm("");
     setFilterType("all");
     setFilterCategory("all");
+    setFilterVisibility("all");
     setCurrentPage(1);
     toast.success("Đã đặt lại bộ lọc!");
   };
@@ -328,6 +340,21 @@ export default function HolidaysManagement() {
             <SelectItem value="event">📅 Sự kiện</SelectItem>
           </SelectContent>
         </Select>
+        <Select
+          value={filterVisibility}
+          onValueChange={(value) =>
+            setFilterVisibility(value as "all" | "public" | "private")
+          }
+        >
+          <SelectTrigger className="w-full sm:w-[180px]">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Tất cả hiển thị</SelectItem>
+            <SelectItem value="public">🌍 Công khai</SelectItem>
+            <SelectItem value="private">🔒 Riêng tư</SelectItem>
+          </SelectContent>
+        </Select>
         <Button
           variant="outline"
           onClick={handleResetFilters}
@@ -371,6 +398,9 @@ export default function HolidaysManagement() {
                     Loại lịch
                   </th>
                   <th className="text-left p-4 font-semibold text-sm">Loại</th>
+                  <th className="text-left p-4 font-semibold text-sm">
+                    Hiển thị
+                  </th>
                   <th className="text-left p-4 font-semibold text-sm">
                     Lặp lại
                   </th>
@@ -446,6 +476,18 @@ export default function HolidaysManagement() {
                             Sự kiện
                           </>
                         )}
+                      </Badge>
+                    </td>
+                    <td className="p-4">
+                      <Badge
+                        variant={item.is_public ? "default" : "secondary"}
+                        className={
+                          item.is_public
+                            ? "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20"
+                            : "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20"
+                        }
+                      >
+                        {item.is_public ? <>🌍 Công khai</> : <>🔒 Riêng tư</>}
                       </Badge>
                     </td>
                     <td className="p-4">

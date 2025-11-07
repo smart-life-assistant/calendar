@@ -4,9 +4,14 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
+    const session = await auth();
+    const isAuthenticated = !!session?.user?.username;
+
     const specialDates = await prisma.special_dates.findMany({
       where: {
         deleted: false,
+        // If not authenticated, only show public events
+        ...(isAuthenticated ? {} : { is_public: true }),
       },
       orderBy: [{ month: "asc" }, { day: "asc" }],
     });
@@ -41,6 +46,7 @@ export async function POST(request: Request) {
         year: body.year,
         is_holiday: body.is_holiday || false,
         is_recurring: body.is_recurring || true,
+        is_public: body.is_public !== undefined ? body.is_public : true,
       },
     });
 
@@ -80,6 +86,7 @@ export async function PUT(request: Request) {
         year: data.year,
         is_holiday: data.is_holiday,
         is_recurring: data.is_recurring,
+        is_public: data.is_public !== undefined ? data.is_public : true,
         updated_at: new Date(),
       },
     });
