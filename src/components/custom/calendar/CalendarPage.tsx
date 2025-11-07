@@ -48,6 +48,7 @@ interface SpecialDate {
   year?: number;
   is_holiday: boolean;
   is_recurring: boolean;
+  is_public: boolean;
 }
 
 export default function CalendarPage() {
