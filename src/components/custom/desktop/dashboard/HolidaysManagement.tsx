@@ -1,6 +1,6 @@
 "use client";
 
-import AddEventModal from "@/components/custom/calendar/AddEventModal";
+import AddEventModal from "@/components/custom/desktop/calendar/AddEventModal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

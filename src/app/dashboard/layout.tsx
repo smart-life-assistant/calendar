@@ -1,5 +1,5 @@
-import { CommandPaletteProvider } from "@/components/custom/dashboard/CommandPaletteProvider";
-import DashboardLayoutClient from "@/components/custom/dashboard/DashboardLayoutClient";
+import { CommandPaletteProvider } from "@/components/custom/desktop/dashboard/CommandPaletteProvider";
+import DashboardLayoutClient from "@/components/custom/desktop/dashboard/DashboardLayoutClient";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 

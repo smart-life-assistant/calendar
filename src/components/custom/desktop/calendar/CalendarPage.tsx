@@ -1,8 +1,8 @@
 "use client";
 
-import AddEventModal from "@/components/custom/calendar/AddEventModal";
-import CalendarDay from "@/components/custom/calendar/CalendarDay";
-import CalendarDetailModal from "@/components/custom/calendar/CalendarDetailModal";
+import AddEventModal from "@/components/custom/desktop/calendar/AddEventModal";
+import CalendarDay from "@/components/custom/desktop/calendar/CalendarDay";
+import CalendarDetailModal from "@/components/custom/desktop/calendar/CalendarDetailModal";
 import {
   Select,
   SelectContent,
