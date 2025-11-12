@@ -1,5 +1,5 @@
-import SettingsPage from "@/components/custom/desktop/dashboard/SettingsPage";
+import SettingsPageWrapper from "@/components/custom/dashboard/SettingsPageWrapper";
 
 export default function Settings() {
-  return <SettingsPage />;
+  return <SettingsPageWrapper />;
 }

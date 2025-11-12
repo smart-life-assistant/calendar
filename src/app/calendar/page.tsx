@@ -1,5 +1,5 @@
-import CalendarPage from "@/components/custom/desktop/calendar/CalendarPage";
+import CalendarPageWrapper from "@/components/custom/calendar/CalendarPageWrapper";
 
 export default function MainCalendarPage() {
-  return <CalendarPage />;
+  return <CalendarPageWrapper />;
 }

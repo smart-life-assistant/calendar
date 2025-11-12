@@ -1,5 +1,5 @@
-import HolidaysManagement from "@/components/custom/desktop/dashboard/HolidaysManagement";
+import HolidaysManagementWrapper from "@/components/custom/dashboard/HolidaysManagementWrapper";
 
 export default function HolidaysPage() {
-  return <HolidaysManagement />;
+  return <HolidaysManagementWrapper />;
 }
