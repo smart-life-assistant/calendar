@@ -300,22 +300,23 @@ function HolidaysManagementMobile() {
       </div>
 
       <div className="flex gap-2">
-        <Select
-          value={filterVisibility}
-          onValueChange={(value) =>
-            setFilterVisibility(value as "all" | "public" | "private")
-          }
-          className="flex-1"
-        >
-          <SelectTrigger className="h-9 text-xs">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Hiển thị</SelectItem>
-            <SelectItem value="public">🌍 Công khai</SelectItem>
-            <SelectItem value="private">🔒 Riêng tư</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex-1">
+          <Select
+            value={filterVisibility}
+            onValueChange={(value) =>
+              setFilterVisibility(value as "all" | "public" | "private")
+            }
+          >
+            <SelectTrigger className="h-9 text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Hiển thị</SelectItem>
+              <SelectItem value="public">🌍 Công khai</SelectItem>
+              <SelectItem value="private">🔒 Riêng tư</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <Button
           onClick={handleResetFilters}
           variant="outline"
