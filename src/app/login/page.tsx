@@ -150,7 +150,7 @@ function LoginForm() {
             </motion.div>
 
             <motion.h1
-              className="text-5xl font-bold text-gray-900 leading-tight"
+              className="text-5xl font-bold text-gray-900 dark:text-cyan-100 leading-tight"
               variants={itemVariants}
             >
               Quản lý lịch
