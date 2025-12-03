@@ -4,11 +4,17 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     // Query nhẹ nhất: SELECT 1
-    const result = await prisma.$queryRaw`SELECT NOW()`;
+    const result = await prisma.special_dates.findFirst({
+      select: {
+        name: true,
+      },
+    });
+
+    console.log("Database ping successful.");
 
     return NextResponse.json({
       ok: true,
-      time: result,
+      data: result,
     });
   } catch (error) {
     const e = error as Error;
