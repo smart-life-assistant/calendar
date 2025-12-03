@@ -10,7 +10,7 @@ export async function GET() {
       },
     });
 
-    console.log("Database ping successful.");
+    console.log("Database ping successful: ", result);
 
     return NextResponse.json({
       ok: true,
