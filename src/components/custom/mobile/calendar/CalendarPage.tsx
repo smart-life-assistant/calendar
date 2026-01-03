@@ -36,6 +36,7 @@ import {
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 interface SpecialDate {
   id: string;
@@ -83,10 +84,15 @@ export default function CalendarPageMobile() {
   const fetchSpecialDates = useCallback(async () => {
     try {
       const response = await fetch("/api/special-dates");
+      if (!response.ok) {
+        throw new Error("Failed to fetch special dates");
+      }
       const data = await response.json();
       setSpecialDates(data);
     } catch (error) {
       console.error("Error fetching special dates:", error);
+      toast.error("Không thể tải dữ liệu sự kiện. Vui lòng thử lại sau!");
+      setSpecialDates([]);
     }
   }, []);
 
