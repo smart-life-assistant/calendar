@@ -20,6 +20,36 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Updating Next.js Project
+
+To update your Next.js project to the latest version:
+
+```bash
+# Update Next.js and React to the latest versions
+pnpm update next eslint-config-next
+# or
+pnpm dlx @next/codemod@canary upgrade latest
+```
+
+**Important steps after updating:**
+
+1. Check the [Next.js upgrade guide](https://nextjs.org/docs/app/building-your-application/upgrading) for breaking changes
+2. Update your dependencies that depend on Next.js/React versions
+3. Review and update deprecated APIs in your codebase
+4. Test thoroughly, especially:
+   - Routing and navigation
+   - API routes
+   - Image optimization
+   - Font loading
+5. Check TypeScript types if using TypeScript
+
+**Common issues to watch for:**
+
+- Changes in App Router behavior (if using App Router)
+- Middleware API changes
+- Image component prop changes
+- Configuration file updates (next.config.js/ts)
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
