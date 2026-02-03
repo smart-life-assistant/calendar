@@ -42,7 +42,7 @@ interface CalendarDayProps {
   onClick: () => void;
 }
 
-export default function CalendarDay({
+function CalendarDay({
   date,
   lunar,
   canChi,
