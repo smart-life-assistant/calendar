@@ -65,32 +65,44 @@ export default function HomePage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "Lịch Việt Nam",
+    name: "Lịch Vạn Niên Việt Nam",
+    alternateName: ["Lịch Âm Dương Việt Nam", "Lịch Việt", "Xem Lịch Vạn Niên"],
     applicationCategory: "LifestyleApplication",
     operatingSystem: "Web Browser",
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "VND",
+      availability: "https://schema.org/InStock",
     },
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.8",
       ratingCount: "10000",
+      bestRating: "5",
+      worstRating: "1",
     },
     description:
-      "Lịch Việt Nam online - Tra cứu lịch âm dương, lịch vạn niên, ngày lễ tết Việt Nam, ngày tốt xấu, can chi. Ứng dụng lịch Việt hiện đại, miễn phí.",
+      "Xem lịch vạn niên Việt Nam 2026 online miễn phí. Tra cứu lịch âm dương chính xác, xem ngày tốt xấu, ngày lễ tết Việt Nam, can chi, giờ hoàng đạo. Lịch vạn niên online cập nhật liên tục, dễ sử dụng trên mọi thiết bị.",
     image: "/og-image.png",
     url: typeof window !== "undefined" ? window.location.origin : "",
     inLanguage: "vi-VN",
     featureList: [
-      "Tra cứu lịch âm dương",
-      "Xem lịch vạn niên",
-      "Ngày lễ tết Việt Nam",
+      "Xem lịch vạn niên Việt Nam online",
+      "Tra cứu lịch âm dương chính xác",
+      "Xem ngày tốt xấu theo âm lịch",
+      "Ngày lễ tết Việt Nam đầy đủ",
       "Can chi ngày tháng năm",
-      "Giao diện hiện đại",
+      "Giờ hoàng đạo hàng ngày",
+      "Chuyển đổi âm dương lịch nhanh",
+      "Lịch vạn sự tích hợp",
+      "Giao diện thân thiện, hiện đại",
       "Responsive mọi thiết bị",
+      "Miễn phí 100%",
+      "Cập nhật liên tục",
     ],
+    keywords:
+      "lịch vạn niên, lịch vạn niên việt nam, xem lịch âm dương, tra cứu lịch vạn niên, ngày tốt xấu, can chi, giờ hoàng đạo, lịch việt nam online",
   };
 
   return (
@@ -182,10 +194,12 @@ export default function HomePage() {
               }}
               style={{ backgroundSize: "200% 200%" }}
             >
-              Lịch Âm - Dương
+              Lịch Vạn Niên
             </motion.span>
             <br />
-            <span className="text-gray-900 dark:text-gray-100">Việt Nam</span>
+            <span className="text-gray-900 dark:text-gray-100">
+              Việt Nam 2026
+            </span>
           </motion.h1>
 
           {/* Description - Dark Mode Text */}
@@ -193,8 +207,9 @@ export default function HomePage() {
             className="text-xl text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto"
             variants={itemVariants}
           >
-            Tra cứu lịch Việt Nam với đầy đủ thông tin ngày lễ, tết, âm lịch.
-            Giao diện hiện đại, dễ sử dụng.
+            Xem lịch vạn niên Việt Nam online miễn phí. Tra cứu lịch âm dương
+            chính xác, xem ngày tốt xấu, giờ hoàng đạo, can chi, ngày lễ tết.
+            Lịch vạn niên cập nhật liên tục, dễ sử dụng trên mọi thiết bị.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -271,9 +286,9 @@ export default function HomePage() {
                 >
                   <feature.icon className="h-6 w-6" />
                 </motion.div>
-                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100">
+                <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100">
                   {feature.title}
-                </h3>
+                </h2>
                 <p className="text-gray-600 dark:text-gray-400">
                   {feature.description}
                 </p>
