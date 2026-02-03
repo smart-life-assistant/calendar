@@ -7,9 +7,6 @@ const nextConfig: NextConfig = {
   // Enable React strict mode for better performance warnings
   reactStrictMode: true,
 
-  // Optimize production builds
-  swcMinify: true,
-
   // Optimize images
   images: {
     formats: ["image/avif", "image/webp"],
@@ -17,9 +14,6 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
   },
-
-  // Optimize font loading
-  optimizeFonts: true,
 
   // Compress responses
   compress: true,
