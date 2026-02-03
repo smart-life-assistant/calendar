@@ -15,8 +15,16 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Script from "next/script";
 
+interface Session {
+  user?: {
+    name?: string;
+    email?: string;
+    image?: string;
+  };
+}
+
 export default function HomePage() {
-  const [session, setSession] = useState<any>(null);
+  const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
     // Get session on client side
@@ -45,18 +53,6 @@ export default function HomePage() {
         type: "spring" as const,
         stiffness: 100,
         damping: 12,
-      },
-    },
-  };
-
-  const floatingVariants = {
-    initial: { y: 0 },
-    animate: {
-      y: [-10, 10, -10],
-      transition: {
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut",
       },
     },
   };
@@ -118,7 +114,7 @@ export default function HomePage() {
         {/* Animated Background Elements - Dark Mode Compatible */}
         <div className="absolute inset-0 -z-10">
           {/* Radial gradient overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100 via-transparent to-transparent dark:from-blue-950/50 opacity-60" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-blue-100 via-transparent to-transparent dark:from-blue-950/50 opacity-60" />
 
           <motion.div
             className="absolute top-20 left-10 w-64 h-64 bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-3xl"
@@ -183,7 +179,7 @@ export default function HomePage() {
             variants={itemVariants}
           >
             <motion.span
-              className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent"
+              className="bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent"
               animate={{
                 backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
               }}
@@ -220,7 +216,7 @@ export default function HomePage() {
           >
             <Link
               href="/calendar"
-              className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-blue-500/25 dark:shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30 dark:hover:shadow-blue-500/25 hover:scale-105 transition-all"
+              className="group inline-flex items-center gap-2 rounded-full bg-linear-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-blue-500/25 dark:shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30 dark:hover:shadow-blue-500/25 hover:scale-105 transition-all"
             >
               <Calendar className="h-5 w-5" />
               <span>Xem Lịch Ngay</span>
@@ -314,7 +310,7 @@ export default function HomePage() {
                 whileHover={{ scale: 1.1 }}
               >
                 <motion.div
-                  className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white mb-3 shadow-lg shadow-blue-500/25 dark:shadow-blue-500/20"
+                  className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-linear-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white mb-3 shadow-lg shadow-blue-500/25 dark:shadow-blue-500/20"
                   animate={{ rotate: 360 }}
                   transition={{
                     duration: 20,

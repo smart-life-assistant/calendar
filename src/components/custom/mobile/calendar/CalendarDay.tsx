@@ -91,7 +91,7 @@ function CalendarDayMobile({
 
       {/* Lunar Date - Optimized for mobile */}
       <div className="flex items-center gap-0.5 mb-1 min-w-0">
-        <Moon className="h-2 w-2 text-amber-500 flex-shrink-0" />
+        <Moon className="h-2 w-2 text-amber-500 shrink-0" />
         <div className="text-[9px] font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap">
           {lunar.day}/{lunar.month}
         </div>

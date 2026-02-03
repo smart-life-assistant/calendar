@@ -174,7 +174,7 @@ export default function RootLayout({
         >
           <SessionProvider>
             <Header />
-            <main className="flex-1 flex flex-col bg-gradient-to-br from-background via-background/95 to-accent/5">
+            <main className="flex-1 flex flex-col bg-linear-to-br from-background via-background/95 to-accent/5">
               {children}
             </main>
             <Footer />

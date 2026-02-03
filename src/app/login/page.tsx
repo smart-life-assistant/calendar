@@ -16,7 +16,6 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
-import Head from "next/head";
 
 function LoginForm() {
   const router = useRouter();
@@ -85,7 +84,7 @@ function LoginForm() {
     <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center p-4 relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50" />
+        <div className="absolute inset-0 bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50" />
         <motion.div
           className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"
           animate={{
@@ -156,7 +155,7 @@ function LoginForm() {
             >
               Quản lý lịch
               <br />
-              <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
                 thông minh hơn
               </span>
             </motion.h1>
@@ -233,11 +232,11 @@ function LoginForm() {
             >
               <div className="relative">
                 <motion.div
-                  className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 blur-lg opacity-50"
+                  className="absolute inset-0 rounded-full bg-linear-to-r from-blue-600 to-indigo-600 blur-lg opacity-50"
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
-                <div className="relative rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 p-4">
+                <div className="relative rounded-full bg-linear-to-r from-blue-600 to-indigo-600 p-4">
                   <CalendarDays className="h-8 w-8 text-white" />
                 </div>
               </div>
@@ -375,7 +374,7 @@ function LoginForm() {
               <motion.button
                 type="submit"
                 disabled={loading}
-                className="relative w-full rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-4 py-4 text-white font-semibold shadow-lg shadow-blue-500/30 focus:outline-none focus:ring-4 focus:ring-blue-500/20 disabled:cursor-not-allowed disabled:opacity-50 overflow-hidden group"
+                className="relative w-full rounded-xl bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 px-4 py-4 text-white font-semibold shadow-lg shadow-blue-500/30 focus:outline-none focus:ring-4 focus:ring-blue-500/20 disabled:cursor-not-allowed disabled:opacity-50 overflow-hidden group"
                 whileHover={{
                   scale: 1.02,
                   boxShadow: "0 20px 25px -5px rgba(59, 130, 246, 0.4)",
@@ -383,7 +382,7 @@ function LoginForm() {
                 whileTap={{ scale: 0.98 }}
                 variants={itemVariants}
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <span className="absolute inset-0 bg-linear-to-r from-blue-700 via-indigo-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <span className="relative flex items-center justify-center gap-2">
                   {loading ? (
                     <>
@@ -416,7 +415,7 @@ function LoginForm() {
 
             {/* Demo Info */}
             <motion.div
-              className="mt-6 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 p-4"
+              className="mt-6 rounded-xl bg-linear-to-r from-blue-50 to-indigo-50 border border-blue-100 p-4"
               variants={itemVariants}
               whileHover={{ scale: 1.02 }}
             >

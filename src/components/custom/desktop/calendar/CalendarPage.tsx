@@ -309,7 +309,7 @@ export default function CalendarPage() {
     <article className="min-h-screen py-4 sm:py-6 md:py-8 px-2 sm:px-4 relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100 via-transparent to-transparent dark:from-blue-950 opacity-40" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-blue-100 via-transparent to-transparent dark:from-blue-950 opacity-40" />
         <motion.div
           className="absolute top-20 left-10 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl"
           animate={{
@@ -340,8 +340,8 @@ export default function CalendarPage() {
         >
           <div className="relative rounded-2xl sm:rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 p-4 sm:p-6 md:p-8 shadow-2xl overflow-hidden">
             {/* Decorative Elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-purple-500/10 to-pink-500/10 rounded-full blur-3xl" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-linear-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-linear-to-tr from-purple-500/10 to-pink-500/10 rounded-full blur-3xl" />
 
             <div className="relative z-10">
               {/* Title Section - Responsive */}
@@ -349,7 +349,7 @@ export default function CalendarPage() {
                 <div className="space-y-2 flex-1">
                   <div className="flex items-center gap-2 sm:gap-3">
                     <motion.div
-                      className="relative flex-shrink-0"
+                      className="relative shrink-0"
                       animate={{ rotate: 360 }}
                       transition={{
                         duration: 20,
@@ -357,13 +357,13 @@ export default function CalendarPage() {
                         ease: "linear",
                       }}
                     >
-                      <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 blur-lg sm:blur-xl opacity-50" />
-                      <div className="relative rounded-xl sm:rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 p-2 sm:p-3">
+                      <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 blur-lg sm:blur-xl opacity-50" />
+                      <div className="relative rounded-xl sm:rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 p-2 sm:p-3">
                         <CalendarIcon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                       </div>
                     </motion.div>
                     <div className="min-w-0 flex-1">
-                      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent truncate">
+                      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent truncate">
                         Lịch Việt Nam
                       </h1>
                       <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 sm:mt-1">
@@ -376,7 +376,7 @@ export default function CalendarPage() {
                 {session && (
                   <motion.button
                     onClick={() => handleAddEvent()}
-                    className="px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30 transition-all inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap"
+                    className="px-3 sm:px-5 py-2 sm:py-2.5 bg-linear-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30 transition-all inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label="Thêm sự kiện mới"
@@ -455,7 +455,7 @@ export default function CalendarPage() {
                   {/* Today Button */}
                   <motion.button
                     onClick={handleToday}
-                    className="w-full shrink-0 sm:w-auto px-4 sm:px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
+                    className="w-full shrink-0 sm:w-auto px-4 sm:px-5 py-2.5 bg-linear-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label="Quay về ngày hôm nay"
@@ -493,8 +493,8 @@ export default function CalendarPage() {
                       </div>
 
                       {/* Month Can Chi Badge */}
-                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 border border-indigo-200 dark:border-indigo-700">
-                        <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-linear-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 border border-indigo-200 dark:border-indigo-700">
+                        <span className="text-[10px] sm:text-xs font-bold bg-linear-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
                           ✨ Tháng {currentMonthLunar.monthCanChi}
                         </span>
                       </div>
@@ -525,10 +525,10 @@ export default function CalendarPage() {
           aria-label="Calendar grid"
         >
           {/* Decorative gradient overlay */}
-          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-blue-500/5 to-transparent pointer-events-none" />
+          <div className="absolute top-0 left-0 right-0 h-32 bg-linear-to-b from-blue-500/5 to-transparent pointer-events-none" />
 
           {/* Weekday Headers - Modern Gradient Design - Responsive */}
-          <div className="grid grid-cols-7 border-b border-border/50 bg-gradient-to-r from-blue-50/50 via-indigo-50/50 to-purple-50/50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20">
+          <div className="grid grid-cols-7 border-b border-border/50 bg-linear-to-r from-blue-50/50 via-indigo-50/50 to-purple-50/50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20">
             {[
               { short: "T2", full: "Thứ Hai", color: "text-foreground" },
               { short: "T3", full: "Thứ Ba", color: "text-foreground" },
@@ -554,7 +554,7 @@ export default function CalendarPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-500/0 group-hover:to-blue-500/5 transition-colors" />
+                <div className="absolute inset-0 bg-linear-to-b from-transparent to-blue-500/0 group-hover:to-blue-500/5 transition-colors" />
                 <span
                   className={`relative font-bold text-xs sm:text-sm md:text-base ${day.color}`}
                 >
@@ -644,7 +644,7 @@ export default function CalendarPage() {
           ].map((item, index) => (
             <motion.div
               key={index}
-              className={`relative rounded-xl sm:rounded-2xl bg-gradient-to-br ${item.gradient} backdrop-blur-sm border ${item.border} p-3 sm:p-4 group hover:scale-105 transition-transform`}
+              className={`relative rounded-xl sm:rounded-2xl bg-linear-to-br ${item.gradient} backdrop-blur-sm border ${item.border} p-3 sm:p-4 group hover:scale-105 transition-transform`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 + index * 0.1 }}

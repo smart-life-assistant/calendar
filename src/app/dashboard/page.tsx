@@ -200,7 +200,7 @@ export default function DashboardPage() {
                 className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                 whileHover={{ x: 5 }}
               >
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white font-semibold text-sm">
+                <div className="shrink-0 w-10 h-10 rounded-full bg-linear-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white font-semibold text-sm">
                   {activity.user.charAt(0)}
                 </div>
                 <div className="flex-1 min-w-0">

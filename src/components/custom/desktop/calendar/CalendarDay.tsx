@@ -110,7 +110,7 @@ function CalendarDay({
             // Holiday background
             hasHoliday &&
               isCurrentMonth &&
-              "bg-gradient-to-br from-red-50 to-pink-50 dark:from-red-950/20 dark:to-pink-950/20",
+              "bg-linear-to-br from-red-50 to-pink-50 dark:from-red-950/20 dark:to-pink-950/20",
           )}
           onClick={onClick}
           whileHover={{ y: -2 }}
@@ -288,7 +288,7 @@ function CalendarDay({
               {/* Lunar info */}
               <div className="space-y-2">
                 {/* Lunar Date Card */}
-                <div className="p-3 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border border-amber-200 dark:border-amber-800 shadow-sm">
+                <div className="p-3 rounded-xl bg-linear-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border border-amber-200 dark:border-amber-800 shadow-sm">
                   <div className="flex items-center gap-2 mb-1.5">
                     <Moon className="h-4 w-4 text-amber-600 dark:text-amber-400" />
                     <span className="text-xs font-semibold text-amber-900 dark:text-amber-100">
@@ -310,7 +310,7 @@ function CalendarDay({
 
                 {/* Can Chi Cards - 3 items in row */}
                 <div className="grid grid-cols-3 gap-2">
-                  <div className="p-2.5 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/30 dark:to-pink-950/30 border border-purple-200 dark:border-purple-800 shadow-sm">
+                  <div className="p-2.5 rounded-lg bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-950/30 dark:to-pink-950/30 border border-purple-200 dark:border-purple-800 shadow-sm">
                     <div className="flex items-center gap-1 mb-1">
                       <Sparkles className="h-3 w-3 text-purple-600 dark:text-purple-400" />
                       <span className="text-[9px] font-semibold text-purple-900 dark:text-purple-100">
@@ -322,7 +322,7 @@ function CalendarDay({
                     </p>
                   </div>
 
-                  <div className="p-2.5 rounded-lg bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-cyan-950/30 dark:to-teal-950/30 border border-cyan-200 dark:border-cyan-800 shadow-sm">
+                  <div className="p-2.5 rounded-lg bg-linear-to-br from-cyan-50 to-teal-50 dark:from-cyan-950/30 dark:to-teal-950/30 border border-cyan-200 dark:border-cyan-800 shadow-sm">
                     <div className="flex items-center gap-1 mb-1">
                       <Moon className="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
                       <span className="text-[9px] font-semibold text-cyan-900 dark:text-cyan-100">
@@ -334,7 +334,7 @@ function CalendarDay({
                     </p>
                   </div>
 
-                  <div className="p-2.5 rounded-lg bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 border border-indigo-200 dark:border-indigo-800 shadow-sm">
+                  <div className="p-2.5 rounded-lg bg-linear-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 border border-indigo-200 dark:border-indigo-800 shadow-sm">
                     <div className="flex items-center gap-1 mb-1">
                       <Star className="h-3 w-3 text-indigo-600 dark:text-indigo-400 fill-indigo-600 dark:fill-indigo-400" />
                       <span className="text-[9px] font-semibold text-indigo-900 dark:text-indigo-100">

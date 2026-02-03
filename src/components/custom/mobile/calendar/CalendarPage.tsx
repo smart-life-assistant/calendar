@@ -65,7 +65,7 @@ export default function CalendarPageMobile() {
   const endYear = currentYear + 10;
   const years = Array.from(
     { length: endYear - startYear + 1 },
-    (_, i) => startYear + i
+    (_, i) => startYear + i,
   );
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
@@ -141,7 +141,7 @@ export default function CalendarPageMobile() {
     const lunar = convertSolar2Lunar(
       date.getDate(),
       date.getMonth() + 1,
-      date.getFullYear()
+      date.getFullYear(),
     );
     return {
       day: lunar.day,
@@ -155,7 +155,7 @@ export default function CalendarPageMobile() {
     const canChi = getCanChi(
       date.getDate(),
       date.getMonth() + 1,
-      date.getFullYear()
+      date.getFullYear(),
     );
     return canChi.day;
   }, []);
@@ -165,14 +165,14 @@ export default function CalendarPageMobile() {
       const lunar = getLunarDate(date);
       return getYearCanChiString(lunar.year);
     },
-    [getLunarDate]
+    [getLunarDate],
   );
 
   const getMonthCanChi = useCallback((date: Date) => {
     const canChi = getCanChi(
       date.getDate(),
       date.getMonth() + 1,
-      date.getFullYear()
+      date.getFullYear(),
     );
     return canChi.month;
   }, []);
@@ -212,21 +212,21 @@ export default function CalendarPageMobile() {
         }
       });
     },
-    [specialDates, getLunarDate]
+    [specialDates, getLunarDate],
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 p-3">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 p-3">
       <div className="max-w-7xl mx-auto space-y-4">
         {/* Header */}
         <div className="bg-card/60 backdrop-blur-sm border border-border/50 rounded-2xl p-4 shadow-lg">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-2 rounded-xl">
+              <div className="bg-linear-to-r from-blue-600 to-indigo-600 p-2 rounded-xl">
                 <CalendarIcon className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h1 className="text-xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   Lịch Việt Nam
                 </h1>
                 <p className="text-xs text-muted-foreground">
@@ -237,7 +237,7 @@ export default function CalendarPageMobile() {
             {session && (
               <button
                 onClick={() => handleAddEvent()}
-                className="px-3 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white text-sm font-semibold rounded-xl shadow-lg active:scale-95 transition-all inline-flex items-center gap-1.5"
+                className="px-3 py-2 bg-linear-to-r from-green-600 to-emerald-600 text-white text-sm font-semibold rounded-xl shadow-lg active:scale-95 transition-all inline-flex items-center gap-1.5"
               >
                 <Plus className="h-4 w-4" />
                 <span>Thêm</span>
@@ -320,7 +320,7 @@ export default function CalendarPageMobile() {
 
           <button
             onClick={() => setCurrentDate(new Date())}
-            className="w-full mt-3 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold rounded-xl shadow-lg active:scale-95 transition-all"
+            className="w-full mt-3 px-4 py-2.5 bg-linear-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold rounded-xl shadow-lg active:scale-95 transition-all"
           >
             📅 Hôm nay
           </button>
@@ -328,7 +328,7 @@ export default function CalendarPageMobile() {
 
         {/* Calendar Grid */}
         <div className="bg-card/60 backdrop-blur-sm border border-border/50 rounded-2xl shadow-lg overflow-hidden">
-          <div className="grid grid-cols-7 border-b border-border/50 bg-gradient-to-r from-blue-50/50 via-indigo-50/50 to-purple-50/50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20">
+          <div className="grid grid-cols-7 border-b border-border/50 bg-linear-to-r from-blue-50/50 via-indigo-50/50 to-purple-50/50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20">
             {["T2", "T3", "T4", "T5", "T6", "T7", "CN"].map((day, index) => (
               <div key={day} className="p-2 text-center">
                 <span
@@ -336,8 +336,8 @@ export default function CalendarPageMobile() {
                     index === 5
                       ? "text-blue-600 dark:text-blue-400"
                       : index === 6
-                      ? "text-red-600 dark:text-red-400"
-                      : "text-foreground"
+                        ? "text-red-600 dark:text-red-400"
+                        : "text-foreground"
                   }`}
                 >
                   {day}

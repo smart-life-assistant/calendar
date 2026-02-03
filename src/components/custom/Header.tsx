@@ -41,7 +41,7 @@ export default function Header() {
   const currentTheme = theme === "system" ? systemTheme : theme;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 shadow-sm">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -55,7 +55,7 @@ export default function Header() {
             >
               <CalendarDays className="h-6 w-6 text-blue-600" />
             </motion.div>
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
               Lịch Việt
             </span>
           </Link>
@@ -74,10 +74,10 @@ export default function Header() {
           >
             <Link
               href="/calendar"
-              className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 overflow-hidden rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white text-sm font-semibold shadow-lg shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 border border-white/20"
+              className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 overflow-hidden rounded-xl bg-linear-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white text-sm font-semibold shadow-lg shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 border border-white/20"
             >
               {/* Shimmer effect */}
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-linear-to-r from-transparent via-white/30 to-transparent" />
 
               {/* Content */}
               <span className="relative z-10 flex items-center gap-1.5">
@@ -87,7 +87,7 @@ export default function Header() {
               </span>
 
               {/* Hover background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-linear-to-r from-emerald-600 via-teal-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Link>
           </motion.div>
 
@@ -138,7 +138,7 @@ export default function Header() {
                 animate={{ scale: 1 }}
                 transition={{ type: "spring" as const, stiffness: 200 }}
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-linear-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
                   <User className="h-4 w-4 text-white" />
                 </div>
                 <span className="text-sm font-medium">
@@ -152,7 +152,7 @@ export default function Header() {
               >
                 <Link
                   href="/dashboard"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-linear-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
                 >
                   <LucideLayoutDashboard className="h-3 w-3 sm:h-4 sm:w-4" />
                   Dashboard
@@ -172,7 +172,7 @@ export default function Header() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 href="/login"
-                className="rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
+                className="rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
               >
                 Đăng nhập
               </Link>
