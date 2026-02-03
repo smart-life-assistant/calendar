@@ -55,6 +55,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
   ),
+  icons: {
+    icon: [
+      { url: "/logo.png", type: "image/png" },
+      { url: "/logo.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [{ url: "/logo.png", sizes: "180x180", type: "image/png" }],
+    shortcut: "/logo.png",
+  },
   alternates: {
     canonical: "/",
   },
@@ -84,22 +92,8 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
-    shortcut: "/logo.png",
-  },
   verification: {
-    // TODO: Thay bằng mã xác minh thật từ Google Search Console
-    // Bước 1: Vào https://search.google.com/search-console
-    // Bước 2: Add property: https://calendar-eight-beige.vercel.app
-    // Bước 3: Chọn phương thức "HTML tag"
-    // Bước 4: Copy mã từ content="xxxxx" và paste vào dưới đây
-    // Bước 5: Commit, push, deploy
-    // Bước 6: Click "Verify" trên Search Console
     google: "jThwvj02giCRVOyG3wTsmZhnJUfIBNmNoDF8fdCxA3w",
-    // Bing Webmaster Tools (optional): https://www.bing.com/webmasters
-    // bing: 'PASTE_YOUR_BING_VERIFICATION_CODE_HERE',
   },
 };
 
