@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Script from "next/script";
+import { CURRENT_YEAR } from "@/lib/constants";
 
 interface Session {
   user?: {
@@ -78,8 +79,7 @@ export default function HomePage() {
       bestRating: "5",
       worstRating: "1",
     },
-    description:
-      "Xem lịch vạn niên Việt Nam 2026 online miễn phí. Tra cứu lịch âm dương chính xác, xem ngày tốt xấu, ngày lễ tết Việt Nam, can chi, giờ hoàng đạo. Lịch vạn niên online cập nhật liên tục, dễ sử dụng trên mọi thiết bị.",
+    description: `Xem lịch vạn niên Việt Nam ${CURRENT_YEAR} online miễn phí. Tra cứu lịch âm dương chính xác, xem ngày tốt xấu, ngày lễ tết Việt Nam, can chi, giờ hoàng đạo. Lịch vạn niên online cập nhật liên tục, dễ sử dụng trên mọi thiết bị.`,
     image: "/og-image.png",
     url: typeof window !== "undefined" ? window.location.origin : "",
     inLanguage: "vi-VN",
@@ -194,7 +194,7 @@ export default function HomePage() {
             </motion.span>
             <br />
             <span className="text-gray-900 dark:text-gray-100">
-              Việt Nam 2026
+              Việt Nam {CURRENT_YEAR}
             </span>
           </motion.h1>
 

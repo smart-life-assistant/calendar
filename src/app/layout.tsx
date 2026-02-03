@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Geist, Geist_Mono } from "next/font/google";
+import { CURRENT_YEAR } from "@/lib/constants";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,16 +20,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Lịch Vạn Niên - Xem Lịch Âm Dương Việt Nam Online 2026",
+    default: `Lịch Vạn Niên - Xem Lịch Âm Dương Việt Nam Online ${CURRENT_YEAR}`,
     template: "%s | Lịch Vạn Niên Việt Nam",
   },
-  description:
-    "Xem lịch vạn niên Việt Nam 2026 - Tra cứu lịch âm dương chính xác, xem ngày tốt xấu, ngày lễ tết, can chi, giờ hoàng đạo. Lịch vạn niên online miễn phí, cập nhật liên tục, dễ sử dụng trên điện thoại và máy tính.",
+  description: `Xem lịch vạn niên Việt Nam ${CURRENT_YEAR} - Tra cứu lịch âm dương chính xác, xem ngày tốt xấu, ngày lễ tết, can chi, giờ hoàng đạo. Lịch vạn niên online miễn phí, cập nhật liên tục, dễ sử dụng trên điện thoại và máy tính.`,
   keywords: [
     "lịch vạn niên",
     "lịch vạn niên việt nam",
     "xem lịch vạn niên",
-    "lịch vạn niên 2026",
+    `lịch vạn niên ${CURRENT_YEAR}`,
     "lịch âm dương",
     "lịch việt nam",
     "lịch âm",
@@ -70,14 +70,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "vi_VN",
     url: "/",
-    title: "Lịch Vạn Niên Việt Nam 2026 - Xem Lịch Âm Dương Online",
-    description:
-      "Xem lịch vạn niên Việt Nam 2026 online miễn phí. Tra cứu lịch âm dương chính xác, xem ngày tốt xấu, giờ hoàng đạo, can chi, ngày lễ tết Việt Nam. Cập nhật liên tục.",
+    title: `Lịch Vạn Niên Việt Nam ${CURRENT_YEAR} - Xem Lịch Âm Dương Online`,
+    description: `Xem lịch vạn niên Việt Nam ${CURRENT_YEAR} online miễn phí. Tra cứu lịch âm dương chính xác, xem ngày tốt xấu, giờ hoàng đạo, can chi, ngày lễ tết Việt Nam. Cập nhật liên tục.`,
     siteName: "Lịch Vạn Niên Việt Nam",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lịch Vạn Niên Việt Nam 2026 - Xem Lịch Âm Dương Online",
+    title: `Lịch Vạn Niên Việt Nam ${CURRENT_YEAR} - Xem Lịch Âm Dương Online`,
     description:
       "Xem lịch vạn niên Việt Nam online miễn phí. Tra cứu lịch âm dương, ngày tốt xấu, can chi, ngày lễ tết. Chính xác và dễ sử dụng.",
   },
@@ -112,8 +111,7 @@ export default function RootLayout({
     alternateName: ["Lịch Việt Nam", "Lịch Âm Dương Việt Nam"],
     url: baseUrl,
     logo: `${baseUrl}/logo.png`,
-    description:
-      "Xem lịch vạn niên Việt Nam 2026 online miễn phí. Tra cứu lịch âm dương chính xác, ngày tốt xấu, can chi, giờ hoàng đạo, ngày lễ tết.",
+    description: `Xem lịch vạn niên Việt Nam ${CURRENT_YEAR} online miễn phí. Tra cứu lịch âm dương chính xác, ngày tốt xấu, can chi, giờ hoàng đạo, ngày lễ tết.`,
     sameAs: [
       // Add your social media links here when available
       // "https://facebook.com/your-page",
@@ -132,8 +130,7 @@ export default function RootLayout({
     "@type": "WebSite",
     name: "Lịch Vạn Niên Việt Nam",
     url: baseUrl,
-    description:
-      "Xem lịch vạn niên Việt Nam 2026 - Tra cứu lịch âm dương, ngày tốt xấu, can chi, giờ hoàng đạo, ngày lễ tết online miễn phí.",
+    description: `Xem lịch vạn niên Việt Nam ${CURRENT_YEAR} - Tra cứu lịch âm dương, ngày tốt xấu, can chi, giờ hoàng đạo, ngày lễ tết online miễn phí.`,
     inLanguage: "vi-VN",
     potentialAction: {
       "@type": "SearchAction",
