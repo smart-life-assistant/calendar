@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Moon, Sparkles, Star } from "lucide-react";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 interface SpecialDate {
   id: string;
@@ -110,7 +110,7 @@ export default function CalendarDay({
             // Holiday background
             hasHoliday &&
               isCurrentMonth &&
-              "bg-gradient-to-br from-red-50 to-pink-50 dark:from-red-950/20 dark:to-pink-950/20"
+              "bg-gradient-to-br from-red-50 to-pink-50 dark:from-red-950/20 dark:to-pink-950/20",
           )}
           onClick={onClick}
           whileHover={{ y: -2 }}
@@ -138,7 +138,7 @@ export default function CalendarDay({
                 isCurrentMonth &&
                   !isToday &&
                   !hasHoliday &&
-                  "text-gray-900 dark:text-gray-100"
+                  "text-gray-900 dark:text-gray-100",
               )}
             >
               {date.getDate()}
@@ -363,7 +363,7 @@ export default function CalendarDay({
                           "p-2 rounded-md text-sm border",
                           event.is_holiday
                             ? "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-900 text-red-900 dark:text-red-100"
-                            : "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-900 text-blue-900 dark:text-blue-100"
+                            : "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-900 text-blue-900 dark:text-blue-100",
                         )}
                       >
                         <div className="flex items-start gap-2">
@@ -404,3 +404,21 @@ export default function CalendarDay({
     </HoverWrapper>
   );
 }
+
+// Memoize CalendarDay component to prevent unnecessary re-renders
+// Custom comparison function for better performance
+const MemoizedCalendarDay = memo(CalendarDay, (prevProps, nextProps) => {
+  // Only re-render if these props change
+  return (
+    prevProps.date.getTime() === nextProps.date.getTime() &&
+    prevProps.isToday === nextProps.isToday &&
+    prevProps.isCurrentMonth === nextProps.isCurrentMonth &&
+    prevProps.events.length === nextProps.events.length &&
+    prevProps.lunar.day === nextProps.lunar.day &&
+    prevProps.lunar.month === nextProps.lunar.month
+  );
+});
+
+MemoizedCalendarDay.displayName = "CalendarDay";
+
+export default MemoizedCalendarDay;

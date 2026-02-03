@@ -16,6 +16,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
+import Head from "next/head";
 
 function LoginForm() {
   const router = useRouter();

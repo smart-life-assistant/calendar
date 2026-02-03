@@ -1,0 +1,9 @@
+# Robots.txt for Lịch Việt Nam
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /login
+
+# Sitemap
+Sitemap: https://calendar-eight-beige.vercel.app/sitemap.xml

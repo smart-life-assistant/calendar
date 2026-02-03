@@ -18,8 +18,69 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vietnamese Calendar - Lịch Việt Nam",
-  description: "Modern calendar with Vietnamese holidays and lunar dates",
+  title: {
+    default: "Lịch Việt Nam - Tra Cứu Âm Dương Lịch, Ngày Lễ Tết Việt Nam",
+    template: "%s | Lịch Việt Nam",
+  },
+  description:
+    "Lịch Việt Nam online - Tra cứu lịch âm dương, lịch vạn niên, ngày lễ tết Việt Nam, ngày tốt xấu, can chi. Ứng dụng lịch Việt hiện đại, miễn phí, dễ sử dụng trên mọi thiết bị.",
+  keywords: [
+    "lịch việt nam",
+    "lịch âm",
+    "lịch dương",
+    "lịch vạn niên",
+    "âm dương lịch",
+    "ngày lễ việt nam",
+    "ngày tết việt nam",
+    "can chi",
+    "xem lịch âm",
+    "tra cứu lịch",
+    "lịch việt online",
+    "lịch việt nam 2026",
+  ],
+  authors: [{ name: "Lịch Việt Nam" }],
+  creator: "Lịch Việt Nam",
+  publisher: "Lịch Việt Nam",
+  formatDetection: {
+    telephone: false,
+  },
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+  ),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "vi_VN",
+    url: "/",
+    title: "Lịch Việt Nam - Tra Cứu Âm Dương Lịch, Ngày Lễ Tết Việt Nam",
+    description:
+      "Lịch Việt Nam online - Tra cứu lịch âm dương, lịch vạn niên, ngày lễ tết Việt Nam, ngày tốt xấu, can chi. Ứng dụng lịch Việt hiện đại, miễn phí, dễ sử dụng.",
+    siteName: "Lịch Việt Nam",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lịch Việt Nam - Tra Cứu Âm Dương Lịch, Ngày Lễ Tết Việt Nam",
+    description:
+      "Lịch Việt Nam online - Tra cứu lịch âm dương, lịch vạn niên, ngày lễ tết Việt Nam, can chi. Miễn phí và dễ sử dụng.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    // Thêm mã xác minh Google Search Console và Bing Webmaster Tools khi có
+    // google: 'your-google-verification-code',
+    // bing: 'your-bing-verification-code',
+  },
 };
 
 export default function RootLayout({

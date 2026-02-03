@@ -36,7 +36,13 @@ import {
   Plus,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+  startTransition,
+} from "react";
 import { toast } from "sonner";
 
 interface SpecialDate {
@@ -61,31 +67,43 @@ export default function CalendarPage() {
   const [editingEvent, setEditingEvent] = useState<SpecialDate | null>(null);
   const [addEventDate, setAddEventDate] = useState<Date | null>(null);
 
-  // Generate year options (current year ± 10 years)
-  const currentYear = new Date().getFullYear();
-  // get years from 2000 to currentYear + 10
-  const startYear = 2000;
-  const endYear = currentYear + 10;
-  const years = Array.from(
-    { length: endYear - startYear + 1 },
-    (_, i) => startYear + i
+  // Generate year options (current year ± 10 years) - Memoized
+  const years = useMemo(() => {
+    const currentYear = new Date().getFullYear();
+    const startYear = 2000;
+    const endYear = currentYear + 10;
+    return Array.from(
+      { length: endYear - startYear + 1 },
+      (_, i) => startYear + i,
+    );
+  }, []);
+
+  const months = useMemo(() => Array.from({ length: 12 }, (_, i) => i + 1), []);
+
+  // Handlers for year/month selection - Optimized with useCallback
+  const handleYearChange = useCallback(
+    (year: string) => {
+      startTransition(() => {
+        const newDate = new Date(currentDate);
+        newDate.setFullYear(parseInt(year));
+        setCurrentDate(newDate);
+      });
+    },
+    [currentDate],
   );
-  const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
-  // Handlers for year/month selection
-  const handleYearChange = (year: string) => {
-    const newDate = new Date(currentDate);
-    newDate.setFullYear(parseInt(year));
-    setCurrentDate(newDate);
-  };
+  const handleMonthChange = useCallback(
+    (month: string) => {
+      startTransition(() => {
+        const newDate = new Date(currentDate);
+        newDate.setMonth(parseInt(month) - 1);
+        setCurrentDate(newDate);
+      });
+    },
+    [currentDate],
+  );
 
-  const handleMonthChange = (month: string) => {
-    const newDate = new Date(currentDate);
-    newDate.setMonth(parseInt(month) - 1);
-    setCurrentDate(newDate);
-  };
-
-  const fetchSpecialDates = async () => {
+  const fetchSpecialDates = useCallback(async () => {
     try {
       const response = await fetch("/api/special-dates");
       if (!response.ok) {
@@ -98,67 +116,62 @@ export default function CalendarPage() {
       toast.error("Không thể tải dữ liệu sự kiện. Vui lòng thử lại sau!");
       setSpecialDates([]);
     }
-  };
+  }, []);
 
   // Fetch special dates
   useEffect(() => {
-    // eslint-disable-next-line
     void fetchSpecialDates();
-  }, []);
+  }, [fetchSpecialDates]);
 
-  // Handle modal actions
-  const handleAddEvent = (date?: Date) => {
+  // Handle modal actions - Optimized with useCallback
+  const handleAddEvent = useCallback((date?: Date) => {
     setAddEventDate(date || null);
     setEditingEvent(null);
     setShowAddModal(true);
-  };
+  }, []);
 
-  const handleEditEvent = (event: SpecialDate) => {
+  const handleEditEvent = useCallback((event: SpecialDate) => {
     setEditingEvent(event);
     setAddEventDate(null);
     setShowAddModal(true);
-  };
+  }, []);
 
-  const handleDeleteEvent = (eventId: string) => {
+  const handleDeleteEvent = useCallback((eventId: string) => {
     setSpecialDates((prev) => prev.filter((e) => e.id !== eventId));
-  };
+  }, []);
 
-  const handleModalSuccess = () => {
+  const handleModalSuccess = useCallback(() => {
     fetchSpecialDates();
     setShowAddModal(false);
     setEditingEvent(null);
     setAddEventDate(null);
-  };
+  }, [fetchSpecialDates]);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setShowAddModal(false);
     setEditingEvent(null);
     setAddEventDate(null);
-  };
+  }, []);
 
-  // Generate calendar grid with days from previous and next month
-  const monthStart = startOfMonth(currentDate);
-  const monthEnd = endOfMonth(currentDate);
+  // Generate calendar grid with days from previous and next month - Memoized
+  const calendarDays = useMemo(() => {
+    const monthStart = startOfMonth(currentDate);
+    const monthEnd = endOfMonth(currentDate);
+    const calendarStart = startOfWeek(monthStart, { weekStartsOn: 1 });
+    const calendarEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
 
-  // Get the start of the week for the first day of month (to include previous month days)
-  // weekStartsOn: 1 means Monday (0 = Sunday, 1 = Monday)
-  const calendarStart = startOfWeek(monthStart, { weekStartsOn: 1 });
+    return eachDayOfInterval({
+      start: calendarStart,
+      end: calendarEnd,
+    });
+  }, [currentDate]);
 
-  // Get the end of the week for the last day of month (to include next month days)
-  const calendarEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
-
-  // Get all days to display in the calendar grid
-  const calendarDays = eachDayOfInterval({
-    start: calendarStart,
-    end: calendarEnd,
-  });
-
-  // Get lunar date using our custom library
-  const getLunarDate = (date: Date) => {
+  // Get lunar date using our custom library - Memoized function
+  const getLunarDate = useCallback((date: Date) => {
     const lunar = convertSolar2Lunar(
       date.getDate(),
       date.getMonth() + 1,
-      date.getFullYear()
+      date.getFullYear(),
     );
     return {
       day: lunar.day,
@@ -166,36 +179,39 @@ export default function CalendarPage() {
       year: lunar.year,
       isLeapMonth: lunar.isLeapMonth,
     };
-  };
+  }, []);
 
-  // Get can chi using our custom library
-  const getDayCanChi = (date: Date) => {
+  // Get can chi using our custom library - Memoized function
+  const getDayCanChi = useCallback((date: Date) => {
     const canChi = getCanChi(
       date.getDate(),
       date.getMonth() + 1,
-      date.getFullYear()
+      date.getFullYear(),
     );
     return canChi.day;
-  };
+  }, []);
 
-  // Get can chi of year (based on lunar year)
-  const getYearCanChi = (date: Date) => {
-    const lunar = getLunarDate(date);
-    return getYearCanChiString(lunar.year);
-  };
+  // Get can chi of year (based on lunar year) - Memoized function
+  const getYearCanChi = useCallback(
+    (date: Date) => {
+      const lunar = getLunarDate(date);
+      return getYearCanChiString(lunar.year);
+    },
+    [getLunarDate],
+  );
 
-  // Get can chi of month
-  const getMonthCanChi = (date: Date) => {
+  // Get can chi of month - Memoized function
+  const getMonthCanChi = useCallback((date: Date) => {
     const canChi = getCanChi(
       date.getDate(),
       date.getMonth() + 1,
-      date.getFullYear()
+      date.getFullYear(),
     );
     return canChi.month;
-  };
+  }, []);
 
-  // Get current month lunar info (for displaying in header)
-  const getCurrentMonthLunarInfo = () => {
+  // Get current month lunar info (for displaying in header) - Memoized
+  const currentMonthLunar = useMemo(() => {
     const firstDayOfMonth = startOfMonth(currentDate);
     const lunar = getLunarDate(firstDayOfMonth);
     const monthCanChi = getMonthCanChi(firstDayOfMonth);
@@ -210,55 +226,87 @@ export default function CalendarPage() {
       monthCanChi,
       yearCanChi,
     };
-  };
+  }, [currentDate, getLunarDate, getMonthCanChi, getYearCanChi]);
 
-  const currentMonthLunar = getCurrentMonthLunarInfo();
+  // Get events for a specific date - Memoized function
+  const getEventsForDate = useCallback(
+    (date: Date) => {
+      const lunar = getLunarDate(date);
 
-  // Get events for a specific date
-  const getEventsForDate = (date: Date) => {
-    const lunar = getLunarDate(date);
+      return specialDates.filter((event) => {
+        if (event.date_type === "solar") {
+          return (
+            event.day === date.getDate() &&
+            event.month === date.getMonth() + 1 &&
+            (event.is_recurring || event.year === date.getFullYear())
+          );
+        } else {
+          return (
+            event.day === lunar.day &&
+            event.month === lunar.month &&
+            (event.is_recurring || event.year === lunar.year)
+          );
+        }
+      });
+    },
+    [specialDates, getLunarDate],
+  );
 
-    return specialDates.filter((event) => {
-      if (event.date_type === "solar") {
-        return (
-          event.day === date.getDate() &&
-          event.month === date.getMonth() + 1 &&
-          (event.is_recurring || event.year === date.getFullYear())
-        );
-      } else {
-        return (
-          event.day === lunar.day &&
-          event.month === lunar.month &&
-          (event.is_recurring || event.year === lunar.year)
-        );
-      }
+  // Navigation handlers - Optimized with useCallback
+  const handlePrevMonth = useCallback(() => {
+    startTransition(() => {
+      setCurrentDate((prev) => subMonths(prev, 1));
     });
-  };
+  }, []);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.02,
-      },
-    },
-  };
+  const handleNextMonth = useCallback(() => {
+    startTransition(() => {
+      setCurrentDate((prev) => addMonths(prev, 1));
+    });
+  }, []);
 
-  const itemVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 300,
+  const handleToday = useCallback(() => {
+    startTransition(() => {
+      setCurrentDate(new Date());
+    });
+  }, []);
+
+  const handleDateClick = useCallback((date: Date) => {
+    setSelectedDate(date);
+  }, []);
+
+  // Animation variants - Memoized to prevent recreation
+  const containerVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.01, // Reduced from 0.02 for better performance
+        },
       },
-    },
-  };
+    }),
+    [],
+  );
+
+  const itemVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0, scale: 0.95 }, // Reduced scale difference
+      visible: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+          type: "spring" as const,
+          stiffness: 200, // Reduced from 300 for smoother animation
+          damping: 20,
+        },
+      },
+    }),
+    [],
+  );
 
   return (
-    <div className="min-h-screen py-4 sm:py-6 md:py-8 px-2 sm:px-4 relative overflow-hidden">
+    <article className="min-h-screen py-4 sm:py-6 md:py-8 px-2 sm:px-4 relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100 via-transparent to-transparent dark:from-blue-950 opacity-40" />
@@ -284,10 +332,11 @@ export default function CalendarPage() {
 
       <div className="max-w-[1600px] mx-auto">
         {/* Modern Header with Glassmorphism - Responsive */}
-        <motion.div
+        <motion.header
           className="mb-4 sm:mb-6 md:mb-8"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
+          aria-label="Calendar header"
         >
           <div className="relative rounded-2xl sm:rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 p-4 sm:p-6 md:p-8 shadow-2xl overflow-hidden">
             {/* Decorative Elements */}
@@ -330,6 +379,7 @@ export default function CalendarPage() {
                     className="px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30 transition-all inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    aria-label="Thêm sự kiện mới"
                   >
                     <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
                     <span className="hidden md:inline">Thêm sự kiện</span>
@@ -345,14 +395,21 @@ export default function CalendarPage() {
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                     {/* Year Selector */}
                     <div className="flex items-center gap-2 bg-background/60 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-2 border border-border/50 flex-1 sm:flex-initial">
-                      <label className="text-xs sm:text-sm font-medium whitespace-nowrap">
+                      <label
+                        htmlFor="year-select"
+                        className="text-xs sm:text-sm font-medium whitespace-nowrap"
+                      >
                         📅 Năm:
                       </label>
                       <Select
                         value={currentDate.getFullYear().toString()}
                         onValueChange={handleYearChange}
                       >
-                        <SelectTrigger className="w-full sm:w-[100px] border-0 bg-transparent focus:ring-0 h-8">
+                        <SelectTrigger
+                          id="year-select"
+                          className="w-full sm:w-[100px] border-0 bg-transparent focus:ring-0 h-8"
+                          aria-label="Chọn năm"
+                        >
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="max-h-[300px]">
@@ -367,14 +424,21 @@ export default function CalendarPage() {
 
                     {/* Month Selector */}
                     <div className="flex items-center gap-2 bg-background/60 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-2 border border-border/50 flex-1 sm:flex-initial">
-                      <label className="text-xs sm:text-sm font-medium whitespace-nowrap">
+                      <label
+                        htmlFor="month-select"
+                        className="text-xs sm:text-sm font-medium whitespace-nowrap"
+                      >
                         🗓️ Tháng:
                       </label>
                       <Select
                         value={(currentDate.getMonth() + 1).toString()}
                         onValueChange={handleMonthChange}
                       >
-                        <SelectTrigger className="w-full sm:w-[110px] border-0 bg-transparent focus:ring-0 h-8">
+                        <SelectTrigger
+                          id="month-select"
+                          className="w-full sm:w-[110px] border-0 bg-transparent focus:ring-0 h-8"
+                          aria-label="Chọn tháng"
+                        >
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -390,10 +454,11 @@ export default function CalendarPage() {
 
                   {/* Today Button */}
                   <motion.button
-                    onClick={() => setCurrentDate(new Date())}
+                    onClick={handleToday}
                     className="w-full shrink-0 sm:w-auto px-4 sm:px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    aria-label="Quay về ngày hôm nay"
                   >
                     <span className="hidden sm:inline">🏠 Hôm nay</span>
                     <span className="sm:hidden">📅 Hôm nay</span>
@@ -405,7 +470,7 @@ export default function CalendarPage() {
                   {/* Month Navigation */}
                   <div className="flex w-full justify-between items-center gap-1 sm:gap-2 bg-background/60 backdrop-blur-sm rounded-xl border border-border/50 p-1">
                     <motion.button
-                      onClick={() => setCurrentDate(subMonths(currentDate, 1))}
+                      onClick={handlePrevMonth}
                       className="p-1.5 sm:p-2 rounded-lg hover:bg-accent transition-colors"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
@@ -436,7 +501,7 @@ export default function CalendarPage() {
                     </div>
 
                     <motion.button
-                      onClick={() => setCurrentDate(addMonths(currentDate, 1))}
+                      onClick={handleNextMonth}
                       className="p-1.5 sm:p-2 rounded-lg hover:bg-accent transition-colors"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
@@ -449,14 +514,15 @@ export default function CalendarPage() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </motion.header>
 
         {/* Ultra Modern Calendar Grid with Glassmorphism */}
-        <motion.div
+        <motion.section
           className="relative rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
+          aria-label="Calendar grid"
         >
           {/* Decorative gradient overlay */}
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-blue-500/5 to-transparent pointer-events-none" />
@@ -505,17 +571,18 @@ export default function CalendarPage() {
             initial="hidden"
             animate="visible"
           >
-            {calendarDays.map((date, index) => {
+            {calendarDays.map((date) => {
               const lunar = getLunarDate(date);
               const canChi = getDayCanChi(date);
               const monthCanChi = getMonthCanChi(date);
               const yearCanChi = getYearCanChi(date);
               const isYearLeap = hasLeapMonth(lunar.year) > 0;
               const events = getEventsForDate(date);
+              const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 
               return (
                 <motion.div
-                  key={index}
+                  key={dateKey}
                   variants={itemVariants}
                   className="md:aspect-square min-h-[80px] xs:min-h-[90px] sm:min-h-[100px] md:min-h-[120px] lg:min-h-[130px]"
                 >
@@ -529,20 +596,21 @@ export default function CalendarPage() {
                     events={events}
                     isCurrentMonth={isSameMonth(date, currentDate)}
                     isToday={isToday(date)}
-                    onClick={() => setSelectedDate(date)}
+                    onClick={() => handleDateClick(date)}
                   />
                 </motion.div>
               );
             })}
           </motion.div>
-        </motion.div>
+        </motion.section>
 
         {/* Modern Legend with Cards - Fully Responsive */}
-        <motion.div
+        <motion.aside
           className="mt-6 sm:mt-8 grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
+          aria-label="Calendar legend"
         >
           {[
             {
@@ -595,7 +663,7 @@ export default function CalendarPage() {
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.aside>
       </div>
 
       {/* Detail Modal */}
@@ -626,6 +694,6 @@ export default function CalendarPage() {
         selectedDate={addEventDate}
         editingEvent={editingEvent}
       />
-    </div>
+    </article>
   );
 }
