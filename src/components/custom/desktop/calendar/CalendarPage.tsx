@@ -306,7 +306,7 @@ export default function CalendarPage() {
   );
 
   return (
-    <article className="min-h-screen py-4 sm:py-6 md:py-8 px-2 sm:px-4 relative overflow-hidden">
+    <article className="h-[calc(100vh-4rem)] py-2 sm:py-3 md:py-4 px-2 sm:px-4 relative overflow-hidden flex flex-col">
       {/* Animated Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100 via-transparent to-transparent dark:from-blue-950 opacity-40" />
@@ -330,15 +330,15 @@ export default function CalendarPage() {
         />
       </div>
 
-      <div className="max-w-[1600px] mx-auto">
+      <div className="max-w-[1600px] mx-auto flex-1 flex flex-col overflow-hidden">
         {/* Modern Header with Glassmorphism - Responsive */}
         <motion.header
-          className="mb-4 sm:mb-6 md:mb-8"
+          className="mb-2 sm:mb-3 md:mb-4 flex-shrink-0"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           aria-label="Calendar header"
         >
-          <div className="relative rounded-2xl sm:rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 p-4 sm:p-6 md:p-8 shadow-2xl overflow-hidden">
+          <div className="relative rounded-xl sm:rounded-2xl bg-card/40 backdrop-blur-2xl border border-border/50 p-3 sm:p-4 md:p-6 shadow-2xl overflow-hidden">
             {/* Decorative Elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-purple-500/10 to-pink-500/10 rounded-full blur-3xl" />
@@ -518,17 +518,17 @@ export default function CalendarPage() {
 
         {/* Ultra Modern Calendar Grid with Glassmorphism */}
         <motion.section
-          className="relative rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-hidden"
+          className="relative rounded-2xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-hidden flex-1 flex flex-col min-h-0"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           aria-label="Calendar grid"
         >
           {/* Decorative gradient overlay */}
-          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-blue-500/5 to-transparent pointer-events-none" />
+          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-blue-500/5 to-transparent pointer-events-none" />
 
           {/* Weekday Headers - Modern Gradient Design - Responsive */}
-          <div className="grid grid-cols-7 border-b border-border/50 bg-gradient-to-r from-blue-50/50 via-indigo-50/50 to-purple-50/50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20">
+          <div className="grid grid-cols-7 border-b border-border/50 bg-gradient-to-r from-blue-50/50 via-indigo-50/50 to-purple-50/50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20 flex-shrink-0">
             {[
               { short: "T2", full: "Thứ Hai", color: "text-foreground" },
               { short: "T3", full: "Thứ Ba", color: "text-foreground" },
@@ -566,7 +566,7 @@ export default function CalendarPage() {
 
           {/* Calendar Days Grid - Fully Responsive */}
           <motion.div
-            className="grid grid-cols-7 gap-0.5 sm:gap-1 p-1 sm:p-2 bg-muted/20"
+            className="grid grid-cols-7 auto-rows-fr gap-0.5 sm:gap-1 p-1 sm:p-2 bg-muted/20 flex-1 min-h-0"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -584,7 +584,7 @@ export default function CalendarPage() {
                 <motion.div
                   key={dateKey}
                   variants={itemVariants}
-                  className="md:aspect-square min-h-[80px] xs:min-h-[90px] sm:min-h-[100px] md:min-h-[120px] lg:min-h-[130px]"
+                  className="h-full min-h-0"
                 >
                   <CalendarDay
                     date={date}
@@ -606,7 +606,7 @@ export default function CalendarPage() {
 
         {/* Modern Legend with Cards - Fully Responsive */}
         <motion.aside
-          className="mt-6 sm:mt-8 grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4"
+          className="mt-2 sm:mt-3 grid grid-cols-2 md:grid-cols-4 gap-2 flex-shrink-0"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}

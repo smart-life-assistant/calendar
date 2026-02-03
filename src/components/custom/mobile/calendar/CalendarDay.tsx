@@ -52,13 +52,13 @@ function CalendarDayMobile({
           "border-gray-200 dark:border-gray-700",
         ],
         !isCurrentMonth && [
-          "bg-gray-50/30 dark:bg-gray-900/30",
-          "border-gray-100 dark:border-gray-800",
-          "opacity-40",
+          "bg-gray-50/50 dark:bg-gray-900/50",
+          "border-gray-200 dark:border-gray-700",
+          "opacity-70",
         ],
         isToday &&
           "ring-1 ring-blue-500 ring-offset-1 dark:ring-offset-gray-900",
-        hasHoliday && isCurrentMonth && "bg-red-50/50 dark:bg-red-950/20"
+        hasHoliday && isCurrentMonth && "bg-red-50/50 dark:bg-red-950/20",
       )}
       onClick={onClick}
     >
@@ -76,7 +76,7 @@ function CalendarDayMobile({
               !isToday &&
               !hasHoliday &&
               "text-gray-900 dark:text-gray-100",
-            !isCurrentMonth && "font-normal text-gray-500 dark:text-gray-700"
+            !isCurrentMonth && "font-normal text-gray-600 dark:text-gray-500",
           )}
         >
           {date.getDate()}
@@ -89,10 +89,10 @@ function CalendarDayMobile({
         </div>
       </div>
 
-      {/* Lunar Date */}
-      <div className="flex items-center gap-1 mb-1">
-        <Moon className="h-2.5 w-2.5 text-amber-500 shrink-0" />
-        <div className="text-[10px] font-medium text-gray-600 dark:text-gray-400 truncate">
+      {/* Lunar Date - Optimized for mobile */}
+      <div className="flex items-center gap-0.5 mb-1 min-w-0">
+        <Moon className="h-2 w-2 text-amber-500 flex-shrink-0" />
+        <div className="text-[9px] font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap">
           {lunar.day}/{lunar.month}
         </div>
       </div>

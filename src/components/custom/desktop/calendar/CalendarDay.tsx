@@ -100,9 +100,9 @@ function CalendarDay({
             ],
             // Dimmed styles for other month days
             !isCurrentMonth && [
-              "bg-gray-50/30 dark:bg-gray-900/30",
-              "border-gray-100 dark:border-gray-800",
-              "opacity-40",
+              "bg-gray-50/50 dark:bg-gray-900/50",
+              "border-gray-200 dark:border-gray-700",
+              "opacity-70",
             ],
             // Today highlight
             isToday &&
@@ -126,7 +126,7 @@ function CalendarDay({
                 isCurrentMonth && "font-bold",
                 // Other month days - lighter weight and very dim
                 !isCurrentMonth &&
-                  "font-normal text-gray-500 dark:text-gray-700",
+                  "font-normal text-gray-600 dark:text-gray-500",
                 // Today highlight
                 isCurrentMonth && isToday && "text-blue-600 dark:text-blue-400",
                 // Holiday color
