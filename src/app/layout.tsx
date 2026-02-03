@@ -84,6 +84,13 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/logo.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: "/logo.png",
+  },
   verification: {
     // TODO: Thay bằng mã xác minh thật từ Google Search Console
     // Bước 1: Vào https://search.google.com/search-console
