@@ -85,11 +85,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/logo.png", type: "image/png", sizes: "32x32" },
-    ],
+    icon: "/logo.png",
     apple: "/logo.png",
+    shortcut: "/logo.png",
   },
   verification: {
     // TODO: Thay bằng mã xác minh thật từ Google Search Console
