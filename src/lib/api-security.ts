@@ -1,29 +1,150 @@
 import { NextRequest, NextResponse } from "next/server";
 
-/**
- * Validates if the request is coming from an allowed origin
- */
-export function validateApiAccess(request: NextRequest): NextResponse | null {
-  const origin = request.headers.get("origin");
-  const referer = request.headers.get("referer");
-  const host = request.headers.get("host");
+// ============================================================================
+// HELPER FUNCTIONS - Các hàm phụ trợ
+// ============================================================================
 
-  // Allowed origins (add your production domain here)
-  const allowedOrigins = [
+/**
+ * Lấy danh sách các origins được phép truy cập API
+ * Bao gồm: production domain và localhost (khi development)
+ */
+function getAllowedOrigins(): string[] {
+  return [
     "https://calendar-eight-beige.vercel.app",
     process.env.NEXT_PUBLIC_APP_URL,
-    // For development
+    // Development only - cho phép localhost
     ...(process.env.NODE_ENV === "development"
       ? ["http://localhost:3000", "http://127.0.0.1:3000"]
       : []),
   ].filter(Boolean) as string[];
+}
 
-  // Check if it's a direct browser access (no origin header but has accept header for HTML)
+/**
+ * Kiểm tra xem user-agent có phải là automated tool không
+ * Ví dụ: curl, wget, postman, python-requests, etc.
+ *
+ * Mục đích: Chặn các tools tự động crawl/scrape data
+ * Lưu ý: Có thể fake được, nhưng chặn được 90% trường hợp
+ */
+function isAutomatedTool(userAgent: string): boolean {
+  const suspiciousPatterns = [
+    "curl",
+    "wget",
+    "python-requests",
+    "postman",
+    "insomnia",
+    "httpie",
+  ];
+
+  return suspiciousPatterns.some((pattern) =>
+    userAgent.toLowerCase().includes(pattern),
+  );
+}
+
+/**
+ * Kiểm tra xem có phải là direct browser access không
+ * Ví dụ: User paste URL vào address bar và nhấn Enter
+ *
+ * Cách phát hiện:
+ * - Không có Origin header (không phải CORS request)
+ * - Không có Referer header (không click từ page nào)
+ * - Accept header yêu cầu HTML (browser behavior)
+ */
+function isDirectBrowserAccess(
+  origin: string | null,
+  referer: string | null,
+  accept: string,
+): boolean {
+  return !origin && !referer && accept.includes("text/html");
+}
+
+/**
+ * Kiểm tra Origin header có hợp lệ không
+ *
+ * Origin header được browser tự động thêm vào CORS requests
+ * Ví dụ: fetch() từ JavaScript sẽ có Origin header
+ */
+function isValidOrigin(origin: string, allowedOrigins: string[]): boolean {
+  return allowedOrigins.some(
+    (allowed) => origin === allowed || origin.startsWith(allowed),
+  );
+}
+
+/**
+ * Kiểm tra Referer header có hợp lệ không
+ *
+ * Referer header cho biết request đến từ page nào
+ * Ví dụ: Click link từ page A → Referer = URL của page A
+ */
+function isValidReferer(
+  referer: string,
+  host: string,
+  allowedOrigins: string[],
+): boolean {
+  try {
+    const refererUrl = new URL(referer);
+
+    // Check xem referer hostname có match với allowed origins không
+    const isAllowed = allowedOrigins.some((allowed) => {
+      try {
+        const allowedUrl = new URL(allowed);
+        return refererUrl.hostname === allowedUrl.hostname;
+      } catch {
+        return false;
+      }
+    });
+
+    // Cho phép nếu referer match hoặc cùng host
+    return isAllowed || refererUrl.hostname === host;
+  } catch {
+    return false;
+  }
+}
+
+// ============================================================================
+// MAIN VALIDATION FUNCTION - Hàm validation chính
+// ============================================================================
+
+/**
+ * Validates if the request is coming from an allowed origin
+ *
+ * Bảo vệ API khỏi:
+ * 1. Direct browser access (paste URL vào browser)
+ * 2. Automated tools (curl, wget, postman)
+ * 3. Cross-origin attacks (requests từ domain khác)
+ *
+ * Lưu ý: Đây chỉ là lớp bảo vệ cơ bản
+ * Đối với endpoints nhạy cảm, cần thêm authentication (session, JWT)
+ */
+export function validateApiAccess(request: NextRequest): NextResponse | null {
+  // Lấy headers từ request
+  const origin = request.headers.get("origin");
+  const referer = request.headers.get("referer");
+  const host = request.headers.get("host");
+  const userAgent = request.headers.get("user-agent") || "";
   const accept = request.headers.get("accept") || "";
-  const isDirectBrowserAccess =
-    !origin && !referer && accept.includes("text/html");
 
-  if (isDirectBrowserAccess) {
+  // Lấy danh sách origins được phép
+  const allowedOrigins = getAllowedOrigins();
+
+  // ======================================================
+  // CHECK 1: Chặn automated tools (curl, wget, postman)
+  // ======================================================
+  if (isAutomatedTool(userAgent) && process.env.NODE_ENV !== "development") {
+    return NextResponse.json(
+      {
+        error: "Access denied",
+        message: "Automated access is not allowed",
+      },
+      { status: 403 },
+    );
+  }
+
+  // ======================================================
+  // CHECK 2: Chặn direct browser access
+  // Ví dụ: Paste https://api.com/endpoint vào browser
+  // ======================================================
+  if (isDirectBrowserAccess(origin, referer, accept)) {
     return NextResponse.json(
       {
         error: "Direct API access is not allowed",
@@ -34,13 +155,12 @@ export function validateApiAccess(request: NextRequest): NextResponse | null {
     );
   }
 
-  // For CORS requests, validate origin
+  // ======================================================
+  // CHECK 3: Validate Origin header (CORS requests)
+  // Browser tự động thêm Origin khi gọi fetch() từ JS
+  // ======================================================
   if (origin) {
-    const isAllowedOrigin = allowedOrigins.some(
-      (allowed) => origin === allowed || origin.startsWith(allowed),
-    );
-
-    if (!isAllowedOrigin) {
+    if (!isValidOrigin(origin, allowedOrigins)) {
       return NextResponse.json(
         {
           error: "Access denied",
@@ -51,19 +171,12 @@ export function validateApiAccess(request: NextRequest): NextResponse | null {
     }
   }
 
-  // For same-origin requests, validate referer
+  // ======================================================
+  // CHECK 4: Validate Referer header (same-origin requests)
+  // Khi không có Origin, check Referer để biết request từ đâu
+  // ======================================================
   if (referer && !origin) {
-    const refererUrl = new URL(referer);
-    const isAllowedReferer = allowedOrigins.some((allowed) => {
-      try {
-        const allowedUrl = new URL(allowed);
-        return refererUrl.hostname === allowedUrl.hostname;
-      } catch {
-        return false;
-      }
-    });
-
-    if (!isAllowedReferer && refererUrl.hostname !== host) {
+    if (!isValidReferer(referer, host || "", allowedOrigins)) {
       return NextResponse.json(
         {
           error: "Access denied",
@@ -74,20 +187,22 @@ export function validateApiAccess(request: NextRequest): NextResponse | null {
     }
   }
 
-  // If no origin and no referer, block (except for localhost in dev)
-  if (!origin && !referer) {
-    if (process.env.NODE_ENV !== "development") {
-      return NextResponse.json(
-        {
-          error: "Access denied",
-          message: "Missing origin or referer header",
-        },
-        { status: 403 },
-      );
-    }
+  // ======================================================
+  // CHECK 5: Chặn requests không có Origin và Referer
+  // (Except development mode)
+  // ======================================================
+  if (!origin && !referer && process.env.NODE_ENV !== "development") {
+    return NextResponse.json(
+      {
+        error: "Access denied",
+        message: "Missing origin or referer header",
+      },
+      { status: 403 },
+    );
   }
 
-  return null; // Access allowed
+  // ✅ Tất cả checks pass → Cho phép truy cập
+  return null;
 }
 
 /**
