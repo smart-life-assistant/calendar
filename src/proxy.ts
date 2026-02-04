@@ -1,21 +1,28 @@
 import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
-import { validateApiAccess } from "@/lib/api-security";
+import { validateApiAccess, validateCronAccess } from "@/lib/api-security";
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
   const isLoggedIn = !!req.auth;
 
-  // Public API endpoints (no protection)
-  const publicApiPaths = ["/api/auth", "/api/ping-db"];
-  const isPublicApi = publicApiPaths.some((path) => pathname.startsWith(path));
-
-  // Protect API routes (except public endpoints)
-  if (pathname.startsWith("/api") && !isPublicApi) {
-    // Validate origin/referer for API endpoints
-    const validationError = validateApiAccess(req);
-    if (validationError) {
-      return validationError;
+  // Protect API routes (except auth endpoints)
+  if (pathname.startsWith("/api") && !pathname.startsWith("/api/auth")) {
+    // Cron endpoints - validate with CRON_SECRET
+    if (
+      pathname.startsWith("/api/ping-db") ||
+      pathname.startsWith("/api/cron/")
+    ) {
+      const cronError = validateCronAccess(req);
+      if (cronError) {
+        return cronError;
+      }
+    } else {
+      // Regular API endpoints - validate origin/referer
+      const validationError = validateApiAccess(req);
+      if (validationError) {
+        return validationError;
+      }
     }
   }
 

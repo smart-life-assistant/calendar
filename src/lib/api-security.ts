@@ -132,3 +132,44 @@ export function addCorsHeaders(
 
   return response;
 }
+
+/**
+ * Validates Vercel Cron requests using CRON_SECRET
+ * Vercel automatically sends Authorization: Bearer ${CRON_SECRET} header
+ * when CRON_SECRET environment variable is set
+ */
+export function validateCronAccess(request: NextRequest): NextResponse | null {
+  const authHeader = request.headers.get("authorization");
+  const cronSecret = process.env.CRON_SECRET;
+
+  // In development, allow without secret
+  if (process.env.NODE_ENV === "development") {
+    return null;
+  }
+
+  // Check if CRON_SECRET is configured
+  if (!cronSecret) {
+    console.error("CRON_SECRET is not configured in environment variables");
+    return NextResponse.json(
+      {
+        error: "Server configuration error",
+        message: "Cron secret is not configured",
+      },
+      { status: 500 },
+    );
+  }
+
+  // Validate Authorization header
+  // Vercel sends: Authorization: Bearer <CRON_SECRET>
+  if (authHeader !== `Bearer ${cronSecret}`) {
+    return NextResponse.json(
+      {
+        error: "Unauthorized",
+        message: "Invalid or missing authorization header",
+      },
+      { status: 401 },
+    );
+  }
+
+  return null; // Access allowed
+}
