@@ -49,7 +49,7 @@ function HolidaysManagementMobile() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<"all" | "solar" | "lunar">(
-    "all"
+    "all",
   );
   const [filterCategory, setFilterCategory] = useState<
     "all" | "holiday" | "event"
@@ -91,7 +91,7 @@ function HolidaysManagementMobile() {
       filtered = filtered.filter(
         (item) =>
           item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.description?.toLowerCase().includes(searchTerm.toLowerCase())
+          item.description?.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 

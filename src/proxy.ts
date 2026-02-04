@@ -1,9 +1,18 @@
 import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
+import { validateApiAccess } from "@/lib/api-security";
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
   const isLoggedIn = !!req.auth;
+
+  // Protect API routes (except auth endpoints)
+  if (pathname.startsWith("/api") && !pathname.startsWith("/api/auth")) {
+    const validationError = validateApiAccess(req);
+    if (validationError) {
+      return validationError;
+    }
+  }
 
   // Public paths that don't require authentication
   const publicPaths = ["/", "/login", "/api/auth"];
@@ -12,7 +21,7 @@ export default auth((req) => {
   // Protected paths that require authentication
   const protectedPaths = ["/dashboard", "/admin"];
   const isProtectedPath = protectedPaths.some((path) =>
-    pathname.startsWith(path)
+    pathname.startsWith(path),
   );
 
   // Redirect to login if trying to access protected route without auth

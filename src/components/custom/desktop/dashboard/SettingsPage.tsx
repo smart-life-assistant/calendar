@@ -83,7 +83,7 @@ export default function SettingsPage() {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Có lỗi xảy ra khi cập nhật thông tin!"
+          : "Có lỗi xảy ra khi cập nhật thông tin!",
       );
     } finally {
       setSavingProfile(false);
@@ -129,7 +129,7 @@ export default function SettingsPage() {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Có lỗi xảy ra khi đổi mật khẩu!"
+          : "Có lỗi xảy ra khi đổi mật khẩu!",
       );
     } finally {
       setChangingPassword(false);

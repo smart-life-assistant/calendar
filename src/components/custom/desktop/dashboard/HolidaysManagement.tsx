@@ -51,7 +51,7 @@ export default function HolidaysManagement() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<"all" | "solar" | "lunar">(
-    "all"
+    "all",
   );
   const [filterCategory, setFilterCategory] = useState<
     "all" | "holiday" | "event"
@@ -94,7 +94,7 @@ export default function HolidaysManagement() {
       filtered = filtered.filter(
         (item) =>
           item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.description?.toLowerCase().includes(searchTerm.toLowerCase())
+          item.description?.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 
@@ -609,7 +609,7 @@ export default function HolidaysManagement() {
                         );
                       }
                       return null;
-                    }
+                    },
                   )}
                 </div>
 
