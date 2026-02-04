@@ -135,7 +135,7 @@ export function addCorsHeaders(
 
 /**
  * Validates Vercel Cron requests using Authorization Bearer token
- * Vercel automatically adds this header to cron requests
+ * Vercel cron automatically adds the Authorization header when configured in vercel.json
  */
 export function validateCronAccess(request: NextRequest): NextResponse | null {
   const authHeader = request.headers.get("authorization");
