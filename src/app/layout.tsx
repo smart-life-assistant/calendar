@@ -73,6 +73,14 @@ export const metadata: Metadata = {
     title: `Lịch Vạn Niên Việt Nam ${CURRENT_YEAR} - Xem Lịch Âm Dương Online`,
     description: `Xem lịch vạn niên Việt Nam ${CURRENT_YEAR} online miễn phí. Tra cứu lịch âm dương chính xác, xem ngày tốt xấu, giờ hoàng đạo, can chi, ngày lễ tết Việt Nam. Cập nhật liên tục.`,
     siteName: "Lịch Vạn Niên Việt Nam",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 675,
+        alt: "Lịch Vạn Niên Việt Nam",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
