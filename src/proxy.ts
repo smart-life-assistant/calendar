@@ -1,6 +1,10 @@
 import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
-import { validateApiAccess } from "@/lib/api-security";
+import {
+  validateApiAccess,
+  validateCronAccess,
+  isCronEndpoint,
+} from "@/lib/api-security";
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
@@ -8,9 +12,19 @@ export default auth((req) => {
 
   // Protect API routes (except auth endpoints)
   if (pathname.startsWith("/api") && !pathname.startsWith("/api/auth")) {
-    const validationError = validateApiAccess(req);
-    if (validationError) {
-      return validationError;
+    // Check if this is a cron endpoint
+    if (isCronEndpoint(pathname)) {
+      // Validate cron secret for cron endpoints
+      const cronError = validateCronAccess(req);
+      if (cronError) {
+        return cronError;
+      }
+    } else {
+      // Validate origin/referer for regular API endpoints
+      const validationError = validateApiAccess(req);
+      if (validationError) {
+        return validationError;
+      }
     }
   }
 

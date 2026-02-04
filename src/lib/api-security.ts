@@ -132,3 +132,63 @@ export function addCorsHeaders(
 
   return response;
 }
+
+/**
+ * Validates Vercel Cron requests using Authorization Bearer token
+ * Vercel automatically adds this header to cron requests
+ */
+export function validateCronAccess(request: NextRequest): NextResponse | null {
+  const authHeader = request.headers.get("authorization");
+  const cronSecret = process.env.CRON_SECRET;
+
+  // In development, allow without secret
+  if (process.env.NODE_ENV === "development") {
+    return null;
+  }
+
+  // Check if CRON_SECRET is configured
+  if (!cronSecret) {
+    console.error("CRON_SECRET is not configured in environment variables");
+    return NextResponse.json(
+      {
+        error: "Server configuration error",
+        message: "Cron secret is not configured",
+      },
+      { status: 500 },
+    );
+  }
+
+  // Validate Authorization header
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return NextResponse.json(
+      {
+        error: "Unauthorized",
+        message: "Missing or invalid authorization header",
+      },
+      { status: 401 },
+    );
+  }
+
+  const token = authHeader.replace("Bearer ", "");
+
+  if (token !== cronSecret) {
+    return NextResponse.json(
+      {
+        error: "Unauthorized",
+        message: "Invalid cron secret",
+      },
+      { status: 401 },
+    );
+  }
+
+  return null; // Access allowed
+}
+
+/**
+ * Checks if a path is a cron endpoint
+ */
+export function isCronEndpoint(pathname: string): boolean {
+  const cronPaths = ["/api/cron/", "/api/ping-db"];
+
+  return cronPaths.some((path) => pathname.startsWith(path));
+}
