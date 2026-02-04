@@ -7,11 +7,8 @@
   "regions": ["sin1"],
   "crons": [
     {
-      "path": "/api/ping-db",
-      "schedule": "0 0 * * *",
-      "headers": {
-        "authorization": "Bearer ${CRON_SECRET}"
-      }
+      "path": "/api/ping-db?secret=${CRON_SECRET}",
+      "schedule": "0 0 * * *"
     }
   ]
 }

@@ -134,11 +134,10 @@ export function addCorsHeaders(
 }
 
 /**
- * Validates Vercel Cron requests using Authorization Bearer token
- * Vercel cron automatically adds the Authorization header when configured in vercel.json
+ * Validates Vercel Cron requests using secret in query parameter
+ * Vercel cron will call: /api/ping-db?secret=${CRON_SECRET}
  */
 export function validateCronAccess(request: NextRequest): NextResponse | null {
-  const authHeader = request.headers.get("authorization");
   const cronSecret = process.env.CRON_SECRET;
 
   // In development, allow without secret
@@ -158,24 +157,16 @@ export function validateCronAccess(request: NextRequest): NextResponse | null {
     );
   }
 
-  // Validate Authorization header
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  // Get secret from query parameter
+  const { searchParams } = new URL(request.url);
+  const providedSecret = searchParams.get("secret");
+
+  // Validate secret
+  if (!providedSecret || providedSecret !== cronSecret) {
     return NextResponse.json(
       {
         error: "Unauthorized",
-        message: "Missing or invalid authorization header",
-      },
-      { status: 401 },
-    );
-  }
-
-  const token = authHeader.replace("Bearer ", "");
-
-  if (token !== cronSecret) {
-    return NextResponse.json(
-      {
-        error: "Unauthorized",
-        message: "Invalid cron secret",
+        message: "Invalid or missing cron secret",
       },
       { status: 401 },
     );
