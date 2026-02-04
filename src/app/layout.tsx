@@ -2,10 +2,10 @@ import Footer from "@/components/custom/Footer";
 import Header from "@/components/custom/Header";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Geist, Geist_Mono } from "next/font/google";
 import { CURRENT_YEAR } from "@/lib/constants";
+import { getHomeMetadata } from "@/lib/metadata";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,91 +18,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: `Lịch Vạn Niên - Xem Lịch Âm Dương Việt Nam Online ${CURRENT_YEAR}`,
-    template: "%s | Lịch Vạn Niên Việt Nam",
-  },
-  description: `Xem lịch vạn niên Việt Nam ${CURRENT_YEAR} - Tra cứu lịch âm dương chính xác, xem ngày tốt xấu, ngày lễ tết, can chi, giờ hoàng đạo. Lịch vạn niên online miễn phí, cập nhật liên tục, dễ sử dụng trên điện thoại và máy tính.`,
-  keywords: [
-    "lịch vạn niên",
-    "lịch vạn niên việt nam",
-    "xem lịch vạn niên",
-    `lịch vạn niên ${CURRENT_YEAR}`,
-    "lịch âm dương",
-    "lịch việt nam",
-    "lịch âm",
-    "lịch dương",
-    "tra cứu lịch vạn niên",
-    "xem lịch âm",
-    "ngày tốt xấu",
-    "ngày lễ việt nam",
-    "ngày tết việt nam",
-    "can chi",
-    "giờ hoàng đạo",
-    "xem ngày",
-    "lịch việt online",
-    "âm lịch việt nam",
-    "dương lịch âm lịch",
-    "lịch vạn sự",
-  ],
-  authors: [{ name: "Lịch Việt Nam" }],
-  creator: "Lịch Việt Nam",
-  publisher: "Lịch Việt Nam",
-  formatDetection: {
-    telephone: false,
-  },
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-  ),
-  icons: {
-    icon: [
-      { url: "/logo.png", type: "image/png" },
-      { url: "/logo.png", sizes: "192x192", type: "image/png" },
-    ],
-    apple: [{ url: "/logo.png", sizes: "180x180", type: "image/png" }],
-    shortcut: "/logo.png",
-  },
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    type: "website",
-    locale: "vi_VN",
-    url: "/",
-    title: `Lịch Vạn Niên Việt Nam ${CURRENT_YEAR} - Xem Lịch Âm Dương Online`,
-    description: `Xem lịch vạn niên Việt Nam ${CURRENT_YEAR} online miễn phí. Tra cứu lịch âm dương chính xác, xem ngày tốt xấu, giờ hoàng đạo, can chi, ngày lễ tết Việt Nam. Cập nhật liên tục.`,
-    siteName: "Lịch Vạn Niên Việt Nam",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 675,
-        alt: "Lịch Vạn Niên Việt Nam",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `Lịch Vạn Niên Việt Nam ${CURRENT_YEAR} - Xem Lịch Âm Dương Online`,
-    description:
-      "Xem lịch vạn niên Việt Nam online miễn phí. Tra cứu lịch âm dương, ngày tốt xấu, can chi, ngày lễ tết. Chính xác và dễ sử dụng.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  verification: {
-    google: "jThwvj02giCRVOyG3wTsmZhnJUfIBNmNoDF8fdCxA3w",
-  },
-};
+export const metadata = getHomeMetadata();
 
 export default function RootLayout({
   children,
