@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import {
   Calendar,
   CalendarDays,
+  CalendarClock,
+  CalendarRange,
   Globe,
-  Shield,
+  Moon,
   Sparkles,
-  Star,
   UserCircle2,
-  Zap,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -298,10 +298,10 @@ export default function HomePage() {
             variants={containerVariants}
           >
             {[
-              { number: "10K+", label: "Người dùng", icon: Star },
-              { number: "50+", label: "Ngày lễ", icon: CalendarDays },
-              { number: "99.9%", label: "Uptime", icon: Zap },
-              { number: "100%", label: "Bảo mật", icon: Shield },
+              { number: "365", label: "Ngày", icon: CalendarDays },
+              { number: "50+", label: "Ngày lễ", icon: CalendarRange },
+              { number: "12", label: "Tháng âm lịch", icon: Moon },
+              { number: "60", label: "Năm Can Chi", icon: CalendarClock },
             ].map((stat, index) => (
               <motion.div
                 key={index}

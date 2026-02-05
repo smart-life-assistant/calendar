@@ -1,5 +1,6 @@
 import Footer from "@/components/custom/Footer";
 import Header from "@/components/custom/Header";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
@@ -88,6 +89,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
+        <GoogleAnalytics />
         <NextTopLoader
           color="linear-gradient(to right, #3b82f6, #6366f1, #8b5cf6)"
           initialPosition={0.3}

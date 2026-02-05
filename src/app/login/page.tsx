@@ -3,14 +3,14 @@
 import { motion } from "framer-motion";
 import {
   CalendarDays,
+  CalendarCheck,
   Eye,
   EyeOff,
   Loader2,
   Lock,
-  Shield,
-  Sparkles,
+  Moon,
+  Star,
   User,
-  Zap,
 } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -143,9 +143,9 @@ function LoginForm() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Sparkles className="h-4 w-4 text-blue-600" />
+              <Star className="h-4 w-4 text-amber-600" />
               <span className="text-sm font-medium text-gray-700">
-                Trusted by 10,000+ users
+                Lịch Việt Nam 2026
               </span>
             </motion.div>
 
@@ -176,15 +176,15 @@ function LoginForm() {
                 color: "blue",
               },
               {
-                icon: Shield,
-                title: "Bảo mật cao",
-                description: "Dữ liệu được mã hóa và bảo vệ tuyệt đối",
+                icon: Moon,
+                title: "Ngày Can Chi",
+                description: "Xem can chi ngày, tháng, năm theo lịch Việt",
                 color: "indigo",
               },
               {
-                icon: Zap,
-                title: "Nhanh chóng",
-                description: "Trải nghiệm mượt mà với hiệu suất tối ưu",
+                icon: CalendarCheck,
+                title: "Ngày lễ Tết",
+                description: "Tra cứu các ngày lễ tết truyền thống Việt Nam",
                 color: "purple",
               },
             ].map((feature, index) => (
@@ -423,7 +423,7 @@ function LoginForm() {
             >
               <div className="flex items-start gap-3">
                 <div className="rounded-lg bg-blue-100 p-2">
-                  <Shield className="h-4 w-4 text-blue-600" />
+                  <Lock className="h-4 w-4 text-blue-600" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-blue-900 mb-2">
