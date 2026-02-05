@@ -169,14 +169,15 @@ export default function Header() {
               </motion.button>
             </>
           ) : (
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="/login"
-                className="rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
-              >
-                Đăng nhập
-              </Link>
-            </motion.div>
+            // <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            //   <Link
+            //     href="/login"
+            //     className="rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
+            //   >
+            //     Đăng nhập
+            //   </Link>
+            // </motion.div>
+            <></>
           )}
         </motion.nav>
 
