@@ -32,9 +32,11 @@
 
 1. Mở file `.env.local` (hoặc tạo mới nếu chưa có)
 2. Thêm dòng sau:
+
    ```env
    NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
    ```
+
    (Thay `G-XXXXXXXXXX` bằng Measurement ID của bạn)
 
 3. Restart dev server:
@@ -90,12 +92,14 @@ event({
 ## Troubleshooting
 
 **Không thấy data?**
+
 - Kiểm tra `NEXT_PUBLIC_GA_ID` có đúng format không
 - Restart dev server sau khi thêm env variable
 - Kiểm tra Console có lỗi không
 - Tắt Ad Blocker khi test
 
 **Realtime không cập nhật?**
+
 - Đợi vài phút
 - Hard refresh browser (Ctrl + Shift + R)
 - Kiểm tra Network tab xem có gọi gtag API không

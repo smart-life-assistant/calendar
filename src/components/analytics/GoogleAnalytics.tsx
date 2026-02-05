@@ -2,22 +2,28 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { pageview } from "@/lib/gtag";
 
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
 
-export default function GoogleAnalytics() {
+function AnalyticsTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
     if (pathname && GA_TRACKING_ID) {
-      const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : "");
+      const url =
+        pathname +
+        (searchParams?.toString() ? `?${searchParams.toString()}` : "");
       pageview(url);
     }
   }, [pathname, searchParams]);
 
+  return null;
+}
+
+export default function GoogleAnalytics() {
   if (!GA_TRACKING_ID) {
     return null;
   }
@@ -42,6 +48,9 @@ export default function GoogleAnalytics() {
           `,
         }}
       />
+      <Suspense fallback={null}>
+        <AnalyticsTracker />
+      </Suspense>
     </>
   );
 }
