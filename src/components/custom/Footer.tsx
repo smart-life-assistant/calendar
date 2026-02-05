@@ -12,10 +12,10 @@ export default function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 p-2">
+              <div className="rounded-lg bg-linear-to-r from-blue-600 to-indigo-600 p-2">
                 <Calendar className="h-5 w-5 text-white" />
               </div>
-              <span className="text-lg font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-lg font-bold bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
                 Lịch Việt
               </span>
             </div>

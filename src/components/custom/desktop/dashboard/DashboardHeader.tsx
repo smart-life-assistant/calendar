@@ -43,7 +43,7 @@ export default function DashboardHeader({
   const currentTheme = theme === "system" ? systemTheme : theme;
 
   return (
-    <header className="border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 sticky top-0 z-30 shadow-sm">
+    <header className="border-b border-gray-200 dark:border-gray-700 bg-linear-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 sticky top-0 z-30 shadow-sm">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
         {/* Left side - Mobile menu + Search */}
         <div className="flex items-center gap-3 flex-1 max-w-md">
@@ -181,7 +181,7 @@ export default function DashboardHeader({
               whileTap={{ scale: 0.98 }}
             >
               <motion.div
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-bold shadow-lg"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-r from-blue-600 to-indigo-600 text-white text-sm font-bold shadow-lg"
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.5 }}
               >
@@ -230,7 +230,7 @@ export default function DashboardHeader({
                     exit={{ opacity: 0, y: -10, scale: 0.95 }}
                     transition={{ type: "spring" as const, stiffness: 300, damping: 25 }}
                   >
-                    <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 text-white">
+                    <div className="bg-linear-to-r from-blue-600 to-indigo-600 p-4 text-white">
                       <div className="flex items-center gap-3">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-lg font-bold">
                           {session.user.username?.charAt(0).toUpperCase()}

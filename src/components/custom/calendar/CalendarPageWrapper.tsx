@@ -25,7 +25,7 @@ const CalendarPageTablet = CalendarPageMobile;
 
 function CalendarSkeleton() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 p-3 md:p-6">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 p-3 md:p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header Skeleton */}
         <div className="bg-card/60 backdrop-blur-sm border border-border/50 rounded-2xl p-6 shadow-lg animate-pulse">

@@ -199,7 +199,7 @@ export default function AddEventModal({
             >
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2 text-2xl">
-                  <div className="p-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+                  <div className="p-2 rounded-lg bg-linear-to-r from-blue-600 to-indigo-600 text-white">
                     <Calendar className="h-5 w-5" />
                   </div>
                   {editingEvent ? "Chỉnh sửa sự kiện" : "Thêm sự kiện mới"}
@@ -456,7 +456,7 @@ export default function AddEventModal({
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                    className="bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                   >
                     {loading && (
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />

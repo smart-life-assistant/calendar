@@ -202,7 +202,7 @@ export default function HolidaysManagement() {
       >
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600">
+            <div className="p-2 rounded-lg bg-linear-to-r from-blue-600 to-indigo-600">
               <Star className="h-6 w-6 text-white" />
             </div>
             Sự kiện & Ngày lễ
@@ -216,7 +216,7 @@ export default function HolidaysManagement() {
             setEditingEvent(null);
             setShowAddModal(true);
           }}
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 gap-2"
+          className="bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 gap-2"
         >
           <Plus className="h-4 w-4" />
           Thêm mới
@@ -586,9 +586,9 @@ export default function HolidaysManagement() {
                             }
                             size="sm"
                             onClick={() => setCurrentPage(page)}
-                            className={`min-w-[36px] ${
+                            className={`min-w-9 ${
                               currentPage === page
-                                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
+                                ? "bg-linear-to-r from-blue-600 to-indigo-600 text-white"
                                 : ""
                             }`}
                           >

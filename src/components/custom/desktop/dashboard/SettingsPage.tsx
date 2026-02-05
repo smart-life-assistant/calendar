@@ -148,7 +148,7 @@ export default function SettingsPage() {
         animate={{ opacity: 1, y: 0 }}
         className="flex items-center gap-3"
       >
-        <div className="p-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600">
+        <div className="p-2 rounded-lg bg-linear-to-r from-blue-600 to-indigo-600">
           <SettingsIcon className="h-6 w-6 text-white" />
         </div>
         <div>
@@ -197,7 +197,7 @@ export default function SettingsPage() {
           <Button
             onClick={handleSaveProfile}
             disabled={savingProfile}
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+            className="bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
           >
             {savingProfile ? (
               <>
@@ -435,7 +435,7 @@ export default function SettingsPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="rounded-xl border border-border/50 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6"
+        className="rounded-xl border border-border/50 bg-linear-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6"
       >
         <div className="text-center space-y-2">
           <div className="text-4xl mb-4">📅</div>

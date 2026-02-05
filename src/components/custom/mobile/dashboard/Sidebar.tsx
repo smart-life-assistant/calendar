@@ -58,13 +58,15 @@ function SidebarMobile({ mobileOpen, setMobileOpen }: SidebarProps) {
       <aside
         className={cn(
           "fixed left-0 top-0 z-50 h-screen w-64 shrink-0 flex-col border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 transition-transform duration-300 ease-in-out md:relative md:translate-x-0",
-          mobileOpen ? "flex translate-x-0" : "hidden md:flex -translate-x-full"
+          mobileOpen
+            ? "flex translate-x-0"
+            : "hidden md:flex -translate-x-full",
         )}
       >
         {/* Sidebar Header */}
         <div className="flex h-14 items-center border-b border-gray-200 dark:border-gray-700 px-4 shrink-0 justify-between">
           <div className="flex items-center gap-2">
-            <div className="rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 p-2">
+            <div className="rounded-lg bg-linear-to-r from-blue-600 to-indigo-600 p-2">
               <CalendarDays className="h-5 w-5 text-white" />
             </div>
             <span className="font-semibold text-gray-900 dark:text-gray-100">
@@ -95,7 +97,7 @@ function SidebarMobile({ mobileOpen, setMobileOpen }: SidebarProps) {
                   "flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium active:scale-95 transition-all relative",
                   isActive
                     ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400"
-                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
                 )}
               >
                 {isActive && (
@@ -104,7 +106,7 @@ function SidebarMobile({ mobileOpen, setMobileOpen }: SidebarProps) {
                 <Icon
                   className={cn(
                     "h-5 w-5 relative z-10",
-                    isActive && "text-blue-600 dark:text-blue-400"
+                    isActive && "text-blue-600 dark:text-blue-400",
                   )}
                 />
                 <span className="relative z-10">{item.title}</span>
@@ -115,7 +117,7 @@ function SidebarMobile({ mobileOpen, setMobileOpen }: SidebarProps) {
 
         {/* Footer */}
         <div className="border-t border-gray-200 dark:border-gray-700 p-3 shrink-0">
-          <div className="rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 p-3 border border-blue-200 dark:border-blue-800">
+          <div className="rounded-lg bg-linear-to-r from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 p-3 border border-blue-200 dark:border-blue-800">
             <div className="flex items-center gap-2 mb-2">
               <div className="rounded-full bg-blue-600 h-2 w-2 animate-pulse" />
               <p className="text-xs font-semibold text-blue-900 dark:text-blue-100">

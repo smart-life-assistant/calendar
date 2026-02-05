@@ -188,7 +188,7 @@ function HolidaysManagementMobile() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600">
+            <div className="p-1.5 rounded-lg bg-linear-to-r from-blue-600 to-indigo-600">
               <Star className="h-4 w-4 text-white" />
             </div>
             Sự kiện & Ngày lễ
@@ -203,7 +203,7 @@ function HolidaysManagementMobile() {
             setShowAddModal(true);
           }}
           size="sm"
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-95 transition-transform"
+          className="bg-linear-to-r from-blue-600 to-indigo-600 active:scale-95 transition-transform"
         >
           <Plus className="h-4 w-4" />
         </Button>

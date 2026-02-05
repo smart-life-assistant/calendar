@@ -113,7 +113,7 @@ function DashboardHeaderMobile({ session, onMenuClick }: DashboardHeaderProps) {
               onClick={handleUserMenuToggle}
               className="flex items-center gap-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-2 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-700 active:scale-95 transition-all"
             >
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-bold">
+              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-linear-to-r from-blue-600 to-indigo-600 text-white text-xs font-bold">
                 {session.user.username?.charAt(0).toUpperCase()}
               </div>
               <svg
@@ -143,7 +143,7 @@ function DashboardHeaderMobile({ session, onMenuClick }: DashboardHeaderProps) {
                   onClick={() => setShowUserMenu(false)}
                 />
                 <div className="absolute right-0 mt-2 w-64 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-2xl z-50 overflow-hidden">
-                  <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 text-white">
+                  <div className="bg-linear-to-r from-blue-600 to-indigo-600 p-4 text-white">
                     <div className="flex items-center gap-3">
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-lg font-bold">
                         {session.user.username?.charAt(0).toUpperCase()}

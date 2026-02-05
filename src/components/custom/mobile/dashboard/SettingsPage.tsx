@@ -140,7 +140,7 @@ function SettingsPageMobile() {
       {/* Header */}
       <div>
         <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600">
+          <div className="p-1.5 rounded-lg bg-linear-to-r from-blue-600 to-indigo-600">
             <SettingsIcon className="h-4 w-4 text-white" />
           </div>
           Cài đặt
@@ -189,7 +189,7 @@ function SettingsPageMobile() {
         <Button
           onClick={handleSaveProfile}
           disabled={savingProfile}
-          className="w-full h-9 bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-95 transition-transform"
+          className="w-full h-9 bg-linear-to-r from-blue-600 to-indigo-600 active:scale-95 transition-transform"
         >
           {savingProfile ? (
             <>
@@ -305,7 +305,7 @@ function SettingsPageMobile() {
             !newPassword ||
             !confirmPassword
           }
-          className="w-full h-9 bg-gradient-to-r from-indigo-600 to-purple-600 active:scale-95 transition-transform"
+          className="w-full h-9 bg-linear-to-r from-indigo-600 to-purple-600 active:scale-95 transition-transform"
         >
           {changingPassword ? (
             <>

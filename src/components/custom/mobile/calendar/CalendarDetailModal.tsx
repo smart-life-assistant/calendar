@@ -111,7 +111,7 @@ function CalendarDetailModalMobile({
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <div className="p-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600">
+                <div className="p-1.5 rounded-lg bg-linear-to-r from-blue-600 to-indigo-600">
                   <Calendar className="h-4 w-4 text-white" />
                 </div>
                 <h2 className="text-base font-bold text-gray-900 dark:text-gray-100">
@@ -137,7 +137,7 @@ function CalendarDetailModalMobile({
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {/* Date Info Cards */}
           <div className="grid grid-cols-2 gap-2">
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-lg p-3 border border-blue-200 dark:border-blue-800">
+            <div className="bg-linear-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-lg p-3 border border-blue-200 dark:border-blue-800">
               <div className="flex items-center gap-2 mb-1">
                 <Sun className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
                 <span className="text-xs font-semibold text-blue-900 dark:text-blue-100">
@@ -149,7 +149,7 @@ function CalendarDetailModalMobile({
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 rounded-lg p-3 border border-amber-200 dark:border-amber-800">
+            <div className="bg-linear-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 rounded-lg p-3 border border-amber-200 dark:border-amber-800">
               <div className="flex items-center gap-2 mb-1">
                 <Moon className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
                 <span className="text-xs font-semibold text-amber-900 dark:text-amber-100">
@@ -343,7 +343,7 @@ function CalendarDetailModalMobile({
                 onAddNew();
                 onClose();
               }}
-              className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold text-sm flex items-center justify-center gap-2 active:scale-95 transition-transform"
+              className="w-full py-3 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold text-sm flex items-center justify-center gap-2 active:scale-95 transition-transform"
             >
               <Plus className="h-4 w-4" />
               Thêm sự kiện mới
