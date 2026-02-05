@@ -24,7 +24,9 @@ function AnalyticsTracker() {
 }
 
 export default function GoogleAnalytics() {
-  if (!GA_TRACKING_ID) {
+  // Validate GA ID format
+  if (!GA_TRACKING_ID || !GA_TRACKING_ID.startsWith("G-")) {
+    console.warn("Invalid or missing Google Analytics ID");
     return null;
   }
 
@@ -33,6 +35,9 @@ export default function GoogleAnalytics() {
       <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+        onError={(e) => {
+          console.error("Failed to load Google Analytics script:", e);
+        }}
       />
       <Script
         id="google-analytics"
@@ -44,6 +49,7 @@ export default function GoogleAnalytics() {
             gtag('js', new Date());
             gtag('config', '${GA_TRACKING_ID}', {
               page_path: window.location.pathname,
+              send_page_view: true
             });
           `,
         }}
