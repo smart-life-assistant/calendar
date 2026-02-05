@@ -302,6 +302,7 @@ function LoginForm() {
                     type="text"
                     required
                     autoComplete="off"
+                    data-form-type="other"
                     className="block w-full rounded-xl border-2 border-gray-200 bg-gray-50 pl-12 pr-4 py-3.5 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all"
                     placeholder="Nhập tên đăng nhập của bạn"
                     whileFocus={{ scale: 1.01 }}
@@ -326,7 +327,8 @@ function LoginForm() {
                     name="password"
                     type={showPassword ? "text" : "password"}
                     required
-                    autoComplete="off"
+                    autoComplete="new-password"
+                    data-form-type="other"
                     className="block w-full rounded-xl border-2 border-gray-200 bg-gray-50 pl-12 pr-12 py-3.5 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all"
                     placeholder="Nhập mật khẩu của bạn"
                     whileFocus={{ scale: 1.01 }}

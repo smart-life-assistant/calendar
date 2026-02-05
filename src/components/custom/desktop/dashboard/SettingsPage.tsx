@@ -237,7 +237,9 @@ export default function SettingsPage() {
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 placeholder="Nhập mật khẩu hiện tại"
                 className="pr-10"
-                autoComplete="off"
+                autoComplete="new-password"
+                data-form-type="other"
+                data-lpignore="true"
               />
               <button
                 type="button"
@@ -263,7 +265,9 @@ export default function SettingsPage() {
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Nhập mật khẩu mới (tối thiểu 6 ký tự)"
                 className="pr-10"
-                autoComplete="off"
+                autoComplete="new-password"
+                data-form-type="other"
+                data-lpignore="true"
               />
               <button
                 type="button"
@@ -289,7 +293,9 @@ export default function SettingsPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Nhập lại mật khẩu mới"
                 className="pr-10"
-                autoComplete="off"
+                autoComplete="new-password"
+                data-form-type="other"
+                data-lpignore="true"
               />
               <button
                 type="button"
