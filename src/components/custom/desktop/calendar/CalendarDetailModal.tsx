@@ -108,7 +108,7 @@ export default function CalendarDetailModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
+        <div className="bg-linear-to-r from-blue-600 to-indigo-600 p-6 text-white">
           <div className="flex items-start justify-between mb-4">
             <div>
               <h2 className="text-3xl font-bold mb-2">
@@ -150,7 +150,7 @@ export default function CalendarDetailModal({
 
             {/* Can Chi Cards - 3 columns */}
             <div className="grid grid-cols-3 gap-2.5">
-              <div className="bg-gradient-to-br from-purple-400/20 to-pink-400/20 backdrop-blur-md rounded-xl p-3 border border-purple-300/30 shadow-lg">
+              <div className="bg-linear-to-br from-purple-400/20 to-pink-400/20 backdrop-blur-md rounded-xl p-3 border border-purple-300/30 shadow-lg">
                 <div className="flex items-center gap-1 mb-1.5">
                   <Sun className="h-3.5 w-3.5 text-purple-200" />
                   <span className="text-[10px] font-semibold text-white/90">
@@ -160,7 +160,7 @@ export default function CalendarDetailModal({
                 <p className="text-base font-bold text-white">{canChi}</p>
               </div>
 
-              <div className="bg-gradient-to-br from-cyan-400/20 to-teal-400/20 backdrop-blur-md rounded-xl p-3 border border-cyan-300/30 shadow-lg">
+              <div className="bg-linear-to-br from-cyan-400/20 to-teal-400/20 backdrop-blur-md rounded-xl p-3 border border-cyan-300/30 shadow-lg">
                 <div className="flex items-center gap-1 mb-1.5">
                   <Moon className="h-3.5 w-3.5 text-cyan-200" />
                   <span className="text-[10px] font-semibold text-white/90">
@@ -170,7 +170,7 @@ export default function CalendarDetailModal({
                 <p className="text-base font-bold text-white">{monthCanChi}</p>
               </div>
 
-              <div className="bg-gradient-to-br from-indigo-400/20 to-blue-400/20 backdrop-blur-md rounded-xl p-3 border border-indigo-300/30 shadow-lg">
+              <div className="bg-linear-to-br from-indigo-400/20 to-blue-400/20 backdrop-blur-md rounded-xl p-3 border border-indigo-300/30 shadow-lg">
                 <div className="flex items-center gap-1 mb-1.5">
                   <Star className="h-3.5 w-3.5 text-indigo-200 fill-indigo-200" />
                   <span className="text-[10px] font-semibold text-white/90">
@@ -342,7 +342,7 @@ export default function CalendarDetailModal({
           <div className="border-t border-gray-200 dark:border-gray-700 p-4">
             <motion.button
               onClick={onAddNew}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >

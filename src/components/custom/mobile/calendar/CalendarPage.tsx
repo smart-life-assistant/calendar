@@ -30,6 +30,8 @@ import {
 } from "date-fns";
 import {
   Calendar as CalendarIcon,
+  CalendarDays,
+  CalendarRange,
   ChevronLeft,
   ChevronRight,
   Plus,
@@ -248,8 +250,9 @@ export default function CalendarPageMobile() {
           {/* Year & Month Selectors */}
           <div className="flex gap-2 mb-3">
             <div className="flex items-center gap-2 bg-background/60 rounded-xl px-3 py-2 border border-border/50 flex-1">
-              <label className="text-xs font-medium whitespace-nowrap">
-                📅 Năm:
+              <label className="text-xs font-medium whitespace-nowrap flex items-center gap-1.5">
+                <CalendarDays className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+                <span>Năm:</span>
               </label>
               <Select
                 value={currentDate.getFullYear().toString()}
@@ -268,8 +271,9 @@ export default function CalendarPageMobile() {
               </Select>
             </div>
             <div className="flex items-center gap-2 bg-background/60 rounded-xl px-3 py-2 border border-border/50 flex-1">
-              <label className="text-xs font-medium whitespace-nowrap">
-                🗓️ Tháng:
+              <label className="text-xs font-medium whitespace-nowrap flex items-center gap-1.5">
+                <CalendarRange className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
+                <span>Tháng:</span>
               </label>
               <Select
                 value={(currentDate.getMonth() + 1).toString()}

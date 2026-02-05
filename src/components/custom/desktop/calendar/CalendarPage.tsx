@@ -31,6 +31,8 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Calendar as CalendarIcon,
+  CalendarDays,
+  CalendarRange,
   ChevronLeft,
   ChevronRight,
   Plus,
@@ -397,9 +399,10 @@ export default function CalendarPage() {
                     <div className="flex items-center gap-2 bg-background/60 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-2 border border-border/50 flex-1 sm:flex-initial">
                       <label
                         htmlFor="year-select"
-                        className="text-xs sm:text-sm font-medium whitespace-nowrap"
+                        className="text-xs sm:text-sm font-medium whitespace-nowrap flex items-center gap-1.5"
                       >
-                        📅 Năm:
+                        <CalendarDays className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                        <span>Năm:</span>
                       </label>
                       <Select
                         value={currentDate.getFullYear().toString()}
@@ -426,9 +429,10 @@ export default function CalendarPage() {
                     <div className="flex items-center gap-2 bg-background/60 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-2 border border-border/50 flex-1 sm:flex-initial">
                       <label
                         htmlFor="month-select"
-                        className="text-xs sm:text-sm font-medium whitespace-nowrap"
+                        className="text-xs sm:text-sm font-medium whitespace-nowrap flex items-center gap-1.5"
                       >
-                        🗓️ Tháng:
+                        <CalendarRange className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                        <span>Tháng:</span>
                       </label>
                       <Select
                         value={(currentDate.getMonth() + 1).toString()}
