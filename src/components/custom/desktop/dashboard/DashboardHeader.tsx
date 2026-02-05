@@ -16,6 +16,7 @@ import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useCommandPalette } from "./CommandPaletteProvider";
+import { useTopLoader } from "nextjs-toploader";
 
 interface DashboardHeaderProps {
   session: Session;
@@ -31,6 +32,7 @@ export default function DashboardHeader({
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme, systemTheme } = useTheme();
   const { setOpen } = useCommandPalette();
+  const loader = useTopLoader();
 
   useEffect(() => {
     setMounted(true);
@@ -282,7 +284,10 @@ export default function DashboardHeader({
 
                     <div className="border-t border-gray-100 dark:border-gray-700 py-2">
                       <motion.button
-                        onClick={() => signOut({ redirectTo: "/login" })}
+                        onClick={() => {
+                          loader.start();
+                          signOut({ redirectTo: "/login" });
+                        }}
                         className="flex items-center gap-3 w-full px-4 py-3 text-sm text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                         whileHover={{ x: 5 }}
                       >

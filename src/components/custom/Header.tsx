@@ -17,12 +17,14 @@ import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useEffect, useState, useCallback } from "react";
+import { useTopLoader } from "nextjs-toploader";
 
 export default function Header() {
   const { data: session } = useSession();
   const { theme, setTheme, systemTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const loader = useTopLoader();
 
   useEffect(() => {
     // Use setTimeout to avoid cascading renders
@@ -159,7 +161,10 @@ export default function Header() {
                 </Link>
               </motion.div>
               <motion.button
-                onClick={() => signOut({ redirectTo: "/login" })}
+                onClick={() => {
+                  loader.start();
+                  signOut({ redirectTo: "/login" });
+                }}
                 className="inline-flex items-center gap-2 rounded-xl bg-red-50 dark:bg-red-950/20 px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-950/40 transition-colors border border-red-200 dark:border-red-900"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -241,6 +246,7 @@ export default function Header() {
                   </Link>
                   <button
                     onClick={() => {
+                      loader.start();
                       signOut({ redirectTo: "/login" });
                       setMobileMenuOpen(false);
                     }}

@@ -15,6 +15,7 @@ import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { memo, useCallback, useEffect, useState } from "react";
 import { useCommandPalette } from "../../desktop/dashboard/CommandPaletteProvider";
+import { useTopLoader } from "nextjs-toploader";
 
 interface DashboardHeaderProps {
   session: Session;
@@ -27,6 +28,7 @@ function DashboardHeaderMobile({ session, onMenuClick }: DashboardHeaderProps) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme, systemTheme } = useTheme();
   const { setOpen } = useCommandPalette();
+  const loader = useTopLoader();
 
   useEffect(() => {
     setMounted(true);
@@ -45,8 +47,9 @@ function DashboardHeaderMobile({ session, onMenuClick }: DashboardHeaderProps) {
   }, []);
 
   const handleSignOut = useCallback(() => {
+    loader.start();
     signOut({ redirectTo: "/login" });
-  }, []);
+  }, [loader]);
 
   const currentTheme = theme === "system" ? systemTheme : theme;
 

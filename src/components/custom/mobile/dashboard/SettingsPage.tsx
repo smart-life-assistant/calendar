@@ -22,11 +22,13 @@ import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { memo, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useTopLoader } from "nextjs-toploader";
 
 function SettingsPageMobile() {
   const { data: session } = useSession();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const loader = useTopLoader();
 
   // Profile settings
   const [fullName, setFullName] = useState("");
@@ -58,6 +60,7 @@ function SettingsPageMobile() {
 
   const handleSaveProfile = useCallback(async () => {
     setSavingProfile(true);
+    loader.start();
     try {
       const response = await fetch("/api/user/profile", {
         method: "PUT",
@@ -86,8 +89,9 @@ function SettingsPageMobile() {
       );
     } finally {
       setSavingProfile(false);
+      loader.done();
     }
-  }, [fullName, username]);
+  }, [fullName, username, loader]);
 
   const handleChangePassword = useCallback(async () => {
     if (newPassword !== confirmPassword) {
@@ -101,6 +105,7 @@ function SettingsPageMobile() {
     }
 
     setChangingPassword(true);
+    loader.start();
     try {
       const response = await fetch("/api/user/change-password", {
         method: "PUT",
@@ -132,8 +137,9 @@ function SettingsPageMobile() {
       );
     } finally {
       setChangingPassword(false);
+      loader.done();
     }
-  }, [currentPassword, newPassword, confirmPassword]);
+  }, [currentPassword, newPassword, confirmPassword, loader]);
 
   return (
     <div className="space-y-4 p-3">

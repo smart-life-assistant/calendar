@@ -23,11 +23,13 @@ import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useTopLoader } from "nextjs-toploader";
 
 export default function SettingsPage() {
   const { data: session } = useSession();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const loader = useTopLoader();
 
   // Profile settings
   const [fullName, setFullName] = useState("");
@@ -59,6 +61,7 @@ export default function SettingsPage() {
 
   const handleSaveProfile = async () => {
     setSavingProfile(true);
+    loader.start();
     try {
       const response = await fetch("/api/user/profile", {
         method: "PUT",
@@ -87,6 +90,7 @@ export default function SettingsPage() {
       );
     } finally {
       setSavingProfile(false);
+      loader.done();
     }
   };
 
@@ -102,6 +106,7 @@ export default function SettingsPage() {
     }
 
     setChangingPassword(true);
+    loader.start();
     try {
       const response = await fetch("/api/user/password", {
         method: "PUT",
@@ -133,6 +138,7 @@ export default function SettingsPage() {
       );
     } finally {
       setChangingPassword(false);
+      loader.done();
     }
   };
 

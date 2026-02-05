@@ -23,7 +23,8 @@ import {
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
+import { useTopLoader } from "nextjs-toploader";
 import * as React from "react";
 
 interface CommandPaletteProps {
@@ -35,6 +36,7 @@ export function CommandPalette({ open, setOpen }: CommandPaletteProps) {
   const router = useRouter();
   const { setTheme } = useTheme();
   const { data: session } = useSession();
+  const loader = useTopLoader();
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -53,7 +55,7 @@ export function CommandPalette({ open, setOpen }: CommandPaletteProps) {
       setOpen(false);
       command();
     },
-    [setOpen]
+    [setOpen],
   );
 
   return (
@@ -147,7 +149,10 @@ export function CommandPalette({ open, setOpen }: CommandPaletteProps) {
             <>
               <CommandItem
                 onSelect={() =>
-                  runCommand(() => signOut({ redirectTo: "/login" }))
+                  runCommand(() => {
+                    loader.start();
+                    signOut({ redirectTo: "/login" });
+                  })
                 }
                 className="text-red-600 dark:text-red-400"
               >

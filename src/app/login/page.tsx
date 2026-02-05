@@ -14,7 +14,8 @@ import {
 } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
+import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 
 function LoginForm() {
