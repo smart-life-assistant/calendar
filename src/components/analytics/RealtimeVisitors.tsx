@@ -13,6 +13,7 @@ export default function RealtimeVisitors() {
       try {
         const response = await fetch("/api/analytics/realtime");
         const data = await response.json();
+        console.log("Realtime data:", data);
         setActiveUsers(data.activeUsers || 0);
         setIsLoading(false);
       } catch (error) {
