@@ -227,6 +227,7 @@ function SettingsPageMobile() {
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 className="h-9 text-sm pr-9"
                 placeholder="••••••••"
+                autoComplete="off"
               />
               <button
                 type="button"
@@ -254,6 +255,7 @@ function SettingsPageMobile() {
                 onChange={(e) => setNewPassword(e.target.value)}
                 className="h-9 text-sm pr-9"
                 placeholder="••••••••"
+                autoComplete="off"
               />
               <button
                 type="button"
@@ -281,6 +283,7 @@ function SettingsPageMobile() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="h-9 text-sm pr-9"
                 placeholder="••••••••"
+                autoComplete="off"
               />
               <button
                 type="button"

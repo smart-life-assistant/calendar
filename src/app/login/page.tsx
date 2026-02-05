@@ -301,9 +301,9 @@ function LoginForm() {
                     name="username"
                     type="text"
                     required
-                    autoComplete="username"
+                    autoComplete="off"
                     className="block w-full rounded-xl border-2 border-gray-200 bg-gray-50 pl-12 pr-4 py-3.5 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all"
-                    placeholder="nhatnguyen"
+                    placeholder="Nhập tên đăng nhập của bạn"
                     whileFocus={{ scale: 1.01 }}
                   />
                 </div>
@@ -326,9 +326,9 @@ function LoginForm() {
                     name="password"
                     type={showPassword ? "text" : "password"}
                     required
-                    autoComplete="current-password"
+                    autoComplete="off"
                     className="block w-full rounded-xl border-2 border-gray-200 bg-gray-50 pl-12 pr-12 py-3.5 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all"
-                    placeholder="••••••••"
+                    placeholder="Nhập mật khẩu của bạn"
                     whileFocus={{ scale: 1.01 }}
                   />
                   <motion.button
