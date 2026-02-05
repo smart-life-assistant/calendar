@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
 import { Geist, Geist_Mono } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 import { CURRENT_YEAR } from "@/lib/constants";
 import { getHomeMetadata } from "@/lib/metadata";
 import "./globals.css";
@@ -87,6 +88,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
+        <NextTopLoader
+          color="linear-gradient(to right, #3b82f6, #6366f1, #8b5cf6)"
+          initialPosition={0.3}
+          crawlSpeed={100}
+          height={2}
+          crawl={true}
+          showSpinner={false}
+          easing="cubic-bezier(0.4, 0, 0.2, 1)"
+          speed={300}
+          shadow="0 0 8px rgba(59, 130, 246, 0.5), 0 0 4px rgba(99, 102, 241, 0.3)"
+          zIndex={9999}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
