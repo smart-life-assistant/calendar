@@ -1,6 +1,7 @@
 import Footer from "@/components/custom/Footer";
 import Header from "@/components/custom/Header";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import RealtimeVisitors from "@/components/analytics/RealtimeVisitors";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
@@ -115,6 +116,7 @@ export default function RootLayout({
             </main>
             <Footer />
             <Toaster />
+            <RealtimeVisitors />
           </SessionProvider>
         </ThemeProvider>
       </body>
