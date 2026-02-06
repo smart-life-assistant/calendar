@@ -10,6 +10,7 @@ import NextTopLoader from "nextjs-toploader";
 import { CURRENT_YEAR } from "@/lib/constants";
 import { getHomeMetadata } from "@/lib/metadata";
 import "./globals.css";
+import KeywordContent from "@/components/custom/KeywordContent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -113,6 +114,7 @@ export default function RootLayout({
             <Header />
             <main className="flex-1 flex flex-col bg-linear-to-br from-background via-background/95 to-accent/5">
               {children}
+              <KeywordContent />
             </main>
             <Footer />
             <Toaster />

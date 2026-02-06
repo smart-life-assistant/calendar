@@ -162,6 +162,23 @@ export const getCalendarMetadata = (): Metadata => ({
     "lịch dương",
     "lịch việt nam",
 
+    // Long-tail keywords (Google rất thích)
+    "tra cứu lịch âm dương online",
+    "xem lịch âm dương chính xác",
+    "lịch âm dương hôm nay",
+    "xem ngày tốt xấu theo lịch âm",
+    "tra cứu can chi ngày tháng năm",
+    "xem giờ tốt trong ngày",
+    "xem lịch miễn phí",
+    "lịch việt nam online",
+
+    // basic keywords
+    "lịch",
+    "xem lịch",
+    "lịch pat",
+    "xem lịch pat",
+    "lịch 1501",
+
     // High-intent search keywords (người dùng search nhiều)
     "xem lịch hôm nay",
     "hôm nay là ngày bao nhiêu",
@@ -174,6 +191,19 @@ export const getCalendarMetadata = (): Metadata => ({
     "ngày tốt xấu",
     "can chi",
     "giờ hoàng đạo",
+
+    // Traditional calendar keywords
+    "can chi",
+    "thiên can địa chi",
+    "ngũ hành",
+    "tuổi âm lịch",
+    "xem tuổi",
+    "xem ngày tốt",
+    "xem ngày xấu",
+    "giờ hoàng đạo",
+    "ngày hoàng đạo",
+    "ngày hắc đạo",
+    "lịch vạn sự",
 
     // Year-based keywords (SEO cực mạnh)
     `lịch năm ${CURRENT_YEAR}`,
@@ -213,19 +243,6 @@ export const getCalendarMetadata = (): Metadata => ({
     `lịch âm tháng 11 ${CURRENT_YEAR}`,
     `lịch âm tháng 12 ${CURRENT_YEAR}`,
 
-    // Traditional calendar keywords
-    "can chi",
-    "thiên can địa chi",
-    "ngũ hành",
-    "tuổi âm lịch",
-    "xem tuổi",
-    "xem ngày tốt",
-    "xem ngày xấu",
-    "giờ hoàng đạo",
-    "ngày hoàng đạo",
-    "ngày hắc đạo",
-    "lịch vạn sự",
-
     // Festival & event keywords (SEO rất tốt)
     "tết âm lịch",
     "tết dương lịch",
@@ -235,23 +252,6 @@ export const getCalendarMetadata = (): Metadata => ({
     `tết ${CURRENT_YEAR} là ngày nào`,
     `rằm tháng giêng ${CURRENT_YEAR}`,
     `mùng 1 tết ${CURRENT_YEAR}`,
-
-    // Long-tail keywords (Google rất thích)
-    "tra cứu lịch âm dương online",
-    "xem lịch âm dương chính xác",
-    "lịch âm dương hôm nay",
-    "xem ngày tốt xấu theo lịch âm",
-    "tra cứu can chi ngày tháng năm",
-    "xem giờ tốt trong ngày",
-    "xem lịch miễn phí",
-    "lịch việt nam online",
-
-    // basic keywords
-    "lịch",
-    "xem lịch",
-    "lịch pat",
-    "xem lịch pat",
-    "lịch 1501",
   ],
   openGraph: generateOpenGraph({
     title: `Xem Lịch Vạn Niên ${CURRENT_YEAR} - Tra Cứu Âm Dương Lịch Việt Nam Online`,
