@@ -52,11 +52,71 @@ export default function RootLayout({
     },
   };
 
+  // FAQ Structured Data for Rich Results
+  const faqData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Lịch vạn niên là gì?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `Lịch vạn niên Việt Nam là công cụ tra cứu lịch âm dương, giúp bạn xem ngày tháng năm theo âm lịch và dương lịch, can chi, giờ hoàng đạo, ngày tốt xấu và các ngày lễ tết Việt Nam ${CURRENT_YEAR}.`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Làm sao để xem lịch âm dương chính xác?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Bạn có thể truy cập website lịch vạn niên online của chúng tôi để xem lịch âm dương chính xác, cập nhật hàng ngày, kèm theo thông tin can chi, ngày tốt xấu, và giờ hoàng đạo.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Website có miễn phí không?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Hoàn toàn miễn phí! Bạn có thể tra cứu lịch vạn niên, xem lịch âm dương, ngày tốt xấu, can chi và các thông tin khác mà không mất phí.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: `Tết ${CURRENT_YEAR} là ngày nào?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `Truy cập lịch vạn niên ${CURRENT_YEAR} để xem chính xác ngày Tết Nguyên Đán, rằm tháng giêng và các ngày lễ quan trọng khác trong năm.`,
+        },
+      },
+    ],
+  };
+
+  // BreadcrumbList Structured Data
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Trang chủ",
+        item: baseUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Xem lịch",
+        item: `${baseUrl}/calendar`,
+      },
+    ],
+  };
+
   // Website Structured Data with SearchAction
   const websiteData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Lịch Vạn Niên Việt Nam",
+    name: "Lịch Vạn Niên Việt Nam - Tra Cứu Âm Dương Lịch Online",
     url: baseUrl,
     description: `Xem lịch vạn niên Việt Nam ${CURRENT_YEAR} - Tra cứu lịch âm dương, ngày tốt xấu, can chi, giờ hoàng đạo, ngày lễ tết online miễn phí.`,
     inLanguage: "vi-VN",
@@ -85,6 +145,20 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(websiteData),
+          }}
+        />
+        {/* FAQ Structured Data for Rich Results */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqData),
+          }}
+        />
+        {/* BreadcrumbList Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(breadcrumbData),
           }}
         />
       </head>

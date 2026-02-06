@@ -93,30 +93,43 @@ export const getHomeMetadata = (): Metadata => ({
   },
   description: `Xem lịch vạn niên Việt Nam ${CURRENT_YEAR} - Tra cứu lịch âm dương chính xác, xem ngày tốt xấu, ngày lễ tết, can chi, giờ hoàng đạo. Lịch vạn niên online miễn phí, cập nhật liên tục, dễ sử dụng trên điện thoại và máy tính.`,
   keywords: [
-    "lịch vạn niên",
-    "lịch vạn niên việt nam",
-    "xem lịch vạn niên",
+    // Core keywords
     `lịch vạn niên ${CURRENT_YEAR}`,
-    "lịch âm dương",
-    "lịch việt nam",
-    "lịch âm",
-    "lịch dương",
+    "lịch vạn niên việt nam",
+    "lịch vạn niên chính xác",
+    "lịch vạn niên online",
+    
+    // High-intent keywords
+    "xem lịch vạn niên",
     "tra cứu lịch vạn niên",
-    "xem lịch âm",
+    "lịch âm dương chính xác",
+    "xem lịch âm dương online",
+    
+    // Daily queries
+    "xem lịch hôm nay",
+    "hôm nay ngày âm lịch bao nhiêu",
+    "hôm nay ngày tốt hay xấu",
+    "giờ hoàng đạo hôm nay",
+    "ngày hoàng đạo",
+    
+    // Feature-based
+    "lịch âm dương không quảng cáo",
+    "lịch vạn niên hiện đại",
+    "tra cứu lịch nhanh",
+    "xem lịch online miễn phí",
+    
+    // Traditional keywords
+    "lịch âm dương việt nam",
+    "can chi ngày tháng năm",
+    "thiên can địa chi",
     "ngày tốt xấu",
-    "ngày lễ việt nam",
-    "ngày tết việt nam",
-    "can chi",
-    "giờ hoàng đạo",
-    "xem ngày",
-    "lịch việt online",
-    "âm lịch việt nam",
-    "dương lịch âm lịch",
     "lịch vạn sự",
+    "ngày lễ tết việt nam",
+    "ngũ hành",
   ],
-  authors: [{ name: "Lịch Việt Nam" }],
-  creator: "Lịch Việt Nam",
-  publisher: "Lịch Việt Nam",
+  authors: [{ name: "Lịch Vạn Niên Việt Nam" }],
+  creator: "Lịch Vạn Niên Việt Nam",
+  publisher: "Lịch Vạn Niên Việt Nam",
   icons: {
     icon: [
       { url: "/logo.png", type: "image/png" },
