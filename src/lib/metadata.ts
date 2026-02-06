@@ -171,6 +171,9 @@ export const getCalendarMetadata = (): Metadata => ({
     "ngày xấu hôm nay",
     "ngày tốt hôm nay",
     "xem lịch online",
+    "ngày tốt xấu",
+    "can chi",
+    "giờ hoàng đạo",
 
     // Year-based keywords (SEO cực mạnh)
     `lịch năm ${CURRENT_YEAR}`,
