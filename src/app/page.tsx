@@ -225,13 +225,15 @@ export default function HomePage() {
               </motion.span>
             </Link>
 
-            <Link
-              href={session ? "/dashboard" : "/login"}
-              className="inline-flex items-center gap-2 rounded-full border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-8 py-4 text-lg font-semibold text-gray-700 dark:text-gray-200 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
-            >
-              <UserCircle2 className="h-5 w-5" />
-              <span>{session ? "Dashboard" : "Đăng Nhập"}</span>
-            </Link>
+            {session ? (
+              <Link
+                href={session ? "/dashboard" : "/login"}
+                className="inline-flex items-center gap-2 rounded-full border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-8 py-4 text-lg font-semibold text-gray-700 dark:text-gray-200 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+              >
+                <UserCircle2 className="h-5 w-5" />
+                <span>{session ? "Dashboard" : "Đăng Nhập"}</span>
+              </Link>
+            ) : null}
           </motion.div>
 
           {/* Features Grid */}
