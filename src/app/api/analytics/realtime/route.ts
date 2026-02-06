@@ -76,14 +76,14 @@ export async function GET() {
     return NextResponse.json({
       activeUsers,
       cached: false,
-      message: "Fetched from GA API",
+      message: "Fetched active users successfully",
       timestamp: new Date().toISOString(),
     });
   } catch (err) {
     console.error("GA realtime error:", err);
     return NextResponse.json({
       activeUsers: 0,
-      message: "Error fetching from GA API",
+      message: "Error fetching active users",
     });
   }
 }
