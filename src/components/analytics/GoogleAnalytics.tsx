@@ -7,9 +7,35 @@ import { pageview } from "@/lib/gtag";
 
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
 
+// Clean up old GA cookies that don't match current GA_TRACKING_ID
+function cleanupOldGACookies() {
+  if (typeof document === "undefined" || !GA_TRACKING_ID) return;
+
+  const cookies = document.cookie.split(";");
+  const currentGAId = GA_TRACKING_ID.replace("G-", "");
+
+  cookies.forEach((cookie) => {
+    const [name] = cookie.trim().split("=");
+    // Remove old _ga_* cookies that don't match current GA ID
+    if (name.startsWith("_ga_") && !name.includes(currentGAId)) {
+      // Delete cookie for all possible domains
+      const domains = ["", `.${window.location.hostname}`];
+      domains.forEach((domain) => {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;${domain ? ` domain=${domain};` : ""}`;
+      });
+      console.log(`Cleaned up old GA cookie: ${name}`);
+    }
+  });
+}
+
 function AnalyticsTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // Clean up old cookies on mount
+    cleanupOldGACookies();
+  }, []);
 
   useEffect(() => {
     if (pathname && GA_TRACKING_ID) {
