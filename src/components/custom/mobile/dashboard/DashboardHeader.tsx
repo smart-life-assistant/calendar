@@ -11,11 +11,10 @@ import {
   User,
 } from "lucide-react";
 import { Session } from "next-auth";
-import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { memo, useCallback, useEffect, useState } from "react";
 import { useCommandPalette } from "../../desktop/dashboard/CommandPaletteProvider";
-import { useTopLoader } from "nextjs-toploader";
+import { useSignOut } from "@/hooks/useSignOut";
 
 interface DashboardHeaderProps {
   session: Session;
@@ -28,7 +27,9 @@ function DashboardHeaderMobile({ session, onMenuClick }: DashboardHeaderProps) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme, systemTheme } = useTheme();
   const { setOpen } = useCommandPalette();
-  const loader = useTopLoader();
+  const { signOut: handleSignOut, isSigningOut } = useSignOut({
+    redirectTo: "/login",
+  });
 
   useEffect(() => {
     setMounted(true);
@@ -45,11 +46,6 @@ function DashboardHeaderMobile({ session, onMenuClick }: DashboardHeaderProps) {
   const handleUserMenuToggle = useCallback(() => {
     setShowUserMenu((prev) => !prev);
   }, []);
-
-  const handleSignOut = useCallback(() => {
-    loader.start();
-    signOut({ redirectTo: "/login" });
-  }, [loader]);
 
   const currentTheme = theme === "system" ? systemTheme : theme;
 
@@ -195,7 +191,8 @@ function DashboardHeaderMobile({ session, onMenuClick }: DashboardHeaderProps) {
                   <div className="border-t border-gray-100 dark:border-gray-700 py-2">
                     <button
                       onClick={handleSignOut}
-                      className="flex items-center gap-3 w-full px-4 py-3 text-sm text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 active:scale-[0.98] transition-all"
+                      disabled={isSigningOut}
+                      className="flex items-center gap-3 w-full px-4 py-3 text-sm text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-100 dark:bg-red-900">
                         <LogOut className="h-4 w-4 text-red-600 dark:text-red-400" />

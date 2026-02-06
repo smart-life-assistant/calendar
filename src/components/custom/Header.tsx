@@ -13,18 +13,20 @@ import {
   User,
   X,
 } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useEffect, useState, useCallback } from "react";
-import { useTopLoader } from "nextjs-toploader";
+import { useSignOut } from "@/hooks/useSignOut";
 
 export default function Header() {
   const { data: session } = useSession();
   const { theme, setTheme, systemTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const loader = useTopLoader();
+  const { signOut: handleSignOut, isSigningOut } = useSignOut({
+    redirectTo: "/login",
+  });
 
   useEffect(() => {
     // Use setTimeout to avoid cascading renders
@@ -161,11 +163,9 @@ export default function Header() {
                 </Link>
               </motion.div>
               <motion.button
-                onClick={() => {
-                  loader.start();
-                  signOut({ redirectTo: "/login" });
-                }}
-                className="inline-flex items-center gap-2 rounded-xl bg-red-50 dark:bg-red-950/20 px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-950/40 transition-colors border border-red-200 dark:border-red-900"
+                onClick={handleSignOut}
+                disabled={isSigningOut}
+                className="inline-flex items-center gap-2 rounded-xl bg-red-50 dark:bg-red-950/20 px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-950/40 transition-colors border border-red-200 dark:border-red-900 disabled:opacity-50 disabled:cursor-not-allowed"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -246,11 +246,11 @@ export default function Header() {
                   </Link>
                   <button
                     onClick={() => {
-                      loader.start();
-                      signOut({ redirectTo: "/login" });
+                      handleSignOut();
                       setMobileMenuOpen(false);
                     }}
-                    className="w-full flex items-center justify-center gap-2 rounded-lg bg-red-100 px-4 py-3 text-sm font-medium text-red-700"
+                    disabled={isSigningOut}
+                    className="w-full flex items-center justify-center gap-2 rounded-lg bg-red-100 px-4 py-3 text-sm font-medium text-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <LogOut className="h-4 w-4" />
                     <span>Đăng xuất</span>

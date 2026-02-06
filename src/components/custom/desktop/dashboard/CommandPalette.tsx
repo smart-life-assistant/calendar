@@ -21,11 +21,11 @@ import {
   Sun,
   Users,
 } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useRouter } from "nextjs-toploader/app";
-import { useTopLoader } from "nextjs-toploader";
 import * as React from "react";
+import { useSignOut } from "@/hooks/useSignOut";
 
 interface CommandPaletteProps {
   open: boolean;
@@ -36,7 +36,9 @@ export function CommandPalette({ open, setOpen }: CommandPaletteProps) {
   const router = useRouter();
   const { setTheme } = useTheme();
   const { data: session } = useSession();
-  const loader = useTopLoader();
+  const { signOut: handleSignOut } = useSignOut({
+    redirectTo: "/login",
+  });
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -148,12 +150,7 @@ export function CommandPalette({ open, setOpen }: CommandPaletteProps) {
           {session ? (
             <>
               <CommandItem
-                onSelect={() =>
-                  runCommand(() => {
-                    loader.start();
-                    signOut({ redirectTo: "/login" });
-                  })
-                }
+                onSelect={() => runCommand(handleSignOut)}
                 className="text-red-600 dark:text-red-400"
               >
                 <LogOut className="mr-2 h-4 w-4" />
