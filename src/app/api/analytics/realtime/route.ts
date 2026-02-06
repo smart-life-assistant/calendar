@@ -1,107 +1,58 @@
 import { NextResponse } from "next/server";
+import { GoogleAuth } from "google-auth-library";
 
-export const runtime = "edge";
+export const runtime = "nodejs"; // ✅ ổn định nhất
 export const revalidate = 0;
 
-// Google Analytics Data API endpoint
 const GA_ENDPOINT = "https://analyticsdata.googleapis.com/v1beta";
-const TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
 
-// Generate JWT and get access token from Service Account
+let cache: {
+  value: number;
+  time: number;
+} | null = null;
+
+const CACHE_TTL = 10_000; // 10s
+
 async function getAccessToken() {
-  const credentials = process.env.GA_SERVICE_ACCOUNT_CREDENTIALS;
+  const base64 = process.env.GA_SERVICE_ACCOUNT_CREDENTIALS!;
+  const json = Buffer.from(base64, "base64").toString("utf-8");
+  const credentials = JSON.parse(json);
 
-  if (!credentials) {
-    throw new Error("Missing GA_SERVICE_ACCOUNT_CREDENTIALS");
-  }
+  const auth = new GoogleAuth({
+    credentials,
+    scopes: ["https://www.googleapis.com/auth/analytics.readonly"],
+  });
 
-  try {
-    const serviceAccount = JSON.parse(
-      Buffer.from(credentials, "base64").toString("utf-8"),
-    );
+  const client = await auth.getClient();
+  const token = await client.getAccessToken();
 
-    const now = Math.floor(Date.now() / 1000);
-    const jwtHeader = Buffer.from(
-      JSON.stringify({ alg: "RS256", typ: "JWT" }),
-    ).toString("base64url");
-
-    const jwtClaimSet = Buffer.from(
-      JSON.stringify({
-        iss: serviceAccount.client_email,
-        scope: "https://www.googleapis.com/auth/analytics.readonly",
-        aud: TOKEN_ENDPOINT,
-        exp: now + 3600,
-        iat: now,
-      }),
-    ).toString("base64url");
-
-    const signatureInput = `${jwtHeader}.${jwtClaimSet}`;
-
-    // Import private key for signing
-    const privateKey = await crypto.subtle.importKey(
-      "pkcs8",
-      Buffer.from(
-        serviceAccount.private_key
-          .replace(/-----BEGIN PRIVATE KEY-----/g, "")
-          .replace(/-----END PRIVATE KEY-----/g, "")
-          .replace(/\n/g, ""),
-        "base64",
-      ),
-      {
-        name: "RSASSA-PKCS1-v1_5",
-        hash: "SHA-256",
-      },
-      false,
-      ["sign"],
-    );
-
-    const signature = await crypto.subtle.sign(
-      "RSASSA-PKCS1-v1_5",
-      privateKey,
-      new TextEncoder().encode(signatureInput),
-    );
-
-    const jwt = `${signatureInput}.${Buffer.from(signature).toString("base64url")}`;
-
-    // Exchange JWT for access token
-    const tokenResponse = await fetch(TOKEN_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
-        assertion: jwt,
-      }),
-    });
-
-    if (!tokenResponse.ok) {
-      throw new Error(`Token exchange failed: ${tokenResponse.statusText}`);
-    }
-
-    const tokenData = await tokenResponse.json();
-    return tokenData.access_token;
-  } catch (error) {
-    console.error("Error getting access token:", error);
-    throw error;
-  }
+  return token.token;
 }
 
 export async function GET() {
   const propertyId = process.env.GA_PROPERTY_ID;
 
-  if (!propertyId || !process.env.GA_SERVICE_ACCOUNT_CREDENTIALS) {
-    return NextResponse.json(
-      { activeUsers: 0, error: "Missing GA credentials" },
-      { status: 200 },
-    );
+  if (!propertyId) {
+    return NextResponse.json({
+      activeUsers: 0,
+      message: "GA_PROPERTY_ID not configured",
+    });
+  }
+
+  // ✅ Cache để tránh spam GA API
+  if (cache && Date.now() - cache.time < CACHE_TTL) {
+    return NextResponse.json({
+      activeUsers: cache.value,
+      cached: true,
+      message: `Cached value (TTL: ${Math.round((CACHE_TTL - (Date.now() - cache.time)) / 1000)}s left)`,
+    });
   }
 
   try {
     const accessToken = await getAccessToken();
 
-    const response = await fetch(
-      `${GA_ENDPOINT}/${propertyId}:runRealtimeReport`,
+    const res = await fetch(
+      `${GA_ENDPOINT}/properties/${propertyId}:runRealtimeReport`,
       {
         method: "POST",
         headers: {
@@ -109,39 +60,30 @@ export async function GET() {
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
-          metrics: [
-            {
-              name: "activeUsers",
-            },
-          ],
+          metrics: [{ name: "activeUsers" }],
         }),
       },
     );
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`GA API error: ${response.statusText} - ${errorText}`);
-    }
+    const data = await res.json();
+    const activeUsers = Number(data?.rows?.[0]?.metricValues?.[0]?.value) || 0;
 
-    const data = await response.json();
-    const activeUsers = data?.rows?.[0]?.metricValues?.[0]?.value || 0;
+    cache = {
+      value: activeUsers,
+      time: Date.now(),
+    };
 
-    return NextResponse.json(
-      {
-        activeUsers: parseInt(activeUsers, 10),
-        timestamp: new Date().toISOString(),
-      },
-      {
-        headers: {
-          "Cache-Control": "public, s-maxage=30, stale-while-revalidate=60",
-        },
-      },
-    );
-  } catch (error) {
-    console.error("Error fetching GA realtime data:", error);
-    return NextResponse.json(
-      { activeUsers: 0, error: "Failed to fetch data" },
-      { status: 200 },
-    );
+    return NextResponse.json({
+      activeUsers,
+      cached: false,
+      message: "Fetched from GA API",
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    console.error("GA realtime error:", err);
+    return NextResponse.json({
+      activeUsers: 0,
+      message: "Error fetching from GA API",
+    });
   }
 }
