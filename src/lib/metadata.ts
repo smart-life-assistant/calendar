@@ -245,7 +245,11 @@ export const getCalendarMetadata = (): Metadata => ({
 
     // basic keywords
     "lịch",
+    "lịch v",
     "xem lịch",
+    "lich",
+    "xem lich",
+    "lich v",
   ],
   openGraph: generateOpenGraph({
     title: `Xem Lịch Vạn Niên ${CURRENT_YEAR} - Tra Cứu Âm Dương Lịch Việt Nam Online`,
