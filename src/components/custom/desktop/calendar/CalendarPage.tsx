@@ -337,7 +337,7 @@ export default function CalendarPage() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_450px] gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8 relative">
           {/* LEFT COLUMN: Calendar Grid with Navigation */}
           <motion.section
-            className="relative rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-visible order-2 lg:order-1"
+            className="relative rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-visible order-2 lg:order-1 ml-6 mr-6"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
@@ -347,38 +347,32 @@ export default function CalendarPage() {
             <div className="absolute top-0 left-0 right-0 h-32 bg-linear-to-b from-blue-500/5 to-transparent pointer-events-none" />
 
             {/* Left Hover Zone */}
-            <div className="hidden lg:block absolute -left-8 top-0 bottom-0 w-24 z-20 group/left">
+            <div className="hidden lg:block absolute -left-3 top-0 bottom-0 w-24 z-20 group/left">
               <motion.button
                 onClick={handlePrevMonth}
-                className="absolute left-0 top-1/2 -translate-y-1/2 h-20 w-20 flex items-center justify-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-md opacity-0 group-hover/left:opacity-100 transition-all duration-300 rounded-full shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] border border-white/20 dark:border-gray-700/50 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)]"
-                whileHover={{ scale: 1.08, x: -2 }}
+                className="absolute left-0 top-1/2 -translate-y-1/2 h-24 w-12 flex items-center justify-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-md opacity-0 group-hover/left:opacity-100 transition-all duration-300 rounded-l-full shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] border border-white/20 dark:border-gray-700/50 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)]"
+                whileHover={{ scale: 1.05, x: -2 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Tháng trước"
-                style={{
-                  clipPath: "ellipse(65% 50% at 100% 50%)",
-                }}
               >
                 <ChevronLeft
-                  className="h-7 w-7 text-gray-700 dark:text-gray-200 -ml-1"
+                  className="h-6 w-6 text-gray-700 dark:text-gray-200"
                   strokeWidth={2.5}
                 />
               </motion.button>
             </div>
 
             {/* Right Hover Zone */}
-            <div className="hidden lg:block absolute -right-8 top-0 bottom-0 w-24 z-20 group/right">
+            <div className="hidden lg:block absolute -right-3 top-0 bottom-0 w-24 z-20 group/right">
               <motion.button
                 onClick={handleNextMonth}
-                className="absolute right-0 top-1/2 -translate-y-1/2 h-20 w-20 flex items-center justify-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-md opacity-0 group-hover/right:opacity-100 transition-all duration-300 rounded-full shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] border border-white/20 dark:border-gray-700/50 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)]"
-                whileHover={{ scale: 1.08, x: 2 }}
+                className="absolute right-0 top-1/2 -translate-y-1/2 h-24 w-12 flex items-center justify-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-md opacity-0 group-hover/right:opacity-100 transition-all duration-300 rounded-r-full shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] border border-white/20 dark:border-gray-700/50 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)]"
+                whileHover={{ scale: 1.05, x: 2 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Tháng sau"
-                style={{
-                  clipPath: "ellipse(65% 50% at 0% 50%)",
-                }}
               >
                 <ChevronRight
-                  className="h-7 w-7 text-gray-700 dark:text-gray-200 -mr-1"
+                  className="h-6 w-6 text-gray-700 dark:text-gray-200"
                   strokeWidth={2.5}
                 />
               </motion.button>
@@ -510,7 +504,7 @@ export default function CalendarPage() {
 
           {/* RIGHT COLUMN: Header & Controls */}
           <motion.header
-            className="order-1 lg:order-2 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] self-start"
+            className="order-1 lg:order-2 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] self-start mr-6"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             aria-label="Calendar header"
