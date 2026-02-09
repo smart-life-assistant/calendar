@@ -504,7 +504,7 @@ export default function CalendarPage() {
 
           {/* RIGHT COLUMN: Header & Controls */}
           <motion.header
-            className="order-1 lg:order-2 lg:sticky lg:top-6 h-full self-start mr-6 flex-1"
+            className="order-1 lg:order-2 lg:sticky lg:top-20 h-full self-start mr-6 flex-1 w-full lg:w-auto"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             aria-label="Calendar header"
