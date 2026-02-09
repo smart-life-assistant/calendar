@@ -337,7 +337,7 @@ export default function CalendarPage() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_450px] gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8 relative">
           {/* LEFT COLUMN: Calendar Grid with Navigation */}
           <motion.section
-            className="relative rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-visible order-2 lg:order-1 ml-6 mr-6"
+            className="relative rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-visible order-2 lg:order-1 ml-9 mr-9"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
