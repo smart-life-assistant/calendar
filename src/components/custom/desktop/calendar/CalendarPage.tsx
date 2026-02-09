@@ -334,10 +334,10 @@ export default function CalendarPage() {
 
       <div className="max-w-[1800px] mx-auto">
         {/* Two Column Layout: Calendar Left, Header Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_450px] gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_450px] gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8 relative">
           {/* LEFT COLUMN: Calendar Grid with Navigation */}
           <motion.section
-            className="relative rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-hidden order-2 lg:order-1"
+            className="relative rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-visible order-2 lg:order-1"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
@@ -347,150 +347,159 @@ export default function CalendarPage() {
             <div className="absolute top-0 left-0 right-0 h-32 bg-linear-to-b from-blue-500/5 to-transparent pointer-events-none" />
 
             {/* Left Hover Zone */}
-            <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-24 z-20 group/left">
+            <div className="hidden lg:block absolute -left-8 top-0 bottom-0 w-24 z-20 group/left">
               <motion.button
                 onClick={handlePrevMonth}
-                className="absolute left-0 top-1/2 -translate-y-1/2 h-32 w-16 flex items-center justify-center bg-linear-to-r from-blue-600/90 to-transparent opacity-0 group-hover/left:opacity-100 transition-opacity duration-300 rounded-r-lg"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                className="absolute left-0 top-1/2 -translate-y-1/2 h-24 w-16 flex items-center justify-center bg-linear-to-br from-indigo-600 via-purple-600 to-indigo-700 backdrop-blur-xl opacity-0 group-hover/left:opacity-100 transition-all duration-300 rounded-full shadow-[0_0_30px_15px_rgba(99,102,241,0.4)]"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 aria-label="Tháng trước"
+                style={{
+                  clipPath: "ellipse(60% 50% at 100% 50%)",
+                }}
               >
-                <ChevronLeft className="h-10 w-10 text-white drop-shadow-lg" />
+                <ChevronLeft className="h-8 w-8 text-white drop-shadow-lg -ml-2" />
               </motion.button>
             </div>
 
             {/* Right Hover Zone */}
-            <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-24 z-20 group/right">
+            <div className="hidden lg:block absolute -right-8 top-0 bottom-0 w-24 z-20 group/right">
               <motion.button
                 onClick={handleNextMonth}
-                className="absolute right-0 top-1/2 -translate-y-1/2 h-32 w-16 flex items-center justify-center bg-linear-to-l from-blue-600/90 to-transparent opacity-0 group-hover/right:opacity-100 transition-opacity duration-300 rounded-l-lg"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                className="absolute right-0 top-1/2 -translate-y-1/2 h-24 w-16 flex items-center justify-center bg-linear-to-br from-indigo-600 via-purple-600 to-indigo-700 backdrop-blur-xl opacity-0 group-hover/right:opacity-100 transition-all duration-300 rounded-full shadow-[0_0_30px_15px_rgba(99,102,241,0.4)]"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 aria-label="Tháng sau"
+                style={{
+                  clipPath: "ellipse(60% 50% at 0% 50%)",
+                }}
               >
-                <ChevronRight className="h-10 w-10 text-white drop-shadow-lg" />
+                <ChevronRight className="h-8 w-8 text-white drop-shadow-lg -mr-2" />
               </motion.button>
             </div>
 
-            {/* Month Navigation Header */}
-            <div className="relative z-10 flex items-center justify-between p-3 sm:p-4 border-b border-border/50 bg-background/60 backdrop-blur-sm">
-              <motion.button
-                onClick={handlePrevMonth}
-                className="p-2 sm:p-3 rounded-xl hover:bg-accent transition-colors bg-background/80"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label="Tháng trước"
-              >
-                <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
-              </motion.button>
+            {/* Content wrapper with overflow hidden to preserve rounded corners */}
+            <div className="overflow-hidden rounded-3xl">
+              {/* Month Navigation Header */}
+              <div className="relative z-10 flex items-center justify-between p-3 sm:p-4 border-b border-border/50 bg-background/60 backdrop-blur-sm">
+                <motion.button
+                  onClick={handlePrevMonth}
+                  className="p-2 sm:p-3 rounded-xl hover:bg-accent transition-colors bg-background/80"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  aria-label="Tháng trước"
+                >
+                  <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+                </motion.button>
 
-              <div className="text-center flex-1">
-                <div className="font-bold text-lg sm:text-xl mb-1">
-                  Tháng {format(currentDate, "MM/yyyy")}
+                <div className="text-center flex-1">
+                  <div className="font-bold text-lg sm:text-xl mb-1">
+                    Tháng {format(currentDate, "MM/yyyy")}
+                  </div>
+
+                  {/* Lunar Month Info */}
+                  <div className="text-xs sm:text-sm text-amber-600 dark:text-amber-400 font-medium mb-1">
+                    🌙 Tháng {currentMonthLunar.lunarMonth}{" "}
+                    {currentMonthLunar.isLeapMonth && "nhuận"} năm{" "}
+                    {currentMonthLunar.yearCanChi}
+                    {currentMonthLunar.isYearLeap && " nhuận"}
+                  </div>
+
+                  {/* Month Can Chi Badge */}
+                  <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-linear-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 border border-indigo-200 dark:border-indigo-700">
+                    <span className="text-xs font-bold bg-linear-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+                      ✨ Tháng {currentMonthLunar.monthCanChi}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Lunar Month Info */}
-                <div className="text-xs sm:text-sm text-amber-600 dark:text-amber-400 font-medium mb-1">
-                  🌙 Tháng {currentMonthLunar.lunarMonth}{" "}
-                  {currentMonthLunar.isLeapMonth && "nhuận"} năm{" "}
-                  {currentMonthLunar.yearCanChi}
-                  {currentMonthLunar.isYearLeap && " nhuận"}
-                </div>
-
-                {/* Month Can Chi Badge */}
-                <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-linear-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 border border-indigo-200 dark:border-indigo-700">
-                  <span className="text-xs font-bold bg-linear-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
-                    ✨ Tháng {currentMonthLunar.monthCanChi}
-                  </span>
-                </div>
+                <motion.button
+                  onClick={handleNextMonth}
+                  className="p-2 sm:p-3 rounded-xl hover:bg-accent transition-colors bg-background/80"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  aria-label="Tháng sau"
+                >
+                  <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
+                </motion.button>
               </div>
 
-              <motion.button
-                onClick={handleNextMonth}
-                className="p-2 sm:p-3 rounded-xl hover:bg-accent transition-colors bg-background/80"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label="Tháng sau"
-              >
-                <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
-              </motion.button>
-            </div>
-
-            {/* Weekday Headers */}
-            <div className="grid grid-cols-7 border-b border-border/50 bg-linear-to-r from-blue-50/50 via-indigo-50/50 to-purple-50/50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20">
-              {[
-                { short: "T2", full: "Thứ Hai", color: "text-foreground" },
-                { short: "T3", full: "Thứ Ba", color: "text-foreground" },
-                { short: "T4", full: "Thứ Tư", color: "text-foreground" },
-                { short: "T5", full: "Thứ Năm", color: "text-foreground" },
-                { short: "T6", full: "Thứ Sáu", color: "text-foreground" },
-                {
-                  short: "T7",
-                  full: "Thứ Bảy",
-                  color: "text-blue-600 dark:text-blue-400",
-                },
-                {
-                  short: "CN",
-                  full: "Chủ Nhật",
-                  color: "text-red-600 dark:text-red-400",
-                },
-              ].map((day, index) => (
-                <motion.div
-                  key={day.short}
-                  className="p-2 sm:p-3 md:p-4 text-center relative group"
-                  title={day.full}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                >
-                  <div className="absolute inset-0 bg-linear-to-b from-transparent to-blue-500/0 group-hover:to-blue-500/5 transition-colors" />
-                  <span
-                    className={`relative font-bold text-xs sm:text-sm md:text-base ${day.color}`}
-                  >
-                    {day.short}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Calendar Days Grid */}
-            <motion.div
-              className="grid grid-cols-7 gap-0.5 sm:gap-1 p-1 sm:p-2 bg-muted/20"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              {calendarDays.map((date) => {
-                const lunar = getLunarDate(date);
-                const canChi = getDayCanChi(date);
-                const monthCanChi = getMonthCanChi(date);
-                const yearCanChi = getYearCanChi(date);
-                const isYearLeap = hasLeapMonth(lunar.year) > 0;
-                const events = getEventsForDate(date);
-                const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-
-                return (
+              {/* Weekday Headers */}
+              <div className="grid grid-cols-7 border-b border-border/50 bg-linear-to-r from-blue-50/50 via-indigo-50/50 to-purple-50/50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20">
+                {[
+                  { short: "T2", full: "Thứ Hai", color: "text-foreground" },
+                  { short: "T3", full: "Thứ Ba", color: "text-foreground" },
+                  { short: "T4", full: "Thứ Tư", color: "text-foreground" },
+                  { short: "T5", full: "Thứ Năm", color: "text-foreground" },
+                  { short: "T6", full: "Thứ Sáu", color: "text-foreground" },
+                  {
+                    short: "T7",
+                    full: "Thứ Bảy",
+                    color: "text-blue-600 dark:text-blue-400",
+                  },
+                  {
+                    short: "CN",
+                    full: "Chủ Nhật",
+                    color: "text-red-600 dark:text-red-400",
+                  },
+                ].map((day, index) => (
                   <motion.div
-                    key={dateKey}
-                    variants={itemVariants}
-                    className="aspect-square"
+                    key={day.short}
+                    className="p-2 sm:p-3 md:p-4 text-center relative group"
+                    title={day.full}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
                   >
-                    <CalendarDay
-                      date={date}
-                      lunar={lunar}
-                      canChi={canChi}
-                      monthCanChi={monthCanChi}
-                      yearCanChi={yearCanChi}
-                      isYearLeap={isYearLeap}
-                      events={events}
-                      isCurrentMonth={isSameMonth(date, currentDate)}
-                      isToday={isToday(date)}
-                      onClick={() => handleDateClick(date)}
-                    />
+                    <div className="absolute inset-0 bg-linear-to-b from-transparent to-blue-500/0 group-hover:to-blue-500/5 transition-colors" />
+                    <span
+                      className={`relative font-bold text-xs sm:text-sm md:text-base ${day.color}`}
+                    >
+                      {day.short}
+                    </span>
                   </motion.div>
-                );
-              })}
-            </motion.div>
+                ))}
+              </div>
+
+              {/* Calendar Days Grid */}
+              <motion.div
+                className="grid grid-cols-7 gap-0.5 sm:gap-1 p-1 sm:p-2 bg-muted/20"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                {calendarDays.map((date) => {
+                  const lunar = getLunarDate(date);
+                  const canChi = getDayCanChi(date);
+                  const monthCanChi = getMonthCanChi(date);
+                  const yearCanChi = getYearCanChi(date);
+                  const isYearLeap = hasLeapMonth(lunar.year) > 0;
+                  const events = getEventsForDate(date);
+                  const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+
+                  return (
+                    <motion.div
+                      key={dateKey}
+                      variants={itemVariants}
+                      className="aspect-square"
+                    >
+                      <CalendarDay
+                        date={date}
+                        lunar={lunar}
+                        canChi={canChi}
+                        monthCanChi={monthCanChi}
+                        yearCanChi={yearCanChi}
+                        isYearLeap={isYearLeap}
+                        events={events}
+                        isCurrentMonth={isSameMonth(date, currentDate)}
+                        isToday={isToday(date)}
+                        onClick={() => handleDateClick(date)}
+                      />
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            </div>
           </motion.section>
 
           {/* RIGHT COLUMN: Header & Controls */}
