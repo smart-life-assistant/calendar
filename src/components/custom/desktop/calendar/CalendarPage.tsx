@@ -308,9 +308,9 @@ export default function CalendarPage() {
   );
 
   return (
-    <article className="min-h-screen py-4 sm:py-6 md:py-8 px-2 sm:px-4 relative overflow-x-hidden">
+    <article className="min-h-screen py-4 sm:py-6 md:py-8 px-2 sm:px-4 relative">
       {/* Animated Background */}
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-blue-100 via-transparent to-transparent dark:from-blue-950 opacity-40" />
         <motion.div
           className="absolute top-20 left-10 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl"
@@ -504,7 +504,7 @@ export default function CalendarPage() {
 
           {/* RIGHT COLUMN: Header & Controls */}
           <motion.header
-            className="order-1 lg:order-2 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] self-start mr-6"
+            className="order-1 lg:order-2 lg:sticky lg:top-4 h-full self-start mr-6"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             aria-label="Calendar header"
