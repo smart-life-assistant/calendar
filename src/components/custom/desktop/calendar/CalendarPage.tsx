@@ -522,7 +522,7 @@ export default function CalendarPage() {
 
         {/* Ultra Modern Calendar Grid with Glassmorphism */}
         <motion.section
-          className="relative rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-hidden max-h-[calc(100vh-300px)] overflow-y-auto"
+          className="relative rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -531,8 +531,8 @@ export default function CalendarPage() {
           {/* Decorative gradient overlay */}
           <div className="absolute top-0 left-0 right-0 h-32 bg-linear-to-b from-blue-500/5 to-transparent pointer-events-none" />
 
-          {/* Weekday Headers - Modern Gradient Design - Responsive - Sticky */}
-          <div className="sticky top-0 z-10 grid grid-cols-7 border-b border-border/50 bg-linear-to-r from-blue-50/95 via-indigo-50/95 to-purple-50/95 dark:from-blue-950/95 dark:via-indigo-950/95 dark:to-purple-950/95 backdrop-blur-md">
+          {/* Weekday Headers - Modern Gradient Design - Responsive */}
+          <div className="grid grid-cols-7 border-b border-border/50 bg-linear-to-r from-blue-50/50 via-indigo-50/50 to-purple-50/50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20">
             {[
               { short: "T2", full: "Thứ Hai", color: "text-foreground" },
               { short: "T3", full: "Thứ Ba", color: "text-foreground" },
