@@ -332,282 +332,272 @@ export default function CalendarPage() {
         />
       </div>
 
-      <div className="max-w-[1600px] mx-auto">
-        {/* Modern Header with Glassmorphism - Responsive */}
-        <motion.header
-          className="mb-4 sm:mb-6 md:mb-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          aria-label="Calendar header"
-        >
-          <div className="relative rounded-2xl sm:rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 p-4 sm:p-6 md:p-8 shadow-2xl overflow-hidden">
-            {/* Decorative Elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-linear-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-linear-to-tr from-purple-500/10 to-pink-500/10 rounded-full blur-3xl" />
+      <div className="max-w-[1800px] mx-auto">
+        {/* Two Column Layout: Calendar Left, Header Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_450px] gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8">
+          
+          {/* LEFT COLUMN: Calendar Grid with Navigation */}
+          <motion.section
+            className="relative rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-hidden order-2 lg:order-1"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1 }}
+            aria-label="Calendar grid"
+          >
+            {/* Decorative gradient overlay */}
+            <div className="absolute top-0 left-0 right-0 h-32 bg-linear-to-b from-blue-500/5 to-transparent pointer-events-none" />
 
-            <div className="relative z-10">
-              {/* Title Section - Responsive */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
-                <div className="space-y-2 flex-1">
-                  <div className="flex items-center gap-2 sm:gap-3">
-                    <motion.div
-                      className="relative shrink-0"
-                      animate={{ rotate: 360 }}
-                      transition={{
-                        duration: 20,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                    >
-                      <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 blur-lg sm:blur-xl opacity-50" />
-                      <div className="relative rounded-xl sm:rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 p-2 sm:p-3">
-                        <CalendarIcon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
-                      </div>
-                    </motion.div>
-                    <div className="min-w-0 flex-1">
-                      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent truncate">
-                        Lịch Việt Nam
-                      </h1>
-                      <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 sm:mt-1">
-                        Tra cứu âm dương lịch & ngày lễ tết 🇻🇳
-                      </p>
+            {/* Month Navigation Header */}
+            <div className="relative z-10 flex items-center justify-between p-3 sm:p-4 border-b border-border/50 bg-background/60 backdrop-blur-sm">
+              <motion.button
+                onClick={handlePrevMonth}
+                className="p-2 sm:p-3 rounded-xl hover:bg-accent transition-colors bg-background/80"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                aria-label="Tháng trước"
+              >
+                <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+              </motion.button>
+
+              <div className="text-center flex-1">
+                <div className="font-bold text-lg sm:text-xl mb-1">
+                  Tháng {format(currentDate, "MM/yyyy")}
+                </div>
+
+                {/* Lunar Month Info */}
+                <div className="text-xs sm:text-sm text-amber-600 dark:text-amber-400 font-medium mb-1">
+                  🌙 Tháng {currentMonthLunar.lunarMonth}{" "}
+                  {currentMonthLunar.isLeapMonth && "nhuận"} năm{" "}
+                  {currentMonthLunar.yearCanChi}
+                  {currentMonthLunar.isYearLeap && " nhuận"}
+                </div>
+
+                {/* Month Can Chi Badge */}
+                <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-linear-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 border border-indigo-200 dark:border-indigo-700">
+                  <span className="text-xs font-bold bg-linear-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+                    ✨ Tháng {currentMonthLunar.monthCanChi}
+                  </span>
+                </div>
+              </div>
+
+              <motion.button
+                onClick={handleNextMonth}
+                className="p-2 sm:p-3 rounded-xl hover:bg-accent transition-colors bg-background/80"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                aria-label="Tháng sau"
+              >
+                <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
+              </motion.button>
+            </div>
+
+            {/* Weekday Headers */}
+            <div className="grid grid-cols-7 border-b border-border/50 bg-linear-to-r from-blue-50/50 via-indigo-50/50 to-purple-50/50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20">
+              {[
+                { short: "T2", full: "Thứ Hai", color: "text-foreground" },
+                { short: "T3", full: "Thứ Ba", color: "text-foreground" },
+                { short: "T4", full: "Thứ Tư", color: "text-foreground" },
+                { short: "T5", full: "Thứ Năm", color: "text-foreground" },
+                { short: "T6", full: "Thứ Sáu", color: "text-foreground" },
+                {
+                  short: "T7",
+                  full: "Thứ Bảy",
+                  color: "text-blue-600 dark:text-blue-400",
+                },
+                {
+                  short: "CN",
+                  full: "Chủ Nhật",
+                  color: "text-red-600 dark:text-red-400",
+                },
+              ].map((day, index) => (
+                <motion.div
+                  key={day.short}
+                  className="p-2 sm:p-3 md:p-4 text-center relative group"
+                  title={day.full}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <div className="absolute inset-0 bg-linear-to-b from-transparent to-blue-500/0 group-hover:to-blue-500/5 transition-colors" />
+                  <span
+                    className={`relative font-bold text-xs sm:text-sm md:text-base ${day.color}`}
+                  >
+                    {day.short}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Calendar Days Grid */}
+            <motion.div
+              className="grid grid-cols-7 gap-0.5 sm:gap-1 p-1 sm:p-2 bg-muted/20"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {calendarDays.map((date) => {
+                const lunar = getLunarDate(date);
+                const canChi = getDayCanChi(date);
+                const monthCanChi = getMonthCanChi(date);
+                const yearCanChi = getYearCanChi(date);
+                const isYearLeap = hasLeapMonth(lunar.year) > 0;
+                const events = getEventsForDate(date);
+                const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+
+                return (
+                  <motion.div
+                    key={dateKey}
+                    variants={itemVariants}
+                    className="aspect-square"
+                  >
+                    <CalendarDay
+                      date={date}
+                      lunar={lunar}
+                      canChi={canChi}
+                      monthCanChi={monthCanChi}
+                      yearCanChi={yearCanChi}
+                      isYearLeap={isYearLeap}
+                      events={events}
+                      isCurrentMonth={isSameMonth(date, currentDate)}
+                      isToday={isToday(date)}
+                      onClick={() => handleDateClick(date)}
+                    />
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </motion.section>
+
+          {/* RIGHT COLUMN: Header & Controls */}
+          <motion.header
+            className="order-1 lg:order-2"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            aria-label="Calendar header"
+          >
+            <div className="relative rounded-2xl sm:rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 p-4 sm:p-6 shadow-2xl overflow-hidden">
+              {/* Decorative Elements */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-linear-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-linear-to-tr from-purple-500/10 to-pink-500/10 rounded-full blur-3xl" />
+
+              <div className="relative z-10 space-y-4 sm:space-y-6">
+                {/* Title Section */}
+                <div className="flex items-center gap-3">
+                  <motion.div
+                    className="relative shrink-0"
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  >
+                    <div className="absolute inset-0 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 blur-lg opacity-50" />
+                    <div className="relative rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 p-2.5">
+                      <CalendarIcon className="h-7 w-7 text-white" />
                     </div>
+                  </motion.div>
+                  <div>
+                    <h1 className="text-2xl sm:text-3xl font-bold bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+                      Lịch Việt Nam
+                    </h1>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Tra cứu âm dương lịch & ngày lễ tết 🇻🇳
+                    </p>
                   </div>
                 </div>
 
+                {/* Add Event Button */}
                 {session && (
                   <motion.button
                     onClick={() => handleAddEvent()}
-                    className="px-3 sm:px-5 py-2 sm:py-2.5 bg-linear-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30 transition-all inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    className="w-full px-4 py-3 bg-linear-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 text-white font-semibold rounded-xl shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30 transition-all inline-flex items-center justify-center gap-2"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     aria-label="Thêm sự kiện mới"
                   >
-                    <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
-                    <span className="hidden md:inline">Thêm sự kiện</span>
-                    <span className="md:hidden">Thêm</span>
+                    <Plus className="h-5 w-5" />
+                    <span>Thêm sự kiện mới</span>
                   </motion.button>
                 )}
-              </div>
 
-              {/* Modern Filter & Navigation Bar - Fully Responsive */}
-              <div className="flex flex-col gap-4">
-                {/* Row 1: Year & Month Selectors + Today Button */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 justify-between">
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                    {/* Year Selector */}
-                    <div className="flex items-center gap-2 bg-background/60 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-2 border border-border/50 flex-1 sm:flex-initial">
-                      <label
-                        htmlFor="year-select"
-                        className="text-xs sm:text-sm font-medium whitespace-nowrap flex items-center gap-1.5"
-                      >
-                        <CalendarDays className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                        <span>Năm:</span>
-                      </label>
-                      <Select
-                        value={currentDate.getFullYear().toString()}
-                        onValueChange={handleYearChange}
-                      >
-                        <SelectTrigger
-                          id="year-select"
-                          className="w-full sm:w-[100px] border-0 bg-transparent focus:ring-0 h-8"
-                          aria-label="Chọn năm"
-                        >
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="max-h-[300px]">
-                          {years.map((year) => (
-                            <SelectItem key={year} value={year.toString()}>
-                              {year}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                {/* Divider */}
+                <div className="border-t border-border/50" />
 
-                    {/* Month Selector */}
-                    <div className="flex items-center gap-2 bg-background/60 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-2 border border-border/50 flex-1 sm:flex-initial">
-                      <label
-                        htmlFor="month-select"
-                        className="text-xs sm:text-sm font-medium whitespace-nowrap flex items-center gap-1.5"
-                      >
-                        <CalendarRange className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
-                        <span>Tháng:</span>
-                      </label>
-                      <Select
-                        value={(currentDate.getMonth() + 1).toString()}
-                        onValueChange={handleMonthChange}
-                      >
-                        <SelectTrigger
-                          id="month-select"
-                          className="w-full sm:w-[110px] border-0 bg-transparent focus:ring-0 h-8"
-                          aria-label="Chọn tháng"
-                        >
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {months.map((month) => (
-                            <SelectItem key={month} value={month.toString()}>
-                              Tháng {month}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  {/* Today Button */}
-                  <motion.button
-                    onClick={handleToday}
-                    className="w-full shrink-0 sm:w-auto px-4 sm:px-5 py-2.5 bg-linear-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    aria-label="Quay về ngày hôm nay"
+                {/* Year Selector */}
+                <div className="space-y-2">
+                  <label
+                    htmlFor="year-select-right"
+                    className="text-sm font-medium flex items-center gap-2"
                   >
-                    <span className="hidden sm:inline">🏠 Hôm nay</span>
-                    <span className="sm:hidden">📅 Hôm nay</span>
-                  </motion.button>
+                    <CalendarDays className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                    <span>Chọn năm</span>
+                  </label>
+                  <Select
+                    value={currentDate.getFullYear().toString()}
+                    onValueChange={handleYearChange}
+                  >
+                    <SelectTrigger
+                      id="year-select-right"
+                      className="w-full bg-background/60 backdrop-blur-sm"
+                      aria-label="Chọn năm"
+                    >
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-[300px]">
+                      {years.map((year) => (
+                        <SelectItem key={year} value={year.toString()}>
+                          {year}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
 
-                {/* Row 2: Navigation & Actions */}
-                <div className="flex items-center gap-3 justify-between">
-                  {/* Month Navigation */}
-                  <div className="flex w-full justify-between items-center gap-1 sm:gap-2 bg-background/60 backdrop-blur-sm rounded-xl border border-border/50 p-1">
-                    <motion.button
-                      onClick={handlePrevMonth}
-                      className="p-1.5 sm:p-2 rounded-lg hover:bg-accent transition-colors"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      aria-label="Tháng trước"
+                {/* Month Selector */}
+                <div className="space-y-2">
+                  <label
+                    htmlFor="month-select-right"
+                    className="text-sm font-medium flex items-center gap-2"
+                  >
+                    <CalendarRange className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                    <span>Chọn tháng</span>
+                  </label>
+                  <Select
+                    value={(currentDate.getMonth() + 1).toString()}
+                    onValueChange={handleMonthChange}
+                  >
+                    <SelectTrigger
+                      id="month-select-right"
+                      className="w-full bg-background/60 backdrop-blur-sm"
+                      aria-label="Chọn tháng"
                     >
-                      <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
-                    </motion.button>
-
-                    <div className="px-2 sm:px-4 text-center min-w-[140px] sm:min-w-[200px]">
-                      <div className="font-bold text-sm sm:text-lg mb-0.5">
-                        Tháng {format(currentDate, "MM/yyyy")}
-                      </div>
-
-                      {/* Lunar Month Info */}
-                      <div className="text-[10px] sm:text-xs text-amber-600 dark:text-amber-400 font-medium mb-1">
-                        🌙 Tháng {currentMonthLunar.lunarMonth}{" "}
-                        {currentMonthLunar.isLeapMonth && "nhuận"} năm{" "}
-                        {currentMonthLunar.yearCanChi}
-                        {currentMonthLunar.isYearLeap && " nhuận"}
-                      </div>
-
-                      {/* Month Can Chi Badge */}
-                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-linear-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 border border-indigo-200 dark:border-indigo-700">
-                        <span className="text-[10px] sm:text-xs font-bold bg-linear-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
-                          ✨ Tháng {currentMonthLunar.monthCanChi}
-                        </span>
-                      </div>
-                    </div>
-
-                    <motion.button
-                      onClick={handleNextMonth}
-                      className="p-1.5 sm:p-2 rounded-lg hover:bg-accent transition-colors"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      aria-label="Tháng sau"
-                    >
-                      <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
-                    </motion.button>
-                  </div>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {months.map((month) => (
+                        <SelectItem key={month} value={month.toString()}>
+                          Tháng {month}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
+
+                {/* Today Button */}
+                <motion.button
+                  onClick={handleToday}
+                  className="w-full px-4 py-3 bg-linear-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  aria-label="Quay về ngày hôm nay"
+                >
+                  🏠 Quay về hôm nay
+                </motion.button>
               </div>
             </div>
-          </div>
-        </motion.header>
-
-        {/* Ultra Modern Calendar Grid with Glassmorphism */}
-        <motion.section
-          className="relative rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-hidden"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          aria-label="Calendar grid"
-        >
-          {/* Decorative gradient overlay */}
-          <div className="absolute top-0 left-0 right-0 h-32 bg-linear-to-b from-blue-500/5 to-transparent pointer-events-none" />
-
-          {/* Weekday Headers - Modern Gradient Design - Responsive */}
-          <div className="grid grid-cols-7 border-b border-border/50 bg-linear-to-r from-blue-50/50 via-indigo-50/50 to-purple-50/50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20">
-            {[
-              { short: "T2", full: "Thứ Hai", color: "text-foreground" },
-              { short: "T3", full: "Thứ Ba", color: "text-foreground" },
-              { short: "T4", full: "Thứ Tư", color: "text-foreground" },
-              { short: "T5", full: "Thứ Năm", color: "text-foreground" },
-              { short: "T6", full: "Thứ Sáu", color: "text-foreground" },
-              {
-                short: "T7",
-                full: "Thứ Bảy",
-                color: "text-blue-600 dark:text-blue-400",
-              },
-              {
-                short: "CN",
-                full: "Chủ Nhật",
-                color: "text-red-600 dark:text-red-400",
-              },
-            ].map((day, index) => (
-              <motion.div
-                key={day.short}
-                className="p-2 sm:p-3 md:p-4 text-center relative group"
-                title={day.full}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <div className="absolute inset-0 bg-linear-to-b from-transparent to-blue-500/0 group-hover:to-blue-500/5 transition-colors" />
-                <span
-                  className={`relative font-bold text-xs sm:text-sm md:text-base ${day.color}`}
-                >
-                  {day.short}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Calendar Days Grid - Fully Responsive */}
-          <motion.div
-            className="grid grid-cols-7 gap-0.5 sm:gap-1 p-1 sm:p-2 bg-muted/20"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {calendarDays.map((date) => {
-              const lunar = getLunarDate(date);
-              const canChi = getDayCanChi(date);
-              const monthCanChi = getMonthCanChi(date);
-              const yearCanChi = getYearCanChi(date);
-              const isYearLeap = hasLeapMonth(lunar.year) > 0;
-              const events = getEventsForDate(date);
-              const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-
-              return (
-                <motion.div
-                  key={dateKey}
-                  variants={itemVariants}
-                  className="aspect-square"
-                >
-                  <CalendarDay
-                    date={date}
-                    lunar={lunar}
-                    canChi={canChi}
-                    monthCanChi={monthCanChi}
-                    yearCanChi={yearCanChi}
-                    isYearLeap={isYearLeap}
-                    events={events}
-                    isCurrentMonth={isSameMonth(date, currentDate)}
-                    isToday={isToday(date)}
-                    onClick={() => handleDateClick(date)}
-                  />
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </motion.section>
-
+          </motion.header>
+        </div>
         {/* Modern Legend with Cards - Fully Responsive */}
         <motion.aside
           className="mt-6 sm:mt-8 grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4"
