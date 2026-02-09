@@ -350,15 +350,18 @@ export default function CalendarPage() {
             <div className="hidden lg:block absolute -left-8 top-0 bottom-0 w-24 z-20 group/left">
               <motion.button
                 onClick={handlePrevMonth}
-                className="absolute left-0 top-1/2 -translate-y-1/2 h-24 w-16 flex items-center justify-center bg-linear-to-br from-indigo-600 via-purple-600 to-indigo-700 backdrop-blur-xl opacity-0 group-hover/left:opacity-100 transition-all duration-300 rounded-full shadow-[0_0_30px_15px_rgba(99,102,241,0.4)]"
-                whileHover={{ scale: 1.05 }}
+                className="absolute left-0 top-1/2 -translate-y-1/2 h-20 w-20 flex items-center justify-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-md opacity-0 group-hover/left:opacity-100 transition-all duration-300 rounded-full shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] border border-white/20 dark:border-gray-700/50 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)]"
+                whileHover={{ scale: 1.08, x: -2 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Tháng trước"
                 style={{
-                  clipPath: "ellipse(60% 50% at 100% 50%)",
+                  clipPath: "ellipse(65% 50% at 100% 50%)",
                 }}
               >
-                <ChevronLeft className="h-8 w-8 text-white drop-shadow-lg -ml-2" />
+                <ChevronLeft
+                  className="h-7 w-7 text-gray-700 dark:text-gray-200 -ml-1"
+                  strokeWidth={2.5}
+                />
               </motion.button>
             </div>
 
@@ -366,15 +369,18 @@ export default function CalendarPage() {
             <div className="hidden lg:block absolute -right-8 top-0 bottom-0 w-24 z-20 group/right">
               <motion.button
                 onClick={handleNextMonth}
-                className="absolute right-0 top-1/2 -translate-y-1/2 h-24 w-16 flex items-center justify-center bg-linear-to-br from-indigo-600 via-purple-600 to-indigo-700 backdrop-blur-xl opacity-0 group-hover/right:opacity-100 transition-all duration-300 rounded-full shadow-[0_0_30px_15px_rgba(99,102,241,0.4)]"
-                whileHover={{ scale: 1.05 }}
+                className="absolute right-0 top-1/2 -translate-y-1/2 h-20 w-20 flex items-center justify-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-md opacity-0 group-hover/right:opacity-100 transition-all duration-300 rounded-full shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] border border-white/20 dark:border-gray-700/50 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)]"
+                whileHover={{ scale: 1.08, x: 2 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Tháng sau"
                 style={{
-                  clipPath: "ellipse(60% 50% at 0% 50%)",
+                  clipPath: "ellipse(65% 50% at 0% 50%)",
                 }}
               >
-                <ChevronRight className="h-8 w-8 text-white drop-shadow-lg -mr-2" />
+                <ChevronRight
+                  className="h-7 w-7 text-gray-700 dark:text-gray-200 -mr-1"
+                  strokeWidth={2.5}
+                />
               </motion.button>
             </div>
 
