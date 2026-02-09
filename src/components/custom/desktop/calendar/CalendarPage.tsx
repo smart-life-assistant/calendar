@@ -347,10 +347,10 @@ export default function CalendarPage() {
             <div className="absolute top-0 left-0 right-0 h-32 bg-linear-to-b from-blue-500/5 to-transparent pointer-events-none" />
 
             {/* Left Hover Zone */}
-            <div className="hidden lg:block absolute -left-3 top-0 bottom-0 w-24 z-20 group/left">
+            <div className="hidden lg:block absolute -left-12 top-0 bottom-0 w-24 group/left">
               <motion.button
                 onClick={handlePrevMonth}
-                className="absolute left-0 top-1/2 -translate-y-1/2 h-24 w-12 flex items-center justify-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-md opacity-0 group-hover/left:opacity-100 transition-all duration-300 rounded-l-full shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] border border-white/20 dark:border-gray-700/50 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)]"
+                className="absolute left-0 top-1/2 -translate-y-1/2 h-24 w-12 flex items-center justify-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-md opacity-0 group-hover/left:opacity-100 transition-all duration-300 rounded-full shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] border border-white/20 dark:border-gray-700/50 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)]"
                 whileHover={{ scale: 1.05, x: -2 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Tháng trước"
@@ -363,10 +363,10 @@ export default function CalendarPage() {
             </div>
 
             {/* Right Hover Zone */}
-            <div className="hidden lg:block absolute -right-3 top-0 bottom-0 w-24 z-20 group/right">
+            <div className="hidden lg:block absolute -right-12 top-0 bottom-0 w-24 group/right">
               <motion.button
                 onClick={handleNextMonth}
-                className="absolute right-0 top-1/2 -translate-y-1/2 h-24 w-12 flex items-center justify-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-md opacity-0 group-hover/right:opacity-100 transition-all duration-300 rounded-r-full shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] border border-white/20 dark:border-gray-700/50 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)]"
+                className="absolute right-0 top-1/2 -translate-y-1/2 h-24 w-12 flex items-center justify-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-md opacity-0 group-hover/right:opacity-100 transition-all duration-300 rounded-full shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] border border-white/20 dark:border-gray-700/50 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)]"
                 whileHover={{ scale: 1.05, x: 2 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Tháng sau"
