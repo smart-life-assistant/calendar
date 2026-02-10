@@ -27,8 +27,8 @@ export default auth((req) => {
   }
 
   // Public paths that don't require authentication
-  const publicPaths = ["/", "/login", "/api/auth"];
-  const isPublicPath = publicPaths.some((path) => pathname.startsWith(path));
+  //   const publicPaths = ["/", "/login", "/api/auth"];
+  //   const isPublicPath = publicPaths.some((path) => pathname.startsWith(path));
 
   // Protected paths that require authentication
   const protectedPaths = ["/dashboard", "/admin"];
